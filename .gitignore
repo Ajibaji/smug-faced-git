@@ -1,0 +1,13 @@
+*/*
+
+!delta/*
+!gitui/*
+!karabiner/*
+!kitty/*
+!neofetch/*
+!neovide/*
+!nvim/*
+!spotifyd/*
+
+.DS_Store
+packer_compiled.lua
