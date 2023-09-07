@@ -1,0 +1,31 @@
+- defaults:
+    brewfile:
+      stdout: true
+    brew:
+      stderr: true
+      stdout: true
+    link:
+      create: true
+      relink: true
+      force: true
+
+- install-brew: true
+
+- brewfile:
+    - brew/Brewfile
+
+- clean:
+    ~/:
+      force: true
+
+- link:
+    ~/.amethyst.yml: amethyst/.amethyst.yml
+    ~/.gitconfig: git-config/.gitconfig
+    ~/.gitignore_global: git-config/.gitignore_global
+    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.zprofile: zsh/.zprofile
+    ~/.zshenv: zsh/.zshenv
+    ~/.zshrc: zsh/.zshrc
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
