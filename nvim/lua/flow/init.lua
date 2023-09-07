@@ -3,6 +3,7 @@ require('flow.session')
 require('flow.goto')
 require('flow.save')
 require('flow.terminal')
+require('flow.dashboard')
 
 require('Comment').setup()
 
