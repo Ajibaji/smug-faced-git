@@ -1,0 +1,8 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = git@github.com:anishathalye/dotbot.git
+	ignore = dirty
+[submodule "dotbot-brew"]
+	path = dotbot-brew
+	url = git@github.com:wren/dotbot-brew.git
+	ignore = dirty
