@@ -14,7 +14,7 @@ o.updatetime = 250
 
 o.termguicolors = true
 opt.termguicolors = true
-opt.guifont = 'JetBrainsMono Nerd Font Mono:h13'
+opt.guifont = 'JetBrainsMono Nerd Font:h13'
 
 opt.foldmethod = 'manual'
 --o.foldcolumn = '1' -- '0' is not bad
