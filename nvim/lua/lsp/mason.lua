@@ -278,17 +278,17 @@ local servers = {
     on_attach = on_attach,
     settings = {
       yaml = {
-        schemas = vim.list_extend(
-          {
-            ['/Users/ammararjomand/seeshellontheseasaw/custom-schemas/bp-ado-pipelines.json'] = {
-              'ado/**/*.y*ml',
-              '**/*azure*.y*ml',
-              '**/*ado*.y*ml',
-              '**/*ipeline*/**/*.y*ml',
-            }
-          },
-          require('schemastore').yaml.schemas()
-        ),
+        -- schemas = vim.list_extend(
+        --   {
+        --     ['/Users/jeff/seeshellontheseasaw/custom-schemas/ado-pipelines.json'] = {
+        --       'ado/**/*.y*ml',
+        --       '**/*azure*.y*ml',
+        --       '**/*ado*.y*ml',
+        --       '**/*ipeline*/**/*.y*ml',
+        --     }
+        --   },
+        --   require('schemastore').yaml.schemas()
+        -- ),
         validate = { enable = true },
       },
     },
