@@ -1,0 +1,70 @@
+[include]
+    path = .config/delta/themes.config
+
+[user]
+    name = Ammar Arjomand
+    email = persiancookbook@gmail.com
+
+[core]
+    pager = delta
+    excludesfile = .gitignore_global
+
+[pager]
+    blame = delta
+    show = delta
+    log = delta
+    blame = delta
+    reflog = delta
+
+[delta]
+	features = DARK
+    navigate = true
+    side-by-side = true 
+    file-style = box
+    hyperlinks = true
+    hyperlinks-file-link-format = "file-line://{path}:{line}"
+    file-added-label = [+]
+    file-copied-label = [==]
+    file-modified-label = [*]
+    file-removed-label = [-]
+    file-renamed-label = [->]
+    hunk-header-style = omit
+    line-numbers = true
+    line-numbers-left-format = " {nm:>3} │"
+    line-numbers-right-format = " {np:>3} │"
+    commit-decoration-style = normal box
+    blame-code-style = syntax
+    blame-format = "{author:>18} ({commit:>8}) {timestamp:<13} "
+    merge-conflict-begin-symbol = ⌃
+    merge-conflict-end-symbol = ⌄
+    merge-conflict-ours-diff-header-decoration-style = ''
+    merge-conflict-theirs-diff-header-decoration-style = ''
+    keep-plus-minus-markers = false
+
+[diff]
+    colorMoved = default
+
+[merge]
+    conflictstyle = diff3
+
+[difftool]
+    prompt = false
+    trustExitCode = true
+
+[pull]
+  	rebase = false
+
+[interactive]
+    diffFilter = delta --color-only --feature=interactive
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "LIGHT"]
+    features = chameleon zebra-light
+
+[delta "DARK"]
+    features = gruvmax-fang zebra-dark
+
+[alias]
+    change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
