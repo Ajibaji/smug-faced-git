@@ -1,7 +1,9 @@
 require 'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  auto_install = true,
+  ignore_install = {},
   ensure_installed = {
     "bash",
+    "c_sharp",
     "dockerfile",
     "help",
     "html",
