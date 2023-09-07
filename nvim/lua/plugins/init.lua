@@ -2,9 +2,9 @@ local packer = require('packer')
 
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
     return true
   end
@@ -93,6 +93,10 @@ packer.startup({
     }
     use 'tummetott/reticle.nvim'
     -------------------------------------------------------------------------> FLOW
+    use {
+      'goolord/alpha-nvim',
+      requires = { 'nvim-tree/nvim-web-devicons' },
+    }
     use 'Pocco81/auto-save.nvim'
     use 'rmagatti/auto-session'
     use 'famiu/bufdelete.nvim'
@@ -131,7 +135,7 @@ packer.startup({
       },
     }
 
-    -------------------------------------------------------------------------> packer
+    -------------------------------------------------------------------------> PACKER
     use 'wbthomason/packer.nvim'
     if packer_bootstrap then
       packer.sync()
