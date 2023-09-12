@@ -20,9 +20,9 @@
 
 # AZURE
   export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
+
 # FZF
-  # export FZF_COMMON_OPTS='--reverse --border --exact --height=50%'
-  export FZF_COMMON_OPTS='--info=hidden --exact --height=50% --margin=10%,5%,8%,5% -m --prompt="   > " --pointer=">" --marker="+"'
+  export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
 
 # Java
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home"
