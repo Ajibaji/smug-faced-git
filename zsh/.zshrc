@@ -31,6 +31,9 @@
         [[ $SILENT != "true" ]] && echo "AWS_PROFILE=${PROFILE}"
       }
 
+    # BAT ALIASES
+      alias cat='bat --paging=never'
+
     # DOCKER ALIASES
       # alias docker='lima nerctl'
       alias dokcer='docker $@'
