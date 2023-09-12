@@ -33,6 +33,9 @@
 # LAZYGIT
   export LG_CONFIG_FILE=~/.config/lazygit/config.yml
 
+# MAN
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # Python
   export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
