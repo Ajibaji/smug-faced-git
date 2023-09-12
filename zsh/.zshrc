@@ -292,6 +292,23 @@
         fi
       }
 
+    # FIND IN FILES
+      function fif () {
+        rg  \
+          --column \
+          --no-heading \
+          --fixed-strings \
+          --ignore-case \
+          --hidden \
+          --follow \
+          --glob '!.git/*' "$1" \
+        | awk -F  ":" '/1/ {start = $2<5 ? 0 : $2 - 5; end = $2 + 5; print $1 " " $2 " " $3 " " start ":" end}' \
+        | fzf \
+            --bind 'ctrl-o:execute(nvim +"call cursor({2},{3})" {1})+cancel' \
+            --preview 'bat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
+            --preview-window wrap
+      }
+
 
 # SHELL:
     # Set TERM variable
@@ -462,3 +479,5 @@
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
