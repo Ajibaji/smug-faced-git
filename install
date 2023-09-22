@@ -10,6 +10,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 KEY_PATH="~/.ssh/id_rsa_github"
 
+mkdir -p ~/.ssh
 ssh-keygen -o -t rsa -f $KEY_PATH
 cat ${KEY_PATH}.pub | pbcopy
 echo "Public key copied to system register"
