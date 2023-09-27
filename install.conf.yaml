@@ -39,7 +39,7 @@
       description: installing FNM
     - command: |
         if ! command -v cargo; then
-          curl https://sh.rustup.rs -sSf | sh
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
         fi
       stdin: true
       stderr: true

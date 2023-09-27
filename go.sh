@@ -25,9 +25,10 @@ function authGithub() {
 }
 
 function cloneAndMerge() {
+  rm -rf ${HOME}/.config.bak
   mv ${HOME}/.config ${HOME}/.config.bak
   git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
-  mv -n ${HOME}/.config.bak/* ${HOME}/.config && rm -rf ${HOME}/.config.bak
+  mv -n ${HOME}/.config.bak/* ${HOME}/.config/ && rm -rf ${HOME}/.config.bak
 }
 
 function runDotbot() {
