@@ -6,3 +6,6 @@
 	path = dotbot-brew
 	url = git@github.com:wren/dotbot-brew.git
 	ignore = dirty
+[submodule "dotbot-conditional"]
+	path = dotbot-conditional
+	url = https://gitlab.com/gnfzdz/dotbot-conditional.git
