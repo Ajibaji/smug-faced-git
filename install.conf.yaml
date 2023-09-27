@@ -29,3 +29,19 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    - command: |
+        if ! command -v fnm; then
+          curl -fsSL https://fnm.vercel.app/install | bash
+        fi
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing FNM
+    - command: |
+        if ! command -v cargo; then
+          curl https://sh.rustup.rs -sSf | sh
+        fi
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing cargo

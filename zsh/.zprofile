@@ -12,7 +12,7 @@
 
 
 # FNM - FASTER LOADING NVM REPLACEMENT
-  export PATH=${HOME}/fnm/target/debug:$PATH
+  export PATH="/home/pi/.local/share/fnm:$PATH"
   eval "`fnm env`"
 
 # NVM
