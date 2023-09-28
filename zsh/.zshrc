@@ -12,6 +12,15 @@
 #  - history management
 # =======================================================================================
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  echo ""
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  source ${HOME}/.config/zsh/.zshrc_mac
+elif [[ "$OSTYPE" == "win32" ]]; then
+        # I'm not sure this can happen.
+else
+  echo "Unknown OS" 
+fi
 
 
 #_________________________________________________________________________________ALIASES:
@@ -68,16 +77,6 @@
       # alias whiptail='dialog'
 
 #_______________________________________________________________________________FUNCTIONS:
-    # cd to the path of the front Finder window
-      cdf() {
-        target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-        if [ "$target" != "" ]; then
-          cd "$target"; pwd
-        else
-          echo 'No Finder window found' >&2
-        fi
-      }
-
     # fix tabs (mixed tabs and spaces error in eslint)
       function fixtabs () {
         find . -name '*.ts' ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
@@ -203,34 +202,6 @@
     #	fi
     #}
 
-    # RUBY
-      source /usr/local/opt/chruby/share/chruby/chruby.sh
-      source /usr/local/opt/chruby/share/chruby/auto.sh
-      chruby ruby-3.1.0 # set default ruby version. Use 'chruby system' to use MacOS version
-
-    # RUST
-      source $HOME/.cargo/env
-
-    # PERL
-      eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
-
-    # MOVE TO OTHER SCREENS
-        # function screen-left () {
-        #     osascript -e 'tell application "System Events" to keystroke key code 123 using {control down, shift down}'
-        # }
-        #
-        # function screen-centre () {
-        #     osascript -e 'tell application "System Events" to keystroke key code 126 using {control down, shift down}'
-        # }
-        #
-        # function screen-down () {
-        #     osascript -e 'tell application "System Events" to keystroke key code 125 using {control down, shift down}'
-        # }
-        #
-        # function screen-max () {
-        #     osascript -e 'tell application "System Events" to keystroke key code 36 using {control down, option down}'
-        # }
-
     # SHOW PATH ENTRIES CLEARLY
       function pathls () {
         echo $PATH | tr ":" "\n"
@@ -311,20 +282,39 @@
 
 
 # SHELL:
+    # ZPLUG
+    export ZPLUG_HOME=${HOME}/.zplug
+    source $ZPLUG_HOME/init.zsh
+
+    if ! command -v zplug; then
+      curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+    fi
+
+    zplug "sindresorhus/pure", from:github, at:main
+    zplug "larkery/zsh-histdb", from:github, at:main
+    zplug "m42e/zsh-histdb-skim", from:github, at:main
+
+    if ! zplug check --verbose; then
+      printf "Install? [y/N]: "
+      if read -q; then
+        echo; zplug install
+      fi
+    fi
+
+    if zplug list > /dev/null 2>&1
+    then
+      zplug load
+    fi
+
     # Set TERM variable
     	#export TERM="xterm-256color"
-
-    # DTERM
-      if [[ $TERM_PROGRAM = "DTerm" && -x /usr/libexec/path_helper ]]
-      then 
-          eval `/usr/libexec/path_helper -s`
-      fi
 
     # Set bindings
     	set -o emacs 
       bindkey "^[[3~" delete-char
       bindkey -M emacs "^[[1;3C" forward-word   # bind alt-right to forward-word
       bindkey -M emacs "^[[1;3D" backward-word  # bind alt-left to backward-word
+      bindkey '^R' histdb-skim-widget
 
     # Enable Ctrl-x-e to edit command line
       autoload -U edit-command-line
@@ -365,24 +355,6 @@
       source /usr/local/etc/bash_completion.d/az
 
     export HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
-    export ZPLUG_HOME=/usr/local/opt/zplug
-    source $ZPLUG_HOME/init.zsh
-    zplug "larkery/zsh-histdb", from:github, at:main
-    zplug "m42e/zsh-histdb-skim", from:github, at:main
-
-    if ! zplug check --verbose; then
-      printf "Install? [y/N]: "
-      if read -q; then
-        echo; zplug install
-      fi
-    fi
-
-    if zplug list > /dev/null 2>&1
-    then
-      zplug load
-    fi
-    bindkey '^R' histdb-skim-widget
-
     # Set title to current working directory
       export DISABLE_AUTO_TITLE="true"
       precmd () {
@@ -449,7 +421,11 @@
   }
 
   function set-os-theme () {
-    osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
+    else
+      echo "Not yet implemented for this linux DE"
+    fi
   }
 
   function toggle-theme () {
@@ -479,5 +455,3 @@
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -10,24 +10,22 @@
 #  - configuration which executes commands (as it may take some time to execute)
 # =======================================================================================
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  echo ""
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  source ${HOME}/.config/zsh/.zshprofile_mac
+elif [[ "$OSTYPE" == "win32" ]]; then
+        # I'm not sure this can happen.
+else
+  echo "Unknown OS" 
+fi
 
 # FNM - FASTER LOADING NVM REPLACEMENT
-  export PATH="/home/pi/.local/share/fnm:$PATH"
+  export PATH="${HOME}/.local/share/fnm:$PATH"
   eval "`fnm env`"
 
 # NVM
   alias nvm='fnm $@'
-
-# SSH AGENT
-  #eval `ssh-agent`
-
-# DISABLE PHOTOS BACKGROUND ANALYSIS
-  #if [ $(pgrep photoanalysisd) ]
-  #then
-  #    launchctl disable user/$UID/com.apple.photoanalysisd && launchctl kill -TERM user/$UID/com.apple.photoanalysisd
-  #    pkill photoanalysisd
-  #    sudo mv /System/Library/LaunchAgents/com.apple.photoanalysisd.plist ~/Documents/com.apple.photoanalysisd.plist.$(date -u '+%Y-%m-%dBACKUP')
-  #fi
 
 # auto-suggestions (now included under ~/.config/zsh/.zhistory)
     # source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -44,5 +42,3 @@
 
 # fuzzy finder
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
