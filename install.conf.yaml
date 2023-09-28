@@ -30,7 +30,7 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - command: |
-        if [ ! -d $HOME/.asdf ]; then
+        if [ ! -d $HOME/seeshellontheseasaw ]; then
           git clone git@github.com/Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
         fi
       stderr: true
