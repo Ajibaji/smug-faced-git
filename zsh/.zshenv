@@ -9,6 +9,7 @@
 #  - machine-usable aliases/functions
 # =======================================================================================
 
+export PATH="$PATH:$HOME/.local/bin"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   echo ""

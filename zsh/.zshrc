@@ -41,7 +41,7 @@ fi
       }
 
     # BAT ALIASES
-      alias cat='bat --paging=never'
+      # alias cat='bat --paging=never'
 
     # DOCKER ALIASES
       # alias docker='lima nerctl'
@@ -284,15 +284,29 @@ fi
 # SHELL:
     # ZPLUG
     export ZPLUG_HOME=${HOME}/.zplug
-    source $ZPLUG_HOME/init.zsh
+    export ZPLUG_REPOS=${ZPLUG_HOME}/repos
+    export ZPLUG_CACHE_DIR=${ZPLUG_HOME}/cache
+    export ZPLUG_BIN=${ZPLUG_HOME}/bin
 
-    if ! command -v zplug; then
-      curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+    if [[ ! -d $ZPLUG_HOME ]]; then
+      # curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+      git clone --depth 1 git@github.com:zplug/zplug $ZPLUG_HOME
     fi
 
-    zplug "sindresorhus/pure", from:github, at:main
-    zplug "larkery/zsh-histdb", from:github, at:main
-    zplug "m42e/zsh-histdb-skim", from:github, at:main
+    source $ZPLUG_HOME/init.zsh
+
+    zplug "zplug/zplug", hook-build:'zplug --self-manage'
+
+    zplug "mafredri/zsh-async", use:asynch.zsh, from:github, defer:0
+      fpath+=("${ZPLUG_REPOS}/mafredri/zsh-async")
+    zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+      fpath+=("${ZPLUG_REPOS}/sindresorhus/pure/functions")
+      export PURE_PROMPT_SYMBOL="  >"
+      export PURE_CMD_MAX_EXEC_TIME=1
+      prompt_pure_set_title() {} # disable title updates by pure
+
+    # zplug "larkery/zsh-histdb", from:github, at:main
+    # zplug "m42e/zsh-histdb-skim", from:github, at:main
 
     if ! zplug check --verbose; then
       printf "Install? [y/N]: "
@@ -301,10 +315,7 @@ fi
       fi
     fi
 
-    if zplug list > /dev/null 2>&1
-    then
-      zplug load
-    fi
+    zplug load
 
     # Set TERM variable
     	#export TERM="xterm-256color"
@@ -322,37 +333,29 @@ fi
       bindkey '^xe' edit-command-line
       bindkey '^x^e' edit-command-line
 
-    # prompt formatting
-      autoload -Uz promptinit
-      promptinit
-      export PURE_PROMPT_SYMBOL="  >"
-      export PURE_CMD_MAX_EXEC_TIME=1
-      prompt pure
-      prompt_pure_set_title() {} # disable title updates by pure
-
     # auto completion
-      # export ZSH_AUTOSUGGEST_MANUAL_REBIND=anything
-      zstyle ':completion:*' menu select
-      zstyle ':completion:*' completer _complete _match _approximate
-      zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-      zstyle ':completion:*' ignored-patterns '_*'
-      zstyle ':completion:*' rehash true
-      zmodload zsh/complist
+      # # export ZSH_AUTOSUGGEST_MANUAL_REBIND=anything
+      # zstyle ':completion:*' menu select
+      # zstyle ':completion:*' completer _complete _match _approximate
+      # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+      # zstyle ':completion:*' ignored-patterns '_*'
+      # zstyle ':completion:*' rehash true
+      # zmodload zsh/complist
 
       # checking cached .zcompdump file to see if it must be regenerated once a day only
-      autoload -Uz compinit 
-      setopt EXTENDEDGLOB
-      for dump in $HOME/.zcompdump(#qN.m1); do
-        compinit
-        if [[ -s "$dump" && (! -s "$dump.zwc" || "$dump" -nt "$dump.zwc") ]]; then
-          zcompile "$dump"
-        fi
-      done
-      unsetopt EXTENDEDGLOB
-      compinit -C
-      autoload -U +X bashcompinit && bashcompinit
-      complete -C '/usr/local/bin/aws_completer' aws
-      source /usr/local/etc/bash_completion.d/az
+      # autoload -Uz compinit 
+      # setopt EXTENDEDGLOB
+      # for dump in $HOME/.zcompdump(#qN.m1); do
+      #   compinit
+      #   if [[ -s "$dump" && (! -s "$dump.zwc" || "$dump" -nt "$dump.zwc") ]]; then
+      #     zcompile "$dump"
+      #   fi
+      # done
+      # unsetopt EXTENDEDGLOB
+      # compinit -C
+      # autoload -U +X bashcompinit && bashcompinit
+      # complete -C '/usr/local/bin/aws_completer' aws
+      # source /usr/local/etc/bash_completion.d/az
 
     export HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
     # Set title to current working directory
@@ -386,7 +389,7 @@ fi
       test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
     # zsh-syntax-highlighting
-      source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+      # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # THEME SWITCHER
   function set-kitty-theme () {
@@ -400,9 +403,9 @@ fi
   function set-session-theme () {
     if [[ "$CURRENT_THEME" = "DARK" ]]
     then
-      gsed -i 's/LIGHT/DARK/gI' ${HOME}/.config/zsh/.zshenv_colours
+      sed -i 's/LIGHT/DARK/gI' ${HOME}/.config/zsh/.zshenv_colours
     else
-      gsed -i 's/DARK/LIGHT/gI' ${HOME}/.config/zsh/.zshenv_colours
+      sed -i 's/DARK/LIGHT/gI' ${HOME}/.config/zsh/.zshenv_colours
     fi
     source ${HOME}/.config/zsh/.zshenv_colours
   }
@@ -440,18 +443,25 @@ fi
     fi
     (set-os-theme $darkMode)
     set-session-theme
-    set-kitty-theme
+    [ $TERM = 'xterm-kitty' ] && set-kitty-theme
     set-git-theme
     # wait
   }
 
 # SOURCE
-  source $HOME/seeshellontheseasaw/*.zshrc
+  # source $HOME/seeshellontheseasaw/*.zshrc
 
 # RUN
   # SILENT=true aws-env & --------------- takes way too long using aws config and cant be thrown to background as env vars dont get set
   get-current-theme
-  set-kitty-theme
+  [ $TERM = 'xterm-kitty' ] && set-kitty-theme
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /usr/local/bin/terraform terraform
+
+# fnm
+export PATH="/home/pi/.local/share/fnm:$PATH"
+eval "`fnm env`"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
