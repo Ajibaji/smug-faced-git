@@ -1,8 +1,17 @@
 .DS_Store
 packer_compiled.lua
 
+albert/
+chromium/
+dconf/
+envman/
 htop/
 kitty/themes.conf
 kitty/themes.conf.bak
 kitty/current-theme.conf
+lazygit/state.yml
+pulse/
+qt*/
 spotify-tui/
+Thunar/
+xarchiver/
