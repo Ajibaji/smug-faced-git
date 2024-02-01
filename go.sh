@@ -31,13 +31,20 @@ function cloneAndMerge() {
   mv -n ${HOME}/.config.bak/* ${HOME}/.config/ && rm -rf ${HOME}/.config.bak
 }
 
+function installBrew() {
+  if ! command -v brew; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+}
+
 function runDotbot() {
-  exec ${HOME}/.config/install
+  cd ${HOME}/.config
+  exec ./install
 }
 
 PS3="Select choice: "
 
-select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" Quit
+select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
 do
     case $choice in
         "Authenticate GitHub")
@@ -46,8 +53,11 @@ do
         "Clone and merge dotfiles")
            cloneAndMerge
 	   break;;
-	"Run DotBot")
-	   runDotbot
+        "Run DotBot")
+           runDotbot
+	   break;;
+        "Install Brew")
+           installBrew
 	   break;;
         "Quit")
            echo "We're done"
