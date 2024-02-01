@@ -9,11 +9,6 @@
       relink: true
       force: true
 
-- install-brew: true
-
-- brewfile:
-    - brew/Brewfile
-
 - clean:
     ~/:
       force: true
@@ -36,6 +31,12 @@
       stderr: true
       quiet: true
       description: Git clone seeshellontheseasaw
+    - command: |
+        sudo apt-get install build-essential
+        brew install gcc
+      stderr: true
+      quiet: true
+      description: Install Homebrew deps
     - command: |
         if ! command -v fnm; then
           curl -fsSL https://fnm.vercel.app/install | bash
@@ -60,7 +61,7 @@
           LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
           curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_${ARCH}.tar.gz"
           tar xzf lazygit.tar.gz lazygit
-          install lazygit ${HOME}/.local/bin
+          install lazygit ~/.local/bin
         fi
       stdin: true
       stderr: true
@@ -74,3 +75,6 @@
       stderr: true
       quiet: true
       description: installing Delta
+- brewfile:
+    - brew/Brewfile
+
