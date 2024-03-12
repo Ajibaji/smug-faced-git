@@ -1,7 +1,7 @@
 local map = vim.api.nvim_set_keymap
 local opts = {
-    noremap = true,
-    silent = true
+  noremap = true,
+  silent = true
 }
 
 vim.g.mapleader = ' '
@@ -15,17 +15,17 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-function OpenFileInNewKittyWindow()
+function OpenFileInNewWindow()
   local currentBuffPath = vim.fn.expand('%:p')
   local line, column = unpack(vim.api.nvim_win_get_cursor(0))
   local command = string.format('kitty @ launch --type os-window --keep-focus --cwd current nvim +%s %s -n', line,
-          currentBuffPath)
+    currentBuffPath)
   require('bufdelete').bufwipeout(0)
   vim.fn.system(command)
   --vim.fn.system('kitty @ focus-window --match recent:1')
 end
 
-map('n', '<leader>b', '<cmd>lua OpenFileInNewKittyWindow()<CR>', opts)
+-- map('n', '<leader>b', '<cmd>lua OpenFileInNewWindow()<CR>', opts)
 
 function OpenTerminalHere()
   local currentBuffPath = vim.fn.expand('%:h')
@@ -33,7 +33,8 @@ function OpenTerminalHere()
   vim.cmd(command)
 end
 
-map('n', '<c-§>', ':lua OpenTerminalHere()<CR>', opts)
+-- map('n', '<c-§>', ':lua OpenTerminalHere()<CR>', opts)
+map('n', '<c-`>', ':lua OpenTerminalHere()<CR>', opts)
 
 --> command remap
 map('n', ':', '<cmd>FineCmdline<CR>', opts)

@@ -300,7 +300,7 @@ fi
     zplug "mafredri/zsh-async", use:asynch.zsh, from:github, defer:0
       fpath+=("${ZPLUG_REPOS}/mafredri/zsh-async")
     zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-      fpath+=("${ZPLUG_REPOS}/sindresorhus/pure/functions")
+      fpath+=("${ZPLUG_REPOS}/sindresorhus/pure")
       export PURE_PROMPT_SYMBOL="  >"
       export PURE_CMD_MAX_EXEC_TIME=1
       prompt_pure_set_title() {} # disable title updates by pure
@@ -451,6 +451,9 @@ fi
 # SOURCE
   # source $HOME/seeshellontheseasaw/*.zshrc
 
+# ZOXIDE
+source $HOME/.config/zsh/zoxide
+
 # RUN
   # SILENT=true aws-env & --------------- takes way too long using aws config and cant be thrown to background as env vars dont get set
   get-current-theme
@@ -459,9 +462,9 @@ fi
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /usr/local/bin/terraform terraform
 
-# fnm
-export PATH="/home/pi/.local/share/fnm:$PATH"
-eval "`fnm env`"
+# # fnm
+# export PATH="$HOME/.local/share/fnm:$PATH"
+# eval "`fnm env`"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

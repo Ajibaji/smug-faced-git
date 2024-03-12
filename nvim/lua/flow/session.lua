@@ -18,9 +18,9 @@ function Post_save()
 end
 
 require('auto-session').setup {
-  log_level = "warn",
+  log_level = "error",
   auto_session_suppress_dirs = nil,
-  auto_session_allowed_dirs = { "~/Documents/code/*", "~/.config/*", "~/.local/share/nvim",
+  auto_session_allowed_dirs = { "~/work/*", "~/seeshellontheseasaw", "~/.local/share/nvim/*", "~/.config/*", "~/Downloads/*",
     "~/.local/share/nvim/site/pack/packer/*" },
   pre_save_cmds = { Pre_save },
   post_save_cmds = { Post_save }

@@ -1,5 +1,29 @@
 local status_ok, alpha = pcall(require, "alpha")
 local dashboard = require("alpha.themes.dashboard")
+-- require'telescope'.load_extension('project')
+local project_actions = require("telescope._extensions.project.actions")
+require('telescope').setup {
+  extensions = {
+    project = {
+      base_dirs = {
+        {path = '~/.config/nvim', max_depth = 0},
+        {'~/work/market-security', max_depth = 0},
+        {'~/work/gre-data-team', max_depth = 0},
+      },
+      hidden_files = true, -- default: false
+      theme = "dropdown",
+      order_by = "asc",
+      search_by = "title",
+      sync_with_nvim_tree = true, -- default false
+      -- default for on_project_selected = find project files
+      on_project_selected = function(prompt_bufnr)
+        -- Do anything you want in here. For example:
+        project_actions.change_working_directory(prompt_bufnr, false)
+        -- require("harpoon.ui").nav_file(1)
+      end
+    }
+  }
+}
 
 if not status_ok then
   return
@@ -65,9 +89,9 @@ require("alpha.term")
 local window_width = vim.api.nvim_win_get_width(0)
 local dynamic_header = {
   type = "terminal",
-  command = "chafa -c full --fg-only --symbols braille ~/Downloads/623965317the-simpsons-animated-gif-4.gif",
+  command = "chafa ~/Downloads/623965317the-simpsons-animated-gif-4.gif",
   width = 40,
-  height = 20,
+  height = 19,
   opts = {
     position = "center",
     redraw = true,
@@ -103,16 +127,16 @@ local date_today = {
 local buttons = {
   type = "group",
   val = {
-    button("f", " -> Find file", ":Telescope find_files <CR>"),
+    -- button("f", " -> Find file", ":Telescope find_files <CR>"),
     button("e", " -> New file", ":RnvimrToggle <CR>"),
-    button("p", " -> Find project", ":Telescope projects <CR>"),
-    button("r", " -> Recently used files", ":Telescope oldfiles <CR>"),
+    button("p", " -> Find project", ":Telescope project <CR>"),
+    -- button("r", " -> Recently used files", ":Telescope oldfiles <CR>"),
     -- button("t", " -> Find text", ":Telescope live_grep <CR>"),
     button("c", " -> Configuration", ":e ~/.config/nvim/init.lua <CR>"),
-    button("q", " -> Quit Neovim", ":qa<CR>"),
+    button("q", "󰅙 -> Quit Neovim", ":qa<CR>"),
   },
   opts = {
-    spacing = 1,
+    spacing = 0,
   }
 }
 

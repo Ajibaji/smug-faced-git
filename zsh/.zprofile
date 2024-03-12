@@ -42,3 +42,7 @@ fi
 
 # fuzzy finder
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# brew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# fpath+=("$(brew --prefix)/share/zsh/site-functions")

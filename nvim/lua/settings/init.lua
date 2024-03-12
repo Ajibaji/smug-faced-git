@@ -4,9 +4,9 @@ local g = vim.g
 
 g.loaded = 1
 g.loaded_netrwPlugin = 1
-g.perl_host_prog = '/usr/local/bin/perl'
-g.python_host_prog = '/usr/bin/python2'
-g.python3_host_prog = '/usr/local/bin/python3'
+-- g.perl_host_prog = '/usr/local/bin/perl'
+-- g.python_host_prog = '/usr/bin/python2'
+-- g.python3_host_prog = '/usr/local/bin/python3'
 
 o.cmdheight = 1
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"

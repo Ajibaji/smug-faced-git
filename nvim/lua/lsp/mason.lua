@@ -29,7 +29,7 @@ vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, opts)
 vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, opts)
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, opts)
 
-require('telescope').setup {}
+-- require('telescope').setup {}
 pcall(require('telescope').load_extension, 'fzf')
 
 vim.keymap.set('n', '<leader>/', function()
@@ -59,10 +59,10 @@ vim.diagnostic.config({
 })
 
 local signs = {
-  { name = 'DiagnosticSignError', text = "" },
-  { name = 'DiagnosticSignWarn',  text = "" },
-  { name = 'DiagnosticSignHint',  text = "" },
-  { name = 'DiagnosticSignInfo',  text = "" },
+  { name = 'DiagnosticSignError', text = "" },
+  { name = 'DiagnosticSignWarn',  text = "" },
+  { name = 'DiagnosticSignHint',  text = "" },
+  { name = 'DiagnosticSignInfo',  text = "" },
 }
 
 for _, sign in ipairs(signs) do
@@ -253,11 +253,6 @@ local servers = {
     on_attach = on_attach,
     settings = {},
   },
-  ruby_ls = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {},
-  },
   rust_analyzer = {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -278,17 +273,25 @@ local servers = {
     on_attach = on_attach,
     settings = {
       yaml = {
-        -- schemas = vim.list_extend(
-        --   {
-        --     ['/Users/jeff/seeshellontheseasaw/custom-schemas/ado-pipelines.json'] = {
-        --       'ado/**/*.y*ml',
-        --       '**/*azure*.y*ml',
-        --       '**/*ado*.y*ml',
-        --       '**/*ipeline*/**/*.y*ml',
-        --     }
-        --   },
-        --   require('schemastore').yaml.schemas()
-        -- ),
+        schemas = vim.list_extend(
+          {
+            ['/home/ammar/seeshellontheseasaw/custom-schemas/gallagher-ado-pipelines.json'] = {
+              'ado-templates/**/*.y*ml',
+              'ado*/**/*.y*ml',
+              '**/*azure*.y*ml',
+              '**/*ado*.y*ml',
+              '**/*ipeline*/**/*.y*ml',
+              '**/template*/*.y*ml',
+              '**/job*/*.y*ml',
+              '**/task*/*.y*ml',
+              '**/stage*/*.y*ml',
+              '**/*var*/*.y*ml',
+              '**/*devops*/*.y*ml',
+              'pipeline*/**/*.y*ml',
+            }
+          },
+          require('schemastore').yaml.schemas()
+        ),
         validate = { enable = true },
       },
     },
@@ -332,6 +335,14 @@ require("typescript-tools").setup {
     tsserver_file_preferences = {},
   },
 }
+-- require("roslyn").setup({
+--     dotnet_cmd = "dotnet", -- this is the default
+--     roslyn_version = "4.8.0-3.23475.7", -- this is the default
+--     on_attach = function(client, bufnr)
+--       on_attach(client, bufnr)
+--     end,
+--     capabilities = capabilities,
+-- })
 
 --> prettier
 -- local status, prettier = pcall(require, "prettier")

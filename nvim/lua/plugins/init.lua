@@ -46,6 +46,7 @@ packer.startup({
       'nvim-treesitter/nvim-treesitter-textobjects',
       after = 'nvim-treesitter',
     }
+    -- use 'jmederosalvarado/roslyn.nvim'
     use 'b0o/schemastore.nvim'
     use {
       "pmizio/typescript-tools.nvim",
@@ -117,6 +118,7 @@ packer.startup({
       run = 'make',
       cond = vim.fn.executable 'make' == 1
     }
+    use 'nvim-telescope/telescope-project.nvim'
     use {
       'akinsho/toggleterm.nvim',
       tag = 'v2.*',
