@@ -27,7 +27,8 @@ function cloneAndMerge {
 }
 
 function runDotbot {
-  Invoke-Command -FilePath ${HOME}/.config/install
+  ./install.ps1
+  # Invoke-Command -FilePath C:\Users\aarjomandkhah\.config\install.ps1
 }
 
 function Show-Menu {
