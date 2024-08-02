@@ -3,15 +3,22 @@ packer_compiled.lua
 
 albert/
 chromium/
+configstore/
 dconf/
 envman/
+git/gitk
 htop/
 kitty/themes.conf
 kitty/themes.conf.bak
 kitty/current-theme.conf
 lazygit/state.yml
+nushell/history.txt
+nvim/lazy-lock.json
 pulse/
 qt*/
+scoop/
 spotify-tui/
 Thunar/
+wezterm/
 xarchiver/
+xfce4/
