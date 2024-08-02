@@ -1,0 +1,13 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+- clean:
+    ~/:
+      force: true
+
+- link:
+    ~/.gitconfig: git-config/.gitconfig
+    ~/.gitignore_global: git-config/.gitignore_global

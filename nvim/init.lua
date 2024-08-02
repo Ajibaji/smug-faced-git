@@ -1,12 +1,5 @@
-require('settings')
-require('plugins')
-require('flow')
-require('colours.nightfox')
-require('mappings')
-require('git.git-diff')
-require('git.git-signs')
-require('visual')
-require('lsp')
+require '/config'
+require '/lazy'
 
-vim.opt.cursorline = true
-vim.opt.cursorcolumn = false
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
