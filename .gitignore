@@ -2,6 +2,7 @@
 packer_compiled.lua
 
 albert/
+all-certificates/
 chromium/
 configstore/
 dconf/
