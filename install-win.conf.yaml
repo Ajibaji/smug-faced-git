@@ -11,3 +11,37 @@
 - link:
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
+    ~/Documents/PowerShell: powershell/Microsoft.PowerShell_profile.ps1
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - command: |
+        winget install -e --id Microsoft.WindowsTerminal
+        winget install -e --id Microsoft.PowerShell
+        winget install -e --id 7zip.7zip
+        winget install -e --id Microsoft.VisualStudio.2022.Community
+        winget install -e --id Neovim.Neovim
+        winget install -e --id Microsoft.VisualStudioCode
+        winget install -e --id JetBrains.Rider
+        winget install -e --id chrisant996.Clink
+        winget install -e --id Schniz.fnm
+        winget install -e --id sharkdp.fd
+        winget install -e --id BurntSushi.ripgrep.GNU
+        winget install -e --id stedolan.jq
+        winget install -e --id MikeFarah.yq
+        winget install -e --id Microsoft.AzureCLI
+        winget install -e --id Hashicorp.Terraform
+        winget install aztfexport
+        winget install -e --id Microsoft.Azure.StorageExplorer
+        winget install -e --id Microsoft.SQLServerManagementStudio
+        winget install -e --id JesseDuffield.lazygit
+        winget install -e --id GoLang.Go
+        winget install -e --id JernejSimoncic.Wget
+        winget install Microsoft.DotNet.SDK.3_1 Microsoft.DotNet.Runtime.3_1 Microsoft.DotNet.AspNetCore.3_1 Microsoft.DotNet.DesktopRuntime.3_1
+        winget install Microsoft.DotNet.SDK.6 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.AspNetCore.6 Microsoft.DotNet.DesktopRuntime.6
+        winget install Microsoft.DotNet.SDK.7 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.AspNetCore.7 Microsoft.DotNet.DesktopRuntime.7
+        winget install Microsoft.DotNet.SDK.8 Microsoft.DotNet.Runtime.8 Microsoft.DotNet.AspNetCore.8 Microsoft.DotNet.DesktopRuntime.8
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing winget packages
