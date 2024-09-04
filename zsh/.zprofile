@@ -10,23 +10,6 @@
 #  - configuration which executes commands (as it may take some time to execute)
 # =======================================================================================
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  echo ""
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  source ${HOME}/.config/zsh/.zshprofile_mac
-elif [[ "$OSTYPE" == "win32" ]]; then
-        # I'm not sure this can happen.
-else
-  echo "Unknown OS" 
-fi
-
-# FNM - FASTER LOADING NVM REPLACEMENT
-  export PATH="${HOME}/.local/share/fnm:$PATH"
-  eval "`fnm env`"
-
-# NVM
-  alias nvm='fnm $@'
-
 # auto-suggestions (now included under ~/.config/zsh/.zhistory)
     # source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
