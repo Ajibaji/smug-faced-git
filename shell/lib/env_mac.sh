@@ -1,8 +1,8 @@
-# MAC only stuff to extend .zshenv
+# MAC only stuff to extend env.sh
 
 # BREW
   export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
-  export PATH="/usr/local/sbin:$PATH"
+  export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
 # Java
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home"
