@@ -10,11 +10,11 @@
   function set-session-theme () {
     if [[ "$CURRENT_THEME" = "DARK" ]]
     then
-      sed -i 's/LIGHT/DARK/gI' ${HOME}/.config/shell/env_colours.sh
+      sed -i 's/LIGHT/DARK/gI' ${HOME}/.config/shell/lib/env_colours.sh
     else
-      sed -i 's/DARK/LIGHT/gI' ${HOME}/.config/shell/env_colours.sh
+      sed -i 's/DARK/LIGHT/gI' ${HOME}/.config/shell/lib/env_colours.sh
     fi
-    source ${HOME}/.config/shell/env_colours.sh
+    source ${HOME}/.config/shell/lib/env_colours.sh
   }
 
   function get-current-theme () {
