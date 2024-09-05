@@ -21,6 +21,10 @@ fi
 # AZURE
   export VSO_AGENT_IGNORE=PIPELINE_AGENT_TOKEN,USER,AWS_SHARED_CREDENTIALS_FILE,API_TOKEN
 
+# DOTNET
+  export DOTNET_ROOT=$HOME/.dotnet
+  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
 
