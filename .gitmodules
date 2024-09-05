@@ -1,11 +1,11 @@
 [submodule "dotbot"]
-	path = dotbot
-	url = git@github.com:anishathalye/dotbot.git
+  path = dotbot
+  url = https://github.com/anishathalye/dotbot
 	ignore = dirty
 [submodule "dotbot-brew"]
 	path = dotbot-brew
-	url = git@github.com:wren/dotbot-brew.git
+	url = https://github.com/wren/dotbot-brew
 	ignore = dirty
-[submodule "dotbot-conditional"]
-	path = dotbot-conditional
-	url = https://gitlab.com/gnfzdz/dotbot-conditional.git
+[submodule "dotbot-apt-get"]
+	path = dotbot-apt-get
+	url = https://github.com/rubenvereecken/dotbot-apt-get
