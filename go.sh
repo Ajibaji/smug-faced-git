@@ -25,15 +25,23 @@ function authGithub() {
 }
 
 function cloneAndMerge() {
-  rm -rf ${HOME}/.config.bak
-  mv ${HOME}/.config ${HOME}/.config.bak
-  git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
-  mv -n ${HOME}/.config.bak/* ${HOME}/.config/ && rm -rf ${HOME}/.config.bak
+  local n="$(( ( RANDOM % 100 )  + 1 ))"
+  mv ${HOME}/.config ${HOME}/.config.${n}.bak
+
+  git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/.config
+  # git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
+
+  mv -n ${HOME}/.config.${n}.bak/* ${HOME}/.config/
 }
 
 function installBrew() {
-  if ! command -v brew; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    if ! command -v brew; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+  else
+    echo "This option is Mac only"
+    sleep 2
   fi
 }
 
