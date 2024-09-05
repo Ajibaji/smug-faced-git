@@ -186,15 +186,25 @@ fi
 
 # SHOW WHICH PATH ENTRIES AN EXECUTABLE APPEARS IN
   function whichpath () {
-    if [ $@ = '' ]
+    if [ $# -eq 0 ]
     then
-      echo 'missing parameter'
+      >&2 echo 'Error: Missing parameter'
+      echo ''
+      echo 'Show which $PATH entry an executable appears in ("/mnt/" entries are skipped).'
+      echo '    Example: "whichpath git"'
       return 1
     fi
 
-    for directory in $(pathls)
+    pathls | while read line
     do
-      gfind $directory -maxdepth 1 -name $@ -type f,l -exec echo $directory \;
+      echo "."
+      if [[ "$line" != "/mnt/"* && -d $line ]]; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+          gfind $line -maxdepth 1 -name $@ -type f,l -exec echo $line \;
+        else
+          find $line -maxdepth 1 -name $@ -type f,l -exec echo $line \;
+        fi
+      fi
     done
   }
 
