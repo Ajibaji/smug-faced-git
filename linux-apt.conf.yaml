@@ -9,6 +9,7 @@
       force: true
 
 - link:
+    ~/.hushlogin: ./.hushlogin
     ~/.bashrc: bash/.bashrc
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global

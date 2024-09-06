@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$CONFIG = "${HOME}\.config\install-win.conf.yaml"
+$CONFIG = "win.conf.yaml"
 $DOTBOT_DIR = "dotbot"
 
 $DOTBOT_BIN = "bin\dotbot"
