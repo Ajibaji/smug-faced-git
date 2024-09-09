@@ -3,7 +3,7 @@
 #  - frequently updated ENV VARS e.g. PATH
 # =======================================================================================
 
-if [[ -z "${WSL_DISTRO_NAME}" ]]; then
+if [[ -n "${WSL_DISTRO_NAME}" ]]; then
   export KITTY_DISABLE_WAYLAND=1
   export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
 fi
