@@ -20,13 +20,12 @@ return {
   'akinsho/toggleterm.nvim',
   version = '*',
   keys = {
-    { '<c-§>', ':lua OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
-    { '<A-\\>', ':lua OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
+    { '<c-§>', ':lua utils.OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
+    { '<A-\\>', ':lua utils.OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
     { '<A-/>', ':ToggleTerm<CR>', desc = 'ToggleTerm' },
   },
   config = function()
     require('toggleterm').setup {
-      -- size can be a number or function which is passed the current terminal
       open_mapping = [[<c-\>]],
       hide_numbers = true, -- hide the number column in toggleterm buffers
       shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
