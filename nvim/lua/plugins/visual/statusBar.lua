@@ -7,10 +7,10 @@ local section_separators
 
 section_separators = { left = '', right = '' }
 
-local lsp_clients = function ()
+local lsp_clients = function()
   local bufnr = vim.api.nvim_get_current_buf()
 
-  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
   if next(clients) == nil then
     return ''
   end
@@ -38,7 +38,7 @@ return {
     'nvim-tree/nvim-web-devicons',
   },
   config = function()
-    require('lualine').setup {
+    require('lualine').setup({
       options = {
         icons_enabled = true,
         theme = 'auto',
@@ -48,12 +48,12 @@ return {
           'NvimTree',
           'SidebarNvim',
           'TelescopePrompt',
-          statusline = {}
+          statusline = {},
         },
         ignore_focus = {
           'NvimTree',
           'SidebarNvim',
-          'TelescopePrompt'
+          'TelescopePrompt',
         },
         always_divide_middle = false,
         globalstatus = true,
@@ -61,16 +61,25 @@ return {
           statusline = 1000,
           tabline = 1000,
           winbar = 1000,
-        }
+        },
       },
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = {
+          'mode',
+          {
+            require('noice').api.statusline.mode.get,
+            cond = require('noice').api.statusline.mode.has,
+            color = {
+              fg = '#420D09',
+            },
+          },
+        },
         lualine_b = { 'branch', 'diff' },
         lualine_c = {
           {
             draw_empty = true,
-            "navic",
-            color_correction = "dynamic", -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
+            'navic',
+            color_correction = 'dynamic', -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
             -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
             -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
             --	 be enough when the lualine section isn't changing colors based on the mode.
@@ -78,9 +87,9 @@ return {
             --	 the current section.
             {
               highlight = true,
-              separator = " > ",
+              separator = ' > ',
               depth_limit = 0,
-              depth_limit_indicator = "..",
+              depth_limit_indicator = '..',
               safe_output = true,
               click = true,
             },
@@ -92,7 +101,7 @@ return {
         lualine_y = {
           lsp_clients,
         },
-        lualine_z = { 'location' }
+        lualine_z = { 'location' },
         --lualine_z = { "os.date('%H:%M')" }
       },
       tabline = {},
@@ -113,9 +122,9 @@ return {
               readonly = '[-]',
               unnamed = '[No Name]',
               newfile = '[New]',
-            }
-          }
-        }
+            },
+          },
+        },
       },
       inactive_winbar = {
         lualine_a = {},
@@ -134,9 +143,9 @@ return {
               readonly = '[-]',
               unnamed = '[No Name]',
               newfile = '[New]',
-            }
-          }
-        }
+            },
+          },
+        },
         --  lualine_a = {},
         --  lualine_b = {},
         --	lualine_c = {},
@@ -173,9 +182,9 @@ return {
       extensions = {
         'nvim-tree',
         'quickfix',
-        'toggleterm'
-      }
-    }
+        'toggleterm',
+      },
+    })
   end,
 }
 
