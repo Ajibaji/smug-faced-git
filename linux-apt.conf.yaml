@@ -38,6 +38,9 @@
     - gnupg
     - imagemagick
     - jq
+    - libcurl4-openssl-dev 
+    - libssl-dev 
+    - libxml2-dev 
     - lsb-release
     - lsof
     - neovim
@@ -45,6 +48,7 @@
     - parallel
     - poppler-utils
     - progress
+    - r-base
     - siege
     - socat
     - strace
@@ -79,6 +83,14 @@
       stderr: true
       quiet: true
       description: installing cargo
+    - command: |
+        if ! command -v atuin; then
+          curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+        fi
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing atuin
     - command: |
         if ! command -v zoxide; then
           cargo binstall -y zoxide
@@ -264,3 +276,10 @@
       stderr: true
       quiet: true
       description: installing k9s
+
+- shell:
+    - command: |
+        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
+      stderr: true
+      quiet: true
+      description: installing npm packages
