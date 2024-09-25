@@ -42,7 +42,7 @@ git:
     paging:
         colorArg: always
         pager: delta --light --paging=never
-        useConfig: true 
+        # useConfig: true 
     commit:
         signOff: false
     merging:
