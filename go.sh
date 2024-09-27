@@ -8,8 +8,16 @@ function authGithub() {
 
   mkdir -p ${HOME}/.ssh
   ssh-keygen -t ed25519 -f $KEY_PATH
-  [ -n "${IS_LINUX}" ] && cat ${KEY_PATH}.pub | xsel --clipboard --input
+
+  if [ -n "${IS_LINUX}" ]; then
+    if ! command -v xsel; then
+      sudo apt install xsel -y
+    fi
+    cat ${KEY_PATH}.pub | xsel --clipboard --input
+  fi
+
   [ -z "${IS_LINUX}" ] && cat ${KEY_PATH}.pub | pbcopy
+
   echo "Public key copied to system register"
 
   echo "Host github.com" >> ~/.ssh/config
