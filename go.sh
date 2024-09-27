@@ -27,6 +27,13 @@ function authGithub() {
 
   echo "Opening browser. Paste key into your GitHub account and save"
   githubKeyUrl="https://github.com/settings/ssh/new"
+
+  if [ -n "${WSLENV}" ]; then
+    if ! command -v wslview; then
+      sudo apt install wslu -y
+    fi
+  fi
+
   python -m webbrowser "$githubKeyUrl" || python3 -m webbrowser "$githubKeyUrl"
 
   sleep 5
