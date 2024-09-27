@@ -46,10 +46,16 @@ function cloneAndMerge() {
   local n="$(( ( RANDOM % 100 )  + 1 ))"
   mv ${HOME}/.config ${HOME}/.config.${n}.bak
 
-  git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/.config
-  # git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
+  # git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/.config
+  git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
 
   mv -n ${HOME}/.config.${n}.bak/* ${HOME}/.config/
+
+  export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+  if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+    rm -rf ${HOME}/.config/.git
+  fi
+  unset GIT_SSH_COMMAND
 }
 
 function installBrew() {
@@ -68,28 +74,34 @@ function runDotbot() {
   exec ./install
 }
 
-PS3="Select choice: "
+function menu() {
+  clear
 
-select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
+  PS3="Select choice: "
+  select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
+  do
+    case $choice in
+      "Authenticate GitHub")
+        authGithub 
+        break;;
+      "Clone and merge dotfiles")
+        cloneAndMerge
+        break;;
+      "Run DotBot")
+        runDotbot
+        break;;
+      "Install Brew")
+        installBrew
+        break;;
+      "Quit")
+        exit 0;;
+      *)
+        echo "Invalid selection";;
+    esac
+  done
+}
+
 while [ true ]
 do
-  case $choice in
-    "Authenticate GitHub")
-      authGithub 
-      break;;
-    "Clone and merge dotfiles")
-      cloneAndMerge
-      break;;
-    "Run DotBot")
-      runDotbot
-      break;;
-    "Install Brew")
-      installBrew
-      break;;
-    "Quit")
-      echo "We're done"
-      break;;
-    *)
-      echo "Invalid selection";;
-  esac
+  menu
 done

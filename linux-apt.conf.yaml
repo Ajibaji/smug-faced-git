@@ -56,27 +56,32 @@
     - zip
 
 - shell:
-    ###################### THIS CLONES A PRIVATE REPO. THIS IS ONLY NEEDED IF _YOU_ ARE _ME_
-    # - command: |
-    #     if [ ! -d $HOME/seeshellontheseasaw ]; then
-    #       git clone git@github.com:Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
-    #     fi
-    #   stderr: true
-    #   quiet: true
-    #   description: Git clone seeshellontheseasaw
+    - command: |
+        export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+        if command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+          if [ ! -d $HOME/seeshellontheseasaw ]; then
+            git clone git@github.com:ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
+          fi
+        else
+          echo "You aren't me. Nothing to see here"
+        fi
+        unset GIT_SSH_COMMAND
+      stderr: true
+      quiet: true
+      description: git clone seeshellontheseasaw
     - command: |
         if ! command -v fnm; then
-          curl -fsSL https://fnm.vercel.app/install | bash
+          curl -fssl https://fnm.vercel.app/install | bash
           ${HOME}/.local/share/fnm/fnm install --lts
         fi
       stdin: true
       stderr: true
       quiet: true
-      description: installing FNM
+      description: installing fnm
     - command: |
         if ! command -v cargo; then
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
-          curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+          curl https://sh.rustup.rs -ssf | sh -s -- -y
+          curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
           cargo binstall -y cargo-update
           cargo install-update -a
         fi
@@ -86,7 +91,7 @@
       description: installing cargo
     - command: |
         if ! command -v atuin; then
-          curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+          curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
         fi
       stdin: true
       stderr: true
@@ -141,29 +146,29 @@
       quiet: true
       description: installing delta
     - command: |
-        if [[ ! -x "$(command -v lazygit)" ]] && [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if [[ ! -x "$(command -v lazygit)" ]] && [[ "$ostype" == "linux-gnu"* ]]; then
           cd $HOME
-          ARCH=$(uname -m)
-          [[ "$ARCH" == "aarch64" ]] && ARCH="arm64"
-          LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-          curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_${ARCH}.tar.gz"
+          arch=$(uname -m)
+          [[ "$arch" == "aarch64" ]] && arch="arm64"
+          lazygit_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -po '"tag_name": "v\k[^"]*')
+          curl -lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${lazygit_version}_linux_${arch}.tar.gz"
           tar xzf lazygit.tar.gz lazygit
           install lazygit /usr/local/bin
         fi
       stdin: true
       stderr: true
       quiet: true
-      description: installing Lazygit
+      description: installing lazygit
     - command: |
-        wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip && \
+        wget -p ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
           cd ~/.local/share/fonts && \
-          unzip JetBrainsMono.zip && \
-          rm JetBrainsMono.zip && \
+          unzip jetbrainsmono.zip && \
+          rm jetbrainsmono.zip && \
           fc-cache -fv
       stdin: true
       stderr: true
       quiet: true
-      description: installing JetBrains font
+      description: installing jetbrains font
     - command: |
         if ! command -v fx; then
           curl https://fx.wtf/install.sh | sh
@@ -174,7 +179,7 @@
       description: installing fx
     - command: |
         if ! command -v kitty; then
-          curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+          curl -l https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
         fi
       stdin: true
       stderr: true
@@ -182,7 +187,7 @@
       description: installing kitty
     - command: |
         if ! command -v dotnet; then
-          wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+          wget https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
           chmod +x ./dotnet-install.sh 
           ./dotnet-install.sh --channel 8.0
           ./dotnet-install.sh --channel 7.0
@@ -198,28 +203,28 @@
     - command: |
         if ! command -v docker; then
           sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo curl -fssl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
           sudo chmod a+r /etc/apt/keyrings/docker.asc
 
           echo \
             "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            $(. /etc/os-release && echo "$version_codename") stable" | \
             sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
         fi
       stderr: true
       quiet: true
-      description: Adding docker apt repo
+      description: adding docker apt repo
     - command: |
         sudo groupadd docker
-        sudo usermod -aG docker $USER
+        sudo usermod -ag docker $user
         rm -rf ~/.docker
       stderr: true
       quiet: true
       description: allow docker to be used by non-root
     - command: |
         if ! command -v kubectl; then
-          curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+          curl -fssl https://pkgs.k8s.io/core:/stable:/v1.31/deb/release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
           sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
           echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -228,36 +233,36 @@
         fi
       stderr: true
       quiet: true
-      description: Adding kubernetes apt repo
+      description: adding kubernetes apt repo
     - command: |
         if ! command -v az; then
-          curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
+          curl -sls https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
           sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
 
-          AZ_DIST=$(lsb_release -cs)
+          az_dist=$(lsb_release -cs)
 
-          echo "Types: deb
-          URIs: https://packages.microsoft.com/repos/azure-cli/
-          Suites: ${AZ_DIST}
-          Components: main
-          Architectures: $(dpkg --print-architecture)
-          Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
+          echo "types: deb
+          uris: https://packages.microsoft.com/repos/azure-cli/
+          suites: ${az_dist}
+          components: main
+          architectures: $(dpkg --print-architecture)
+          signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
 
           sudo apt-get update
         fi
       stderr: true
       quiet: true
-      description: Adding azure-cli apt repo
+      description: adding azure-cli apt repo
     - command: |
         if ! command -v terraform; then
-          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          wget -o- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 
           sudo apt-get update
         fi
       stderr: true
       quiet: true
-      description: Adding hashicorp apt repo
+      description: adding hashicorp apt repo
 
 - aptget:
     - azure-cli
@@ -272,7 +277,7 @@
 - shell:
     - command: |
         if ! command -v k9s; then
-          curl -sS https://webinstall.dev/k9s | bash
+          curl -ss https://webinstall.dev/k9s | bash
         fi
       stderr: true
       quiet: true
