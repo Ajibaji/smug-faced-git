@@ -26,7 +26,8 @@ function authGithub() {
   echo "  IdentityFile $KEY_PATH" >> ~/.ssh/config
 
   echo "Opening browser. Paste key into your GitHub account and save"
-  python -m webbrowser "https://github.com/settings/ssh/new"
+  githubKeyUrl="https://github.com/settings/ssh/new"
+  python -m webbrowser $githubKeyUrl || python3 -m webbrowser $githubKeyUrl
 
   sleep 5
   read -p 'When done, press any key to continue...' continue
