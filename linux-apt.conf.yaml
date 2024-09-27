@@ -73,15 +73,20 @@
     - command: |
         if ! command -v fnm; then
           curl -fssl https://fnm.vercel.app/install | bash
-          fnm install v20
-          fnm install v18
-          fnm install v16
-          fnm default v20
         fi
       stdin: true
       stderr: true
       quiet: true
       description: installing fnm
+    - command: |
+        fnm install v20
+        fnm install v18
+        fnm install v16
+        fnm default v20
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing node 16/18/20
     - command: |
         if ! command -v cargo; then
           curl https://sh.rustup.rs -ssf | sh -s -- -y
