@@ -70,6 +70,9 @@ function installBrew() {
 }
 
 function runDotbot() {
+  if ! command -v unzip; then
+    sudo apt install unzip -y
+  fi
   cd ${HOME}/.config
   exec ./install
 }
