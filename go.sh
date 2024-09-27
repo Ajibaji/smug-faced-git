@@ -70,9 +70,35 @@ function installBrew() {
 }
 
 function runDotbot() {
+  if ! command -v wget; then
+    sudo apt install wget -y
+  fi
+
+  if ! command -v zip; then
+    sudo apt install zip -y
+  fi
+
   if ! command -v unzip; then
     sudo apt install unzip -y
   fi
+
+  if ! command -v fnm; then
+    curl -fssl https://fnm.vercel.app/install | bash
+    source ~/.bashrc
+    fnm install v20
+    fnm install v18
+    fnm install v16
+    fnm default v20
+  fi
+
+  if ! command -v cargo; then
+    curl https://sh.rustup.rs -ssf | sh -s -- -y
+    curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+    source ~/.bashrc
+    cargo binstall -y cargo-update
+    cargo install-update -a
+  fi
+
   cd ${HOME}/.config
   exec ./install
 }

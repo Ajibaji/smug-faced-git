@@ -24,6 +24,7 @@
         sudo apt-get update
       stderr: true
       quiet: true
+      stdin: true
       description: Adding neovim apt repo
 
 - aptget:
@@ -31,7 +32,6 @@
     - bat
     - build-essential
     - ca-certificates
-    - curl
     - dolphin
     - dos2unix
     - fzf
@@ -52,8 +52,6 @@
     - siege
     - socat
     - strace
-    - wget
-    - zip
 
 - shell:
     - command: |
@@ -70,34 +68,34 @@
       stderr: true
       quiet: true
       description: git clone seeshellontheseasaw
-    - command: |
-        if ! command -v fnm; then
-          curl -fssl https://fnm.vercel.app/install | bash
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing fnm
-    - command: |
-        fnm install v20
-        fnm install v18
-        fnm install v16
-        fnm default v20
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing node 16/18/20
-    - command: |
-        if ! command -v cargo; then
-          curl https://sh.rustup.rs -ssf | sh -s -- -y
-          curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-          cargo binstall -y cargo-update
-          cargo install-update -a
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing cargo
+    # - command: |
+    #     if ! command -v fnm; then
+    #       curl -fssl https://fnm.vercel.app/install | bash
+    #     fi
+    #   stdin: true
+    #   stderr: true
+    #   quiet: true
+    #   description: installing fnm
+    # - command: |
+    #     fnm install v20
+    #     fnm install v18
+    #     fnm install v16
+    #     fnm default v20
+    #   stdin: true
+    #   stderr: true
+    #   quiet: true
+    #   description: installing node 16/18/20
+    # - command: |
+    #     if ! command -v cargo; then
+    #       curl https://sh.rustup.rs -ssf | sh -s -- -y
+    #       curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+    #       cargo binstall -y cargo-update
+    #       cargo install-update -a
+    #     fi
+    #   stdin: true
+    #   stderr: true
+    #   quiet: true
+    #   description: installing cargo
     - command: |
         if ! command -v atuin; then
           curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
@@ -203,6 +201,7 @@
           ./dotnet-install.sh --channel 6.0
           ./dotnet-install.sh --channel 3.1
           rm dotnet-install.sh
+          source ~/.bashrc
           dotnet tool install --global csharp-ls
         fi
       stdin: true
@@ -295,6 +294,7 @@
 - shell:
     - command: |
         npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
+      stdin: true
       stderr: true
       quiet: true
       description: installing npm packages
