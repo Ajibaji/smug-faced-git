@@ -32,9 +32,11 @@ function authGithub() {
     if ! command -v wslview; then
       sudo apt install wslu -y
     fi
-  fi
 
-  python -m webbrowser "$githubKeyUrl" || python3 -m webbrowser "$githubKeyUrl"
+    wslview $githubKeyUrl
+  else
+    python3 -m webbrowser "$githubKeyUrl" || python -m webbrowser "$githubKeyUrl"
+  fi
 
   sleep 5
   read -p 'When done, press any key to continue...' continue
