@@ -68,30 +68,28 @@ function runDotbot() {
   exec ./install
 }
 
+PS3="Select choice: "
+
+select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
 while [ true ]
 do
-  PS3="Select choice: "
-
-  select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
-  do
-    case $choice in
-      "Authenticate GitHub")
-        authGithub 
-        break;;
-      "Clone and merge dotfiles")
-        cloneAndMerge
-        break;;
-      "Run DotBot")
-        runDotbot
-        break;;
-      "Install Brew")
-        installBrew
-        break;;
-      "Quit")
-        echo "We're done"
-        break;;
-      *)
-        echo "Invalid selection";;
-    esac
-  done
+  case $choice in
+    "Authenticate GitHub")
+      authGithub 
+      break;;
+    "Clone and merge dotfiles")
+      cloneAndMerge
+      break;;
+    "Run DotBot")
+      runDotbot
+      break;;
+    "Install Brew")
+      installBrew
+      break;;
+    "Quit")
+      echo "We're done"
+      break;;
+    *)
+      echo "Invalid selection";;
+  esac
 done
