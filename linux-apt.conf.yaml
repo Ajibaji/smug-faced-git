@@ -58,21 +58,25 @@
 - shell:
     - command: |
         export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-        if command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+        if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+          echo "You aren't me. Nothing to see here"
+          unset GIT_SSH_COMMAND
+        else
+          unset GIT_SSH_COMMAND
           if [ ! -d $HOME/seeshellontheseasaw ]; then
             git clone git@github.com:ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
           fi
-        else
-          echo "You aren't me. Nothing to see here"
         fi
-        unset GIT_SSH_COMMAND
       stderr: true
       quiet: true
       description: git clone seeshellontheseasaw
     - command: |
         if ! command -v fnm; then
           curl -fssl https://fnm.vercel.app/install | bash
-          ${HOME}/.local/share/fnm/fnm install --lts
+          fnm install v20
+          fnm install v18
+          fnm install v16
+          fnm default v20
         fi
       stdin: true
       stderr: true
