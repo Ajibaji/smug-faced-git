@@ -56,13 +56,14 @@
     - zip
 
 - shell:
-    - command: |
-        if [ ! -d $HOME/seeshellontheseasaw ]; then
-          git clone git@github.com:Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
-        fi
-      stderr: true
-      quiet: true
-      description: Git clone seeshellontheseasaw
+    ###################### THIS CLONES A PRIVATE REPO. THIS IS ONLY NEEDED IF _YOU_ ARE _ME_
+    # - command: |
+    #     if [ ! -d $HOME/seeshellontheseasaw ]; then
+    #       git clone git@github.com:Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
+    #     fi
+    #   stderr: true
+    #   quiet: true
+    #   description: Git clone seeshellontheseasaw
     - command: |
         if ! command -v fnm; then
           curl -fsSL https://fnm.vercel.app/install | bash
