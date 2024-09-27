@@ -69,6 +69,7 @@ function runDotbot() {
 }
 
 while [ true ]
+do
   PS3="Select choice: "
 
   select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
