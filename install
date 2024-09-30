@@ -16,9 +16,9 @@ else
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}/apt-pre-run.sh"
   ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}/apt-pre-run.sh
 
-  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml ${@}"
-  "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "linux-base.conf.yaml" "${@}"
+  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}"
+  "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "linux-base.conf.yaml" -v "${@}"
 
-  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-apt.conf.yaml ${@}"
-  sudo "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -p dotbot-apt/apt.py -c "linux-base.conf.yaml" "${@}"
+  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-apt.conf.yaml -v ${@}"
+  sudo "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -p dotbot-apt/apt.py -c "linux-base.conf.yaml" -v "${@}"
 fi
