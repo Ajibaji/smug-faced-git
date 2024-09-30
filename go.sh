@@ -87,8 +87,6 @@ function runDotbot() {
     FNM_PATH="/home/ammar/.local/share/fnm"
     export PATH="$FNM_PATH:$PATH"
     eval "`fnm env`"
-    echo "fnm path: $FNM_PATH"
-    echo "path: $PATH"
     fnm install v20
     fnm install v18
     fnm install v16
@@ -98,7 +96,7 @@ function runDotbot() {
   if ! command -v cargo; then
     curl https://sh.rustup.rs -ssf | sh -s -- -y
     curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-    source ${HOME}/.bashrc
+    export PATH="${HOME}/.cargo/bin:${PATH}"
     cargo binstall -y cargo-update
     cargo install-update -a
   fi
