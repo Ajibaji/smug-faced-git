@@ -13,8 +13,8 @@ git submodule update --init --recursive
 if [[ "$OSTYPE" == "darwin"* ]]; then
   "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "mac.conf.yaml" "${@}"
 else
-  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}/apt-pre-run.sh"
-  ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}/apt-pre-run.sh
+  echo "command: ${BASEDIR}/apt-pre-run.sh"
+  ${BASEDIR}/apt-pre-run.sh
 
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}"
   "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "linux-base.conf.yaml" -v "${@}"
