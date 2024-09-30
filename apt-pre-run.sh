@@ -1,6 +1,27 @@
-# this script should contain only the commands to add sources to the apt repository list
-# there is a `sudo apt update` at the end so don't add it
+# install dotbot requirements and add required apt repositories
 
+sudo apt update
+
+sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg -y
+
+if ! command -v fnm; then
+  curl -fssl https://fnm.vercel.app/install | bash
+  FNM_PATH="/home/ammar/.local/share/fnm"
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+  fnm install v20
+  fnm install v18
+  fnm install v16
+  fnm default v20
+fi
+
+if ! command -v cargo; then
+  curl https://sh.rustup.rs -ssf | sh -s -- -y
+  curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+  cargo binstall -y cargo-update
+  cargo install-update -a
+fi
 
 echo "adding docker apt repo..."
 if ! command -v docker; then
