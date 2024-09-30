@@ -84,9 +84,11 @@ function runDotbot() {
 
   if ! command -v fnm; then
     curl -fssl https://fnm.vercel.app/install | bash
-    source ${HOME}/.bashrc
-    echo "fnm path: $FNM_PATH"
+    FNM_PATH="/home/ammar/.local/share/fnm"
+    export PATH="$FNM_PATH:$PATH"
     eval "`fnm env`"
+    echo "fnm path: $FNM_PATH"
+    echo "path: $PATH"
     fnm install v20
     fnm install v18
     fnm install v16
