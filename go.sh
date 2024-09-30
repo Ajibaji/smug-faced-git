@@ -84,7 +84,7 @@ function runDotbot() {
 
   if ! command -v fnm; then
     curl -fssl https://fnm.vercel.app/install | bash
-    source ~/.bashrc
+    source ${HOME}/.bashrc
     echo "fnm path: $FNM_PATH"
     eval "`fnm env`"
     fnm install v20
@@ -96,7 +96,7 @@ function runDotbot() {
   if ! command -v cargo; then
     curl https://sh.rustup.rs -ssf | sh -s -- -y
     curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-    source ~/.bashrc
+    source ${HOME}/.bashrc
     cargo binstall -y cargo-update
     cargo install-update -a
   fi
