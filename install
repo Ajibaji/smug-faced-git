@@ -13,5 +13,6 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "mac.conf.yaml" "${@}"
 else
+  echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-apt.conf.yaml ${@}"
   sudo "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -p dotbot-apt/apt.py -c "linux-apt.conf.yaml" "${@}"
 fi
