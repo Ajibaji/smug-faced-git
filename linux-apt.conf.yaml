@@ -27,7 +27,7 @@
       stdin: true
       description: Adding neovim apt repo
 
-- aptget:
+- apt:
     - apt-transport-https
     - bat
     - build-essential
@@ -274,7 +274,7 @@
       quiet: true
       description: adding hashicorp apt repo
 
-- aptget:
+- apt:
     - azure-cli
     - docker-ce
     - docker-ce-cli
