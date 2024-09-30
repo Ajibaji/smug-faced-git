@@ -6,7 +6,6 @@ all-certificates/
 chromium/
 configstore/
 dconf/
-dotbot*/
 envman/
 git/gitk
 htop/
