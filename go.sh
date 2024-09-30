@@ -10,6 +10,7 @@ function authGithub() {
   ssh-keygen -t ed25519 -f $KEY_PATH
 
   if [ -n "${IS_LINUX}" ]; then
+    sudo apt update
     if ! command -v xsel; then
       sudo apt install xsel -y
     fi
