@@ -20,41 +20,6 @@
 
 - shell:
     - command: |
-        sudo add-apt-repository ppa:neovim-ppa/unstable -y
-        sudo apt-get update
-      stderr: true
-      quiet: true
-      stdin: true
-      description: Adding neovim apt repo
-
-- apt:
-    - apt-transport-https
-    - bat
-    - build-essential
-    - ca-certificates
-    - dolphin
-    - dos2unix
-    - fzf
-    - gnupg
-    - imagemagick
-    - jq
-    - libcurl4-openssl-dev 
-    - libssl-dev 
-    - libxml2-dev 
-    - lsb-release
-    - lsof
-    - neovim
-    - p7zip
-    - parallel
-    - poppler-utils
-    - progress
-    - r-base
-    - siege
-    - socat
-    - strace
-
-- shell:
-    - command: |
         export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
           echo "You aren't me. Nothing to see here"
@@ -68,34 +33,6 @@
       stderr: true
       quiet: true
       description: git clone seeshellontheseasaw
-    # - command: |
-    #     if ! command -v fnm; then
-    #       curl -fssl https://fnm.vercel.app/install | bash
-    #     fi
-    #   stdin: true
-    #   stderr: true
-    #   quiet: true
-    #   description: installing fnm
-    # - command: |
-    #     fnm install v20
-    #     fnm install v18
-    #     fnm install v16
-    #     fnm default v20
-    #   stdin: true
-    #   stderr: true
-    #   quiet: true
-    #   description: installing node 16/18/20
-    # - command: |
-    #     if ! command -v cargo; then
-    #       curl https://sh.rustup.rs -ssf | sh -s -- -y
-    #       curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-    #       cargo binstall -y cargo-update
-    #       cargo install-update -a
-    #     fi
-    #   stdin: true
-    #   stderr: true
-    #   quiet: true
-    #   description: installing cargo
     - command: |
         if ! command -v atuin; then
           curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
@@ -210,80 +147,15 @@
       stderr: true
       quiet: true
       description: installing dotnet
-    - command: |
-        if ! command -v docker; then
-          sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fssl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-          sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$version_codename") stable" | \
-            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-          sudo apt-get update
-        fi
-      stderr: true
-      quiet: true
-      description: adding docker apt repo
-    - command: |
-        sudo groupadd docker
-        sudo usermod -ag docker $user
-        rm -rf ~/.docker
-      stderr: true
-      quiet: true
-      description: allow docker to be used by non-root
-    - command: |
-        if ! command -v kubectl; then
-          curl -fssl https://pkgs.k8s.io/core:/stable:/v1.31/deb/release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-          sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-
-          echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-          sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
-          sudo apt-get update
-        fi
-      stderr: true
-      quiet: true
-      description: adding kubernetes apt repo
-    - command: |
-        if ! command -v az; then
-          curl -sls https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
-          sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
-
-          az_dist=$(lsb_release -cs)
-
-          echo "types: deb
-          uris: https://packages.microsoft.com/repos/azure-cli/
-          suites: ${az_dist}
-          components: main
-          architectures: $(dpkg --print-architecture)
-          signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
-
-          sudo apt-get update
-        fi
-      stderr: true
-      quiet: true
-      description: adding azure-cli apt repo
-    - command: |
-        if ! command -v terraform; then
-          wget -o- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-
-          sudo apt-get update
-        fi
-      stderr: true
-      quiet: true
-      description: adding hashicorp apt repo
-
-- apt:
-    - azure-cli
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-buildx-plugin
-    - docker-compose-plugin
-    - kubectl
-    - terraform
-
+    # - command: |
+    #     sudo groupadd docker
+    #     sudo usermod -ag docker $user
+    #     rm -rf ~/.docker
+    #   stderr: true
+    #   quiet: true
+    #   description: allow docker to be used by non-root
+    #
 - shell:
     - command: |
         if ! command -v k9s; then
