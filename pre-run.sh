@@ -45,6 +45,21 @@ if ! command -v kubectl; then
   sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
 fi
 
+if ! command -v dotnet; then
+  printf "\n\ninstalling dotnet...\n"
+  wget https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+  chmod +x ./dotnet-install.sh 
+  ./dotnet-install.sh --channel 8.0
+  ./dotnet-install.sh --channel 7.0
+  ./dotnet-install.sh --channel 6.0
+  ./dotnet-install.sh --channel 3.1
+  rm dotnet-install.sh
+
+  export DOTNET_ROOT=$HOME/.dotnet
+  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+  dotnet tool install --global csharp-ls
+fi
+
 if ! command -v az; then
   printf "\n\nadding azure-cli apt repo...\n"
   curl -sls https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
