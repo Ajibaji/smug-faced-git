@@ -73,7 +73,8 @@ function installBrew() {
 
 function runDotbot() {
   cd ${HOME}/.config
-  exec ./install
+  # exec ./install
+  ./install
 }
 
 function menu() {
