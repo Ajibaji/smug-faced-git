@@ -2,7 +2,7 @@
 
 sudo apt update
 
-sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg -y
+sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg software-properties-common -y
 
 if ! command -v fnm; then
   curl -fssl https://fnm.vercel.app/install | bash
@@ -16,7 +16,7 @@ if ! command -v fnm; then
 fi
 
 if ! command -v cargo; then
-  echo "\n\ninstalling cargo-binstall..."
+  printf "\n\ninstalling cargo-binstall...\n"
   curl https://sh.rustup.rs -ssf | sh -s -- -y
   curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
   export PATH="${HOME}/.cargo/bin:${PATH}"
@@ -25,7 +25,7 @@ if ! command -v cargo; then
 fi
 
 if ! command -v docker; then
-  echo "\n\nadding docker apt repo..."
+  printf "\n\nadding docker apt repo...\n"
   sudo install -m 0755 -d /etc/apt/keyrings
   sudo curl -fssl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
   sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -36,7 +36,7 @@ $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
 fi
 
 if ! command -v kubectl; then
-  echo "\n\nadding kubernetes apt repo..."
+  printf "\n\nadding kubernetes apt repo...\n"
   curl -fssl https://pkgs.k8s.io/core:/stable:/v1.31/deb/release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
   sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
   echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -44,7 +44,7 @@ if ! command -v kubectl; then
 fi
 
 if ! command -v az; then
-  echo "\n\nadding azure-cli apt repo..."
+  printf "\n\nadding azure-cli apt repo...\n"
   curl -sls https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
   sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
 
@@ -59,13 +59,13 @@ signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/a
 fi
 
 if ! command -v terraform; then
-  echo "\n\nadding hashicorp apt repo..."
-  wget -o- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+  printf "\n\nadding hashicorp apt repo...\n"
+  wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
   echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 fi
 
 if ! command -v nvim; then
-  echo "\n\nAdding neovim apt repo..."
+  printf "\n\nAdding neovim apt repo...\n"
   sudo add-apt-repository ppa:neovim-ppa/unstable -y
 fi
 
