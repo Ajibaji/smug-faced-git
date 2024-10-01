@@ -1,4 +1,6 @@
-# install dotbot requirements and add required apt repositories
+#!/usr/bin/env bash
+
+# install dotbot dependencies and add required apt repositories
 
 sudo apt update
 
