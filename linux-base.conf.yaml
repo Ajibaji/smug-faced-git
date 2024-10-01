@@ -114,7 +114,7 @@
       description: installing jetbrains font
     - command: |
         if ! command -v fx; then
-          sudo curl https://fx.wtf/install.sh | sh
+          curl https://fx.wtf/install.sh | sudo sh
         fi
       stdin: true
       stderr: true
@@ -122,8 +122,9 @@
       description: installing fx
     - command: |
         if ! command -v kitty; then
-          bash -c "$(echo I live at ${HOME} ; echo my name is $(whoami)"
-          bash -c "$(curl -l https://sw.kovidgoyal.net/kitty/installer.sh) launch=n"
+          bash -c "$(echo my name is $(whoami)"
+          bash -c "$(echo I live at ${HOME})"
+          bash -c "$(curl -l https://sw.kovidgoyal.net/kitty/installer.sh)"
         fi
       stdin: true
       stderr: true
