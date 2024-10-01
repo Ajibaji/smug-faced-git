@@ -26,8 +26,8 @@
           unset GIT_SSH_COMMAND
         else
           unset GIT_SSH_COMMAND
-          if [ ! -d $HOME/seeshellontheseasaw ]; then
-            git clone git@github.com:ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
+          if [ ! -d ~/seeshellontheseasaw ]; then
+            git clone git@github.com:ajibaji/seeshellontheseasaw.git ~/seeshellontheseasaw
           fi
         fi
       stderr: true
@@ -104,10 +104,10 @@
       quiet: true
       description: installing lazygit
     - command: |
-        wget -p ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
+        sudo wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
           cd ~/.local/share/fonts && \
-          unzip jetbrainsmono.zip && \
-          rm jetbrainsmono.zip && \
+          sudo unzip jetbrainsmono.zip && \
+          sudo rm jetbrainsmono.zip && \
           fc-cache -fv
       stdin: true
       stderr: true
