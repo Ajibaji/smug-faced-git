@@ -114,7 +114,7 @@
       description: installing jetbrains font
     - command: |
         if ! command -v fx; then
-          curl https://fx.wtf/install.sh | sh
+          sudo curl https://fx.wtf/install.sh | sh
         fi
       stdin: true
       stderr: true
@@ -122,7 +122,8 @@
       description: installing fx
     - command: |
         if ! command -v kitty; then
-          bash -c "$(echo I live at ${HOME} ; echo my name is $(whoami) ; curl -l https://sw.kovidgoyal.net/kitty/installer.sh launch=n")
+          bash -c "$(echo I live at ${HOME} ; echo my name is $(whoami)"
+          bash -c "$(curl -l https://sw.kovidgoyal.net/kitty/installer.sh) launch=n"
         fi
       stdin: true
       stderr: true
@@ -132,10 +133,10 @@
         if ! command -v dotnet; then
           wget https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
           chmod +x ./dotnet-install.sh 
-          ./dotnet-install.sh --channel 8.0
-          ./dotnet-install.sh --channel 7.0
-          ./dotnet-install.sh --channel 6.0
-          ./dotnet-install.sh --channel 3.1
+          bash -c "./dotnet-install.sh --channel 8.0"
+          bash -c "./dotnet-install.sh --channel 7.0"
+          bash -c "./dotnet-install.sh --channel 6.0"
+          bash -c "./dotnet-install.sh --channel 3.1"
           rm dotnet-install.sh
 
           export DOTNET_ROOT=$HOME/.dotnet
