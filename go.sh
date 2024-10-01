@@ -26,7 +26,6 @@ function authGithub() {
   echo "  Hostname github.com" >> ~/.ssh/config
   echo "  IdentityFile $KEY_PATH" >> ~/.ssh/config
 
-  echo "Opening browser. Paste key into your GitHub account and save"
   githubKeyUrl="https://github.com/settings/ssh/new"
 
   if [ -n "${WSLENV}" ]; then
@@ -34,8 +33,10 @@ function authGithub() {
       sudo apt install wslu -y
     fi
 
+    printf "\n\n\nOpening browser. Paste key into your GitHub account and save\n"
     wslview $githubKeyUrl
   else
+    printf "\n\n\nOpening browser. Paste key into your GitHub account and save\n"
     python3 -m webbrowser "$githubKeyUrl" || python -m webbrowser "$githubKeyUrl"
   fi
 
