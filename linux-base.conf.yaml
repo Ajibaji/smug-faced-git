@@ -122,9 +122,8 @@
       description: installing fx
     - command: |
         if ! command -v kitty; then
-          bash -c "$(echo my name is $(whoami)"
-          bash -c "$(echo I live at ${HOME})"
-          bash -c "$(curl -l https://sw.kovidgoyal.net/kitty/installer.sh)"
+          echo "my name is $(whoami)"
+          curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
         fi
       stdin: true
       stderr: true
