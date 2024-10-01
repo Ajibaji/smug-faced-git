@@ -13,12 +13,16 @@ git submodule update --init --recursive
 if [[ "$OSTYPE" == "darwin"* ]]; then
   "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "mac.conf.yaml" "${@}"
 else
-  echo "command: ${BASEDIR}/apt-pre-run.sh"
-  ${BASEDIR}/apt-pre-run.sh
+  echo "command: ${BASEDIR}/pre-run.sh"
+  ${BASEDIR}/pre-run.sh
+  export PATH="${HOME}/.cargo/bin:${PATH}"
 
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}"
-  exec env -i bash -c "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}"
+  $(exec env -i bash -c "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}")
 
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-apt.conf.yaml -v ${@}"
-  exec env -i bash -c "sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-base.conf.yaml -v ${@}"
+  $(exec env -i bash -c "sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-base.conf.yaml -v ${@}")
+
+  echo "command: ${BASEDIR}/post-run.sh"
+  $(exec env -i bash -c "${BASEDIR}/post-run.sh")
 fi

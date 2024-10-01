@@ -147,16 +147,6 @@
       stderr: true
       quiet: true
       description: installing dotnet
-
-    # - command: |
-    #     sudo groupadd docker
-    #     sudo usermod -ag docker $user
-    #     rm -rf ~/.docker
-    #   stderr: true
-    #   quiet: true
-    #   description: allow docker to be used by non-root
-    #
-- shell:
     - command: |
         if ! command -v k9s; then
           curl -ss https://webinstall.dev/k9s | bash
@@ -164,8 +154,6 @@
       stderr: true
       quiet: true
       description: installing k9s
-
-- shell:
     - command: |
         npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
       stdin: true
