@@ -47,12 +47,13 @@ function cloneAndMerge() {
   local n="$(( ( RANDOM % 100 )  + 1 ))"
   mv ${HOME}/.config ${HOME}/.config.${n}.bak
 
+  export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
   # git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/.config
   git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
 
   mv -n ${HOME}/.config.${n}.bak/* ${HOME}/.config/
 
-  export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
     rm -rf ${HOME}/.config/.git
   fi
