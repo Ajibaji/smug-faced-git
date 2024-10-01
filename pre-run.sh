@@ -4,7 +4,7 @@
 
 sudo apt update
 
-sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg software-properties-common -y
+sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg software-properties-common fontconfig -y
 
 if ! command -v fnm; then
   curl -fssl https://fnm.vercel.app/install | bash
