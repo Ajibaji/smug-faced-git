@@ -90,7 +90,7 @@
       description: installing delta
     - command: |
         if [[ ! -x "$(command -v lazygit)" ]] && [[ "$ostype" == "linux-gnu"* ]]; then
-          cd $HOME
+          cd ~
           arch=$(uname -m)
           [[ "$arch" == "aarch64" ]] && arch="arm64"
           lazygit_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -po '"tag_name": "v\k[^"]*')
@@ -122,7 +122,7 @@
       description: installing fx
     - command: |
         if ! command -v kitty; then
-          curl -l https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+          bash -c "$(echo I live at ${HOME} ; echo my name is $(whoami) ; curl -l https://sw.kovidgoyal.net/kitty/installer.sh launch=n")
         fi
       stdin: true
       stderr: true
