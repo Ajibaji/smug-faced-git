@@ -21,7 +21,7 @@ else
   $(exec env -i bash -c "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v ${@}")
 
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-apt.conf.yaml -v ${@}"
-  $(exec env -i bash -c "sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c linux-base.conf.yaml -v ${@}")
+  $(exec env -i bash -c "sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c apt.conf.yaml -v ${@}")
 
   echo "command: ${BASEDIR}/post-run.sh"
   $(exec env -i bash -c "${BASEDIR}/post-run.sh")
