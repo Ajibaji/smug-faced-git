@@ -86,4 +86,13 @@ if ! command -v nvim; then
   sudo add-apt-repository ppa:neovim-ppa/unstable -y
 fi
 
+printf "\n\nAdding mesa apt repo...\n"
+sudo add-apt-repository ppa:kisak/kisak-mesa
+
+if ! command -v hx; then
+  printf "\n\nAdding helix apt repo...\n"
+  sudo add-apt-repository ppa:maveonair/helix-editor
+fi
+
 sudo apt update
+sudo apt upgrade -y

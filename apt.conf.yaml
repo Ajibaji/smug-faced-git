@@ -9,9 +9,10 @@
     - gnupg
     - imagemagick
     - jq
-    - libcurl4-openssl-dev 
-    - libssl-dev 
-    - libxml2-dev 
+    - libcurl4-openssl-dev
+    - libssl-dev
+    - libxml2-dev
+    - libvulkan-dev
     - lsb-release
     - lsof
     - neovim
