@@ -69,7 +69,7 @@ function tt {
 
     $activeNvimSessions = @(Get-ChildItem \\.\pipe\nvim*).FullName
     foreach ($pipe in $activeNvimSessions) {
-      nvim --remote-send ":lua tt($newvalue)<CR>" --server $pipe &
+      nvim --remote-send ":lua utils.tt($newvalue)<CR>" --server $pipe &
     }
 
     Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value $newValue -Type Dword &

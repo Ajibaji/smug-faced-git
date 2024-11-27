@@ -1,8 +1,9 @@
 return {
-  'tummetott/reticle.nvim',
-  event = "VeryLazy",
+  'btmxh/reticle.nvim',
+  -- 'tummetott/reticle.nvim', -- original repo. switched to unapproved pull-request branch on a forked repo until branch is merged
+  event = 'VeryLazy',
   config = function()
-    require('reticle').setup {
+    require('reticle').setup({
       -- Make the cursorline and cursorcolumn follow your active window. This
       -- only works if the cursorline and cursorcolumn setting is switched on
       -- globaly like explained in 'Usage'. Default is true for both values
@@ -10,15 +11,15 @@ return {
         cursorline = true,
         cursorcolumn = true,
       },
-    
+
       -- Disable the cursorline and cursorcolumn in insert mode. Default is true
       disable_in_insert = true,
-    
+
       -- By default, nvim highlights the cursorline number only when the cursorline setting is
       -- switched on. When enabling the following setting, the cursorline number
       -- of every window is always highlighted, regardless of the setting
       always_highlight_number = true,
-    
+
       -- Define filetypes where the cursorline / cursorcolumn is always on,
       -- regardless of the global setting
       always = {
@@ -27,7 +28,7 @@ return {
         },
         cursorcolumn = {},
       },
-    
+
       -- Define filetypes where the cursorline / cursorcolumn is always on when
       -- the window is focused, regardless of the global setting
       on_focus = {
@@ -37,7 +38,7 @@ return {
         },
         cursorcolumn = {},
       },
-    
+
       -- Define filetypes where the cursorline / cursorcolumn is never on,
       -- regardless of the global setting
       never = {
@@ -48,7 +49,7 @@ return {
           'qf',
         },
       },
-    
+
       -- Define filetypes which are ignored by the plugin
       ignore = {
         cursorline = {
@@ -58,6 +59,6 @@ return {
           'lspinfo',
         },
       },
-    }
+    })
   end,
 }

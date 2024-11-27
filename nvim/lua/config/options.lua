@@ -87,22 +87,4 @@ opt.fileencoding = 'utf-8'
 opt.undofile = true
 
 o.autoread = false       --> disabled due to unstable behaviour e.g. npm i
---vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
---  command = "if mode() != 'c' | checktime | endif",
---  pattern = { "*" },
---})
-
 o.completeopt = 'menuone,noselect'
-
-
--- auto-reload kitty on editing kitty.conf
---vim.api.nvim_create_autocmd(
---  {
---    "bufwritepost"
---  },
---  {
---    pattern = vim.fn.expand("~").."/.config/kitty/*",
---    command = "silent !kill -SIGUSR1 $(pgrep -a kitty)"
---  }
---)
--- vim: ts=2 sts=2 sw=2 et
