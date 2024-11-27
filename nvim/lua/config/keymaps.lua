@@ -1,5 +1,3 @@
-require '/utils'
-
 local map = vim.api.nvim_set_keymap
 local opts = {
   noremap = true,
@@ -28,24 +26,13 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-function OpenTerminalHere()
-  local command = 'ToggleTerm dir=%:h'
-  -- local command = string.format('ToggleTerm dir=%s', currentBuffPath)
-  vim.cmd(command)
-end
-
-map('n', '<c-§>', ':lua OpenTerminalHere()<CR>', opts)
-map('n', '<A-\\>', ':lua OpenTerminalHere()<CR>', opts)
+map('n', '<c-§>', ':lua utils.OpenTerminalHere()<CR>', opts)
+map('n', '<A-\\>', ':lua utils.OpenTerminalHere()<CR>', opts)
 
 --> Other:
--- map('n', '<A-]>', ":lua require('goto-preview').goto_preview_definition()<CR>", opts)
+map('n', '<A-]>', ":lua require('goto-preview').goto_preview_definition()<CR>", opts)
 map('n', '<A-[>', ':close<CR>', opts)
 map('n', '<leader><leader>', '<C-w>L', opts) --move floating window to split-right
---  See `:help wincmd` for a list of all window commands
--- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
--- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
--- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
--- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 map('n', '<leader><left>', '<C-W>h', opts)
 map('n', '<leader><right>', '<C-W>l', opts)
 map('n', '<leader><up>', '<C-W>k', opts)
@@ -73,42 +60,4 @@ map('v', '∆', ":m '>+1<CR>gv=gv", opts)
 map('v', '<A-k>', ":m '<-2<CR>gv=gv", opts)
 map('v', '˚', ":m '<-2<CR>gv=gv", opts)
 
-local function compare_to_clipboard()
-  local ftype = vim.api.nvim_eval '&filetype'
-  vim.cmd(string.format(
-    [[
-    execute "normal! \"xy"
-    vsplit
-    enew
-    normal! P
-    setlocal buftype=nowrite
-    set filetype=%s
-    diffthis
-    execute "normal! \<C-w>\<C-w>"
-    enew
-    set filetype=%s
-    normal! "xP
-    diffthis
-  ]],
-    ftype,
-    ftype
-  ))
-end
-
-vim.keymap.set('n', '<Space>d', compare_to_clipboard)
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
--- vim: ts=2 sts=2 sw=2 et
+vim.keymap.set('n', '<Space>d', utils.compare_to_clipboard)
