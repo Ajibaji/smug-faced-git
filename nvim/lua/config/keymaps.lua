@@ -30,7 +30,7 @@ map('n', '<c-§>', ':lua utils.OpenTerminalHere()<CR>', opts)
 map('n', '<A-\\>', ':lua utils.OpenTerminalHere()<CR>', opts)
 
 --> Other:
--- map('n', '<A-]>', ":lua require('goto-preview').goto_preview_definition()<CR>", opts) --moved to the event trigger for goto_preview lazy config
+map('n', '<A-]>', ":lua require('goto-preview').goto_preview_definition()<CR>", opts)
 map('n', '<A-[>', ':close<CR>', opts)
 map('n', '<leader><leader>', '<C-w>L', opts) --move floating window to split-right
 map('n', '<leader><left>', '<C-W>h', opts)

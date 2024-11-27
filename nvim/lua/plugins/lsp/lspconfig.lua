@@ -1,6 +1,6 @@
 return {
   {
-  "Decodetalkers/csharpls-extended-lsp.nvim",
+    'Decodetalkers/csharpls-extended-lsp.nvim',
   },
   {
     'neovim/nvim-lspconfig',
@@ -115,7 +115,31 @@ return {
         pylyzer = {},
         r_language_server = {},
         rnix = {},
-        -- snyk_ls = {}, --needs active snyk account
+        snyk_ls = {
+          filetypes = {
+            'cs',
+            'go',
+            'gomod',
+            'javascript',
+            'typescript',
+            'java',
+            'json',
+            'python',
+            'requirements',
+            'helm',
+            'yaml',
+            'r',
+            'rmd',
+            'ruby',
+            'terraform',
+            'terraform-vars',
+            'vb',
+          },
+          init_options = {},
+          root_dir = require('lspconfig.util').root_pattern('.git', '.snyk', '.svn'),
+          settings = {},
+          single_file_support = true,
+        },
         sqlls = {},
         terraformls = {},
         ts_ls = {},
