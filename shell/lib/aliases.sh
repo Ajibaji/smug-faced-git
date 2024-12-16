@@ -8,9 +8,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
     # BAT ALIASES
-      # alias cat='bat --paging=never'
+      alias cat='batcat --paging=never'
       alias bat='batcat'
-      alias cat='batcat'
 
     # DOCKER ALIASES
       # alias docker='lima nerctl'
