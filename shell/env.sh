@@ -32,7 +32,7 @@ fi
   export PATH=$PATH:~/.kube/plugins/jordanwilson230
 
 # MAN
-  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 
 # PERSONAL BIN
   # export PATH=$PATH:~/Documents/code/ME/bin
