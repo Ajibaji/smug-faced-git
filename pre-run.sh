@@ -94,5 +94,12 @@ if ! command -v hx; then
   sudo add-apt-repository ppa:maveonair/helix-editor
 fi
 
+if ! command -v R; then
+  printf "\n\nAdding CRAN (R lang) apt repo...\n"
+  sudo apt install --no-install-recommends software-properties-common dirmngr
+  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+fi
+
 sudo apt update
 sudo apt upgrade -y
