@@ -148,6 +148,7 @@ fi
         if whiptail --yesno "Delete all $( echo $dir_names) directories from this tree?" 20 60
         then
           echo "Deleting all 'node_modules' directories from this tree..."
+          # consider replacing with fd -g '{dir,*anotherDir,*.tmp,*.zip,*.spec.*,*test*}' | xargs rm -rf -v
           find . -name $dir_names -type d -prune -exec rm -rf '{}' +
           echo "Done"
         fi
@@ -262,7 +263,7 @@ fi
     | awk -F  ":" '/1/ {start = $2<5 ? 0 : $2 - 5; end = $2 + 5; print $1 " " $2 " " $3 " " start ":" end}' \
     | fzf \
         --bind 'ctrl-o:execute(nvim +"call cursor({2},{3})" {1})+cancel' \
-        --preview 'bat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
+        --preview 'batcat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
         --preview-window wrap
   }
 
@@ -285,3 +286,5 @@ function yy() {
   fi
   rm -f -- "$tmp"
 }
+
+

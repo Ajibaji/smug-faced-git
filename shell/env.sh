@@ -28,6 +28,10 @@ fi
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
 
+# GCC
+  export CXXFLAGS="-Wno-format-security"
+  export CFLAGS="-Wno-format-security"
+
 # KUBERNETES
   export PATH=$PATH:~/.kube/plugins/jordanwilson230
 
