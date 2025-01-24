@@ -124,8 +124,6 @@
     # zsh-syntax-highlighting
       # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# SOURCE
-  # source $HOME/seeshellontheseasaw/*.zshrc
 
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /usr/local/bin/terraform terraform
