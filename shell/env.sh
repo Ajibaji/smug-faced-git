@@ -47,9 +47,3 @@ fi
   export DARK_KITTY_THEME='Nightfox'
   export LIGHT_KITTY_THEME='Dawnfox'
   source ${HOME}/.config/shell/lib/env_colours.sh
-
-# SECRETS
-  if [[ -d ${HOME}/seeshellontheseasaw ]]
-  then
-    source ${HOME}/seeshellontheseasaw/source_me.sh
-  fi
