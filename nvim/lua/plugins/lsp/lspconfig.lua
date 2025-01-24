@@ -116,6 +116,7 @@ return {
         r_language_server = {},
         rnix = {},
         snyk_ls = {
+          cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
           filetypes = {
             'cs',
             'go',
@@ -135,7 +136,17 @@ return {
             'terraform-vars',
             'vb',
           },
-          init_options = {},
+          init_options = {
+            activateSnykCode = 'true',
+            activateSnykCodeQuality = 'true',
+            activateSnykIac = 'true',
+            activateSnykOpenSource = 'true',
+            automaticAuthentication = 'true',
+            enableTelemetry = 'false',
+            enableTrustedFoldersFeature = 'false',
+            organization = os.getenv('SNYK_ORG'),
+            token = os.getenv('SNYK_TOKEN'),
+          },
           root_dir = require('lspconfig.util').root_pattern('.git', '.snyk', '.svn'),
           settings = {},
           single_file_support = true,

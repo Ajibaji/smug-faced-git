@@ -68,7 +68,7 @@ git:
     parseEmoji: false
     diffContextSize: 3 # how many lines of context are shown around a change in diffs
 os:
-    edit: 'v' # see 'Configuring File Editing' section
+    edit: 'nvim' # see 'Configuring File Editing' section
     editAtLine: '{{editor}} +{{line}} {{filename}}'
     open: 'open {{filename}}'
 refresher:
