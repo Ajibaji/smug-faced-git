@@ -18,3 +18,20 @@ hidden = false
 
 [editor.indent-guides]
 render = true
+
+[keys.normal]
+C-g = [
+    ":write-all", 
+    ":new", 
+    ":insert-output lazygit", 
+    ":set mouse false", # First disable mouse to hint helix into activating it
+    ":set mouse true",
+    ":buffer-close!", 
+    ":redraw", 
+    ":reload-all"
+]
+"*" = [
+    "move_prev_word_start",
+    "move_next_word_end",
+    "search_selection"
+]
