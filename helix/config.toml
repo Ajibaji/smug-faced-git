@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "naysayer"
 
 [editor]
 line-number = "relative"
@@ -31,6 +31,7 @@ C-g = [
     ":reload-all"
 ]
 "*" = [
+    "move_char_right",
     "move_prev_word_start",
     "move_next_word_end",
     "search_selection"
