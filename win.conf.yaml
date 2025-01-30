@@ -41,6 +41,7 @@
         winget install Microsoft.DotNet.SDK.6 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.AspNetCore.6 Microsoft.DotNet.DesktopRuntime.6
         winget install Microsoft.DotNet.SDK.7 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.AspNetCore.7 Microsoft.DotNet.DesktopRuntime.7
         winget install Microsoft.DotNet.SDK.8 Microsoft.DotNet.Runtime.8 Microsoft.DotNet.AspNetCore.8 Microsoft.DotNet.DesktopRuntime.8
+        winget install -e --id gokcehan.lf
       stdin: true
       stderr: true
       quiet: true
