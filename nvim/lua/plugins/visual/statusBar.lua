@@ -66,34 +66,34 @@ return {
       sections = {
         lualine_a = {
           'mode',
-          {
-            require('noice').api.statusline.mode.get,
-            cond = require('noice').api.statusline.mode.has,
-            color = {
-              fg = '#420D09',
-            },
-          },
+          -- {
+          --   require('noice').api.statusline.mode.get,
+          --   cond = require('noice').api.statusline.mode.has,
+          --   color = {
+          --     fg = '#420D09',
+          --   },
+          -- },
         },
         lualine_b = { 'branch', 'diff' },
         lualine_c = {
-          {
-            draw_empty = true,
-            'navic',
-            color_correction = 'dynamic', -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
-            -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
-            -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
-            --	 be enough when the lualine section isn't changing colors based on the mode.
-            -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
-            --	 the current section.
-            {
-              highlight = true,
-              separator = ' > ',
-              depth_limit = 0,
-              depth_limit_indicator = '..',
-              safe_output = true,
-              click = true,
-            },
-          },
+          -- {
+          --   draw_empty = true,
+          --   'navic',
+          --   color_correction = 'dynamic', -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
+          --   -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
+          --   -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
+          --   --	 be enough when the lualine section isn't changing colors based on the mode.
+          --   -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
+          --   --	 the current section.
+          --   {
+          --     highlight = true,
+          --     separator = ' > ',
+          --     depth_limit = 0,
+          --     depth_limit_indicator = '..',
+          --     safe_output = true,
+          --     click = true,
+          --   },
+          -- },
         },
         lualine_x = {
           -- lsp_status,
@@ -146,38 +146,6 @@ return {
             },
           },
         },
-        --  lualine_a = {},
-        --  lualine_b = {},
-        --	lualine_c = {},
-        --	lualine_x = {
-        --	  {
-        --	    'buffers',
-        --	    show_filename_only = true,
-        --	    hide_filename_extension = false,
-        --	    show_modified_status = true,
-        --	    mode = 0,
-        --	    max_length = vim.o.columns * 2 / 3,
-        --	    filetype_names = {
-        --				NvimTree = '',
-        --	      TelescopePrompt = '',
-        --	      dashboard = 'Dashboard',
-        --	     	packer = 'packer',
-        --	      fzf = 'FZF',
-        --	      alpha = 'Alpha'
-        --	    },
-        --	    buffers_color = {
-        --	      active = 'StatusLine',
-        --	      inactive = 'StatusLineNC'
-        --	    },
-        --	    symbols = {
-        --	      modified = ' ●',
-        --	      alternate_file = '',
-        --	      directory =  ''
-        --	    }
-        --	  }
-        --	},
-        --  lualine_y = {},
-        --  lualine_z = {}
       },
       extensions = {
         'nvim-tree',

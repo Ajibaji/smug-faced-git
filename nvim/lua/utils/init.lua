@@ -13,7 +13,6 @@ end
 
 function M.OpenTerminalHere()
   local command = 'ToggleTerm dir=%:h'
-  -- local command = string.format('ToggleTerm dir=%s', currentBuffPath)
   vim.cmd(command)
 end
 
