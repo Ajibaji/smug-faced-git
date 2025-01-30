@@ -15,7 +15,7 @@ return {
       resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
       post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
       references = { -- Configure the telescope UI for slowing the references cycling window.
-        telescope = require('telescope.themes').get_ivy()
+        -- telescope = require('telescope.themes').get_ivy()
       },
       -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
       focus_on_open = true, -- Focus the floating window when opening it.

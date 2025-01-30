@@ -1,90 +1,3 @@
--- local popup_preview = function(file_path)
---   local Popup = require('nui.popup')
---   local autocmd = require('nui.utils.autocmd')
---   local event = autocmd.event
---
---   local popup_options = {
---     enter = true,
---     border = {
---       style = 'single',
---       highlight = 'Fg',
---       text = {
---         top_align = 'left',
---       },
---     },
---     highlight = 'Normal:Normal',
---     position = '50%',
---     size = {
---       width = '70%',
---       height = '80%',
---     },
---     relative = 'editor',
---     opacity = 1,
---     -- zindex = 50,
---     focusable = true,
---   }
---
---   local popup = Popup(popup_options)
---   popup:mount()
---
---   local fname = vim.fn.fnameescape(file_path)
---   vim.fn.win_execute(popup.winid, 'edit ' .. fname)
---   vim.wo[popup.winid].number = false
---   vim.wo[popup.winid].signcolumn = 'no'
---   vim.bo[vim.fn.winbufnr(popup.winid)].buflisted = false
---
---   popup:on({ event.BufLeave, event.BufWinLeave, event.WinLeave, event.CmdWinEnter }, function()
---     vim.schedule(function()
---       popup:unmount()
---     end)
---   end, { once = true })
---
---   popup:map('n', '<esc>', function()
---     popup:unmount()
---   end, { noremap = true })
--- end
---
--- local function preview()
---   local node = lib.get_node_at_cursor()
---   if node ~= nil then
---     local path = node.absolute_path
---     if vim.fn.isdirectory(path) == 1 then
---       return
---     end
---     popup_preview(path)
---   end
--- end
-
--- local function collapse()
---   require("nvim-tree.actions.tree-modifiers.collapse-all").fn(true)
--- end
-
--- local function onAttach(bufnr)
---   local api = require('nvim-tree.api')
---   local node = api.tree.get_node_under_cursor()
---
---   local function opts(desc)
---     return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
---   end
---
---   api.config.mappings.default_on_attach(bufnr)
---
---   -- vim.keymap.set('n', '<Tab>', '', { buffer = bufnr })
---   -- vim.keymap.del('n', '<Tab>', { buffer = bufnr })
---   -- vim.keymap.set('n', 'W', '', { buffer = bufnr })
---   -- vim.keymap.del('n', 'W', { buffer = bufnr })
---
---   vim.keymap.set('n', '<Tab>', function()
---     -- local path = node.absolute_path
---     local path = api.tree.get_node_under_cursor()
---     if vim.fn.isdirectory(path) == 1 then
---       return
---     end
---     popup_preview(path)
---   end, opts('Preview'))
---   vim.keymap.set('n', 'W', collapse, opts('collapse_keep_buffers'))
--- end
-
 return {
 	"nvim-tree/nvim-tree.lua",
 	lazy = false,
@@ -100,7 +13,6 @@ return {
 		local tree = require("nvim-tree")
 
 		local function run_on_attach(bufnr)
-			local api = require("nvim-tree.api")
 			local lib = require("nvim-tree.lib")
 
 			local popup_preview = function(file_path)
