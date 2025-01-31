@@ -17,6 +17,8 @@
     ~/.zprofile: zsh/.zprofile
     ~/.zshenv: zsh/.zshenv
     ~/.zshrc: zsh/.zshrc
+    ~/.config/starship.toml: starship/starship.toml
+    ~/.config/user-dirs.locale: user-dirs.locale
 
 - shell:
     - command: |

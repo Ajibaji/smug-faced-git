@@ -44,20 +44,35 @@ function authGithub() {
   read -p 'When done, press any key to continue...' continue
 }
 
-function cloneAndMerge() {
-  local n="$(( ( RANDOM % 100 )  + 1 ))"
-  mv ${HOME}/.config ${HOME}/.config.${n}.bak
+function cloneAndLink() {
+  function createSymLink () {
+    local directory="@"
+    directory=$(basename ${directory})
+    local sourceDir="${PWD}/${directory}"
+    local destDir="${HOME}/.config/${directory}"
+    local n="$(( ( RANDOM % 100 )  + 1 ))"
 
+    if [[ -d "$destDir" ]]
+    then
+      mv ${destDir} ${destDir}-${n}.bak
+    fi
+
+    ln -s ${sourceDir} ${destDir}
+  }
+
+  export -f createSymLink
   export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-  # git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/.config
-  git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/.config
+  git clone git@github.com:Ajibaji/smug-faced-git.git || git clone https://github.com/Ajibaji/smug-faced-git.git
 
-  mv -n ${HOME}/.config.${n}.bak/* ${HOME}/.config/
+  cd smug-faced-git
 
-  if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
-    rm -rf ${HOME}/.config/.git
-  fi
+  find . -maxdepth 1 \
+    -type d \
+    -not -path '*.git' \
+    -not -path '.' \
+    -exec cloneAndLink '{}' \;
+
   unset GIT_SSH_COMMAND
 }
 
@@ -82,14 +97,14 @@ function menu() {
   clear
 
   PS3="Select choice: "
-  select choice in "Authenticate GitHub" "Clone and merge dotfiles" "Run DotBot" "Install Brew" Quit
+  select choice in "Authenticate GitHub" "Clone and link dotfiles" "Run DotBot" "Install Brew" Quit
   do
     case $choice in
       "Authenticate GitHub")
         authGithub 
         break;;
-      "Clone and merge dotfiles")
-        cloneAndMerge
+      "Clone and link dotfiles")
+        cloneAndLink
         break;;
       "Run DotBot")
         runDotbot

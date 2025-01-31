@@ -15,15 +15,18 @@
 
 - link:
     ~/.amethyst.yml: amethyst/.amethyst.yml
+    ~/.hushlogin: ./.hushlogin
+    ~/.bashrc: bash/.bashrc
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zprofile: zsh/.zprofile
     ~/.zshenv: zsh/.zshenv
     ~/.zshrc: zsh/.zshrc
+    ~/.config/starship.toml: starship/starship.toml
+    ~/.config/user-dirs.locale: user-dirs.locale
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
     - command: |
         if [ ! -d $HOME/seeshellontheseasaw ]; then
           git clone git@github.com:Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
