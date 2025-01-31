@@ -150,3 +150,9 @@
       stderr: true
       quiet: true
       description: installing jqp
+    - command: |
+        go install github.com/zyedidia/eget@latest
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing eget
