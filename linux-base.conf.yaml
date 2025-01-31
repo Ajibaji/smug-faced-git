@@ -142,3 +142,9 @@
       stderr: true
       quiet: true
       description: installing npm packages
+    - command: |
+        sudo snap install jqp
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing jqp
