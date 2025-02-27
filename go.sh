@@ -90,7 +90,7 @@ function installBrew() {
 function runDotbot() {
   cd ${HOME}/.config
   # exec ./install
-  ./install
+  ./dotbot-run.sh
 }
 
 function menu() {
