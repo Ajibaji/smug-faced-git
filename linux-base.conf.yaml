@@ -91,25 +91,25 @@
       quiet: true
       description: installing delta
     - command: |
-        if [[ ! -x "$(command -v lazygit)" ]] && [[ "$ostype" == "linux-gnu"* ]]; then
+        if ! command -v lazygit; then
           cd ~
-          arch=$(uname -m)
-          [[ "$arch" == "aarch64" ]] && arch="arm64"
-          lazygit_version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -po '"tag_name": "v\k[^"]*')
-          curl -lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${lazygit_version}_linux_${arch}.tar.gz"
+          LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+          curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
           tar xzf lazygit.tar.gz lazygit
-          install lazygit /usr/local/bin
+          sudo install lazygit -D -t /usr/local/bin/
         fi
       stdin: true
       stderr: true
       quiet: true
       description: installing lazygit
     - command: |
-        sudo wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
-          cd ~/.local/share/fonts && \
-          sudo unzip -o jetbrainsmono.zip && \
+        if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
+          sudo curl -fsSLO ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
+            cd ~/.local/share/fonts && \
+            sudo unzip -o jetbrainsmono.zip
           sudo rm jetbrainsmono.zip && \
-          fc-cache -fv
+            fc-cache -fv
+        fi
       stdin: true
       stderr: true
       quiet: true
@@ -151,7 +151,7 @@
       quiet: true
       description: installing jqp
     - command: |
-        go install github.com/zyedidia/eget@latest
+        curl https://zyedidia.github.io/eget.sh | sh
       stdin: true
       stderr: true
       quiet: true

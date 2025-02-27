@@ -3,6 +3,7 @@
 # post-install configuration scripts go here
 
 printf "\n\nallowing docker to be used by non-root...\n"
-sudo groupadd docker
-sudo usermod -ag docker $user
+sudo groupadd -f docker
+sudo usermod -aG docker $(whoami)
 rm -rf ~/.docker
+newgrp docker
