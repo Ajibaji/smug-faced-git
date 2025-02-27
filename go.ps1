@@ -30,7 +30,7 @@ function cloneAndMerge
 
 function runDotbot
 {
-  ./install.ps1
+  ./dotbot-run.ps1
   # Invoke-Command -FilePath C:\Users\aarjomandkhah\.config\install.ps1
 }
 

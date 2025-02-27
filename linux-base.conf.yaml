@@ -107,7 +107,7 @@
     - command: |
         sudo wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
           cd ~/.local/share/fonts && \
-          sudo unzip jetbrainsmono.zip && \
+          sudo unzip -o jetbrainsmono.zip && \
           sudo rm jetbrainsmono.zip && \
           fc-cache -fv
       stdin: true
