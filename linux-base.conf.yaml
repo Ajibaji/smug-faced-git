@@ -152,6 +152,7 @@
       description: installing jqp
     - command: |
         curl https://zyedidia.github.io/eget.sh | sh
+        sudo mv ./eget /usr/local/bin/eget
       stdin: true
       stderr: true
       quiet: true
