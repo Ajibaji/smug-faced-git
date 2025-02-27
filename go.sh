@@ -46,7 +46,7 @@ function authGithub() {
 
 function cloneAndLink() {
   function createSymLink () {
-    local directory="@"
+    local directory="$@"
     directory=$(basename ${directory})
     local sourceDir="${PWD}/${directory}"
     local destDir="${HOME}/.config/${directory}"
@@ -63,7 +63,7 @@ function cloneAndLink() {
   export -f createSymLink
   export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-  git clone git@github.com:Ajibaji/smug-faced-git.git || git clone https://github.com/Ajibaji/smug-faced-git.git
+  git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git || git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
 
   cd smug-faced-git
 
@@ -71,7 +71,7 @@ function cloneAndLink() {
     -type d \
     -not -path '*.git' \
     -not -path '.' \
-    -exec cloneAndLink '{}' \;
+    -exec createSymLink '{}' \;
 
   unset GIT_SSH_COMMAND
 }
@@ -88,9 +88,10 @@ function installBrew() {
 }
 
 function runDotbot() {
-  cd ${HOME}/.config
+  cd ${HOME}/smug-faced-git
   # exec ./install
   ./dotbot-run.sh
+  cd -
 }
 
 function menu() {
@@ -108,7 +109,7 @@ function menu() {
         break;;
       "Run DotBot")
         runDotbot
-        break;;
+	exit 0;;
       "Install Brew")
         installBrew
         break;;
