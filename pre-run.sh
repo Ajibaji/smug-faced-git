@@ -47,7 +47,8 @@ fi
 
 if ! command -v dotnet; then
   printf "\n\ninstalling dotnet...\n"
-  wget https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+
+  curl -fsSLO https://dot.net/v1/dotnet-install.sh
   chmod +x ./dotnet-install.sh 
   ./dotnet-install.sh --channel 8.0
   ./dotnet-install.sh --channel 7.0
@@ -87,18 +88,18 @@ if ! command -v nvim; then
 fi
 
 printf "\n\nAdding mesa apt repo...\n"
-sudo add-apt-repository ppa:kisak/kisak-mesa
+sudo add-apt-repository ppa:kisak/kisak-mesa -y
 
 if ! command -v hx; then
   printf "\n\nAdding helix apt repo...\n"
-  sudo add-apt-repository ppa:maveonair/helix-editor
+  sudo add-apt-repository ppa:maveonair/helix-editor -y
 fi
 
 if ! command -v R; then
   printf "\n\nAdding CRAN (R lang) apt repo...\n"
   sudo apt install --no-install-recommends software-properties-common dirmngr
   wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
 fi
 
 sudo apt update
