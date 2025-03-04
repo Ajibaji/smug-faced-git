@@ -13,7 +13,7 @@ return {
     local tree = require('nvim-tree')
 
     local function run_on_attach(bufnr)
-      local lib = require('nvim-tree.lib')
+      local api = require('nvim-tree.api')
 
       local popup_preview = function(file_path)
         local Popup = require('nui.popup')
@@ -62,7 +62,7 @@ return {
       end
 
       local function preview()
-        local node = lib.get_node_at_cursor()
+        local node = api.tree.get_node_under_cursor()
         if node ~= nil then
           local path = node.absolute_path
           if vim.fn.isdirectory(path) == 1 then
@@ -74,7 +74,7 @@ return {
 
       local function collapse()
         -- require("nvim-tree.actions.tree-modifiers.collapse-all").fn(true)
-        require('nvim-tree.api').tree.collapse_all(true)
+        api.tree.collapse_all(true)
       end
 
       local function opts(desc)
@@ -82,7 +82,7 @@ return {
       end
 
       vim.keymap.set('n', '<s-Tab>', preview, opts('Open Preview'))
-      vim.keymap.set('n', '<esc>', collapse, opts('Collapse keep open buffers'))
+      vim.keymap.set('n', 'w', collapse, opts('Collapse keep open buffers'))
       -- vim.keymap.set("n", "W", api.tree.collapse_all(true), opts("Collapse keep open buffers"))
     end
 
