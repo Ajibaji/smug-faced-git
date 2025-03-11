@@ -111,6 +111,7 @@ return {
         pylyzer = {},
         r_language_server = {},
         rnix = {},
+        shfmt = {},
         snyk_ls = {
           cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
           filetypes = {
