@@ -20,9 +20,9 @@ return {
   'akinsho/toggleterm.nvim',
   version = '*',
   keys = {
-    { '<c-§>', ':lua utils.OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
+    -- { '<c-§>', ':lua utils.OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
     { '<A-\\>', ':lua utils.OpenTerminalHere()<CR>', desc = 'ToggleTerm here' },
-    { '<A-/>', ':ToggleTerm<CR>', desc = 'ToggleTerm' },
+    { '<C-\\>', ':ToggleTerm<CR>', desc = 'ToggleTerm' },
   },
   config = function()
     require('toggleterm').setup {

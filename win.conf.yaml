@@ -14,7 +14,6 @@
     ~/Documents/PowerShell: powershell/Microsoft.PowerShell_profile.ps1
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
     - command: |
         winget install -e --id Microsoft.WindowsTerminal
         winget install -e --id Microsoft.PowerShell
@@ -46,3 +45,10 @@
       stderr: true
       quiet: true
       description: installing winget packages
+    - command: |
+        go install github.com/zyedidia/eget@latest
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing eget
+
