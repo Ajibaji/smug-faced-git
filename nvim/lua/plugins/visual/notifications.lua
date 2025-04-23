@@ -1,103 +1,76 @@
 return {
   'folke/noice.nvim',
   event = 'VeryLazy',
-  opts = {},
+  opts = {
+    lsp = {
+      override = {
+        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+        ['vim.lsp.util.stylize_markdown'] = true,
+        ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+      },
+    },
+    presets = {
+      bottom_search = false, -- use a classic bottom cmdline for search
+      command_palette = true, -- position the cmdline and popupmenu together
+      long_message_to_split = true, -- long messages will be sent to a split
+      inc_rename = false, -- enables an input dialog for inc-rename.nvim
+      lsp_doc_border = true, -- add a border to hover docs and signature help
+    },
+    routes = {
+      {
+        filter = {
+          event = 'msg_show',
+          kind = 'echomsg',
+          find = 'AutoSave',
+        },
+        opts = { skip = true },
+      },
+    },
+  },
   dependencies = {
     'MunifTanjim/nui.nvim',
-    -- {
-    --   'rcarriga/nvim-notify',
-    --   config = function()
-    --     local stages_util = require 'notify.stages.util'
-    --
-    --     require('notify').setup {
-    --       stages = {
-    --         function(state)
-    --           local next_height = state.message.height + 2
-    --           local next_row = stages_util.available_slot(state.open_windows, next_height, stages_util.DIRECTION.BOTTOM_UP)
-    --           if not next_row then
-    --             return nil
-    --           end
-    --           return {
-    --             relative = 'editor',
-    --             anchor = 'NE',
-    --             --width = state.message.width,
-    --             width = 1,
-    --             height = state.message.height,
-    --             col = vim.opt.columns:get(),
-    --             row = next_row,
-    --             border = 'rounded',
-    --             style = 'minimal',
-    --           }
-    --         end,
-    --         function(state)
-    --           return {
-    --             --opacity = { 100 },
-    --             width = { state.message.width, frequency = 2 },
-    --             col = { vim.opt.columns:get() },
-    --           }
-    --         end,
-    --         function()
-    --           return {
-    --             col = { vim.opt.columns:get() },
-    --             time = true,
-    --           }
-    --         end,
-    --         function()
-    --           return {
-    --             width = {
-    --               1,
-    --               frequency = 2.5,
-    --               damping = 0.9,
-    --               complete = function(cur_width)
-    --                 --return cur_width < 3
-    --                 return cur_width < 2
-    --               end,
-    --             },
-    --             -- opacity = {
-    --             --  0,
-    --             --  frequency = 2,
-    --             --  complete = function(cur_opacity)
-    --             --    return cur_opacity <= 4
-    --             --  end,
-    --             -- },
-    --             col = { vim.opt.columns:get() },
-    --           }
-    --         end,
-    --       },
-    --     }
-    --
-    --     vim.notify = require 'notify'
-    --   end,
-    -- },
   },
-  config = function()
-    require('noice').setup {
-      lsp = {
-        override = {
-          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-          ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-        },
-      },
-      presets = {
-        bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = true, -- add a border to hover docs and signature help
-      },
-      routes = {
-        {
-          filter = {
-            event = 'msg_show',
-            kind = 'echomsg',
-            find = 'AutoSave',
-          },
-          opts = { skip = true },
-        },
-      },
-    }
-  end,
+  -- config = function()
+  --   require('noice').setup({
+  --     lsp = {
+  --       override = {
+  --         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+  --         ['vim.lsp.util.stylize_markdown'] = true,
+  --         ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+  --       },
+  --     },
+  --     presets = {
+  --       bottom_search = false, -- use a classic bottom cmdline for search
+  --       command_palette = true, -- position the cmdline and popupmenu together
+  --       long_message_to_split = true, -- long messages will be sent to a split
+  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
+  --       lsp_doc_border = true, -- add a border to hover docs and signature help
+  --     },
+  --     routes = {
+  --       {
+  --         filter = {
+  --           event = 'msg_show',
+  --           kind = 'echomsg',
+  --           find = 'AutoSave',
+  --         },
+  --         opts = { skip = true },
+  --       },
+  --     },
+  --     views = {
+  --       mini = {
+  --         winhighlight = {
+  --           Normal = '',
+  --           IncSearch = '',
+  --           CurSearch = '',
+  --           Search = '',
+  --         },
+  --         -- win_options = {
+  --         --   winblend = 0,
+  --         -- },
+  --       },
+  --     },
+  --   })
+  -- end,
 }
 
 -- require("telescope").load_extension("notify")
