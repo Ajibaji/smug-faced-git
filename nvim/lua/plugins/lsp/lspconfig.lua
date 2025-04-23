@@ -238,6 +238,7 @@ return {
         virtual_text = {
           prefix = 'jeff says...',
         },
+        virtual_lines = true,
         signs = true,
         underline = true,
         update_in_insert = false,

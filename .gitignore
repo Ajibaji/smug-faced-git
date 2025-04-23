@@ -13,7 +13,7 @@ kitty/themes.conf
 kitty/themes.conf.bak
 kitty/current-theme.conf
 lazygit/state.yml
-nushell/history.txt
+nushell/history*.*
 nvim/lazy-lock.json
 pulse/
 qt*/
