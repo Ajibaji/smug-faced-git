@@ -62,7 +62,7 @@
     	#export TERM="xterm-256color"
 
     # Set bindings
-    	set -o emacs 
+      set -o emacs
       bindkey "^[[3~" delete-char
       bindkey -M emacs "^[[1;3C" forward-word   # bind alt-right to forward-word
       bindkey -M emacs "^[[1;3D" backward-word  # bind alt-left to backward-word
@@ -84,7 +84,7 @@
       # zmodload zsh/complist
 
       # checking cached .zcompdump file to see if it must be regenerated once a day only
-      # autoload -Uz compinit 
+      # autoload -Uz compinit
       # setopt EXTENDEDGLOB
       # for dump in $HOME/.zcompdump(#qN.m1); do
       #   compinit
@@ -106,11 +106,11 @@
         then
           kitty @ set-tab-title $(print -Pn "${PWD/${PWD%*\/*\/*}\/}\007")
         else
-          print -Pn "${PWD/${PWD%*\/*\/*}\/}\007"
+          echo -en "\e]2;$PWD\a"
         fi
       }
 
-    # shell history saved to database. searching included 
+    # shell history saved to database. searching included
       # [[ $TERM_PROGRAM != "DTerm" ]] && eval "$(atuin init zsh)"
       # source ~/.config/zsh/.zhistory
 
@@ -127,3 +127,13 @@
 
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /usr/local/bin/terraform terraform
+
+# fnm
+FNM_PATH="/Users/aarjomandkhah/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/aarjomandkhah/Library/Application Support/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

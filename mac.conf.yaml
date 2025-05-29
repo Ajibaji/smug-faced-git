@@ -1,83 +1,54 @@
 - defaults:
     brewfile:
+      stderr: true
       stdout: true
+      quiet: false
     brew:
       stderr: true
       stdout: true
+      quiet: false
     link:
       create: true
       relink: true
       force: true
 
-- clean:
-    ~/:
-      force: true
-
 - link:
     ~/.amethyst.yml: amethyst/.amethyst.yml
-    ~/.hushlogin: ./.hushlogin
-    ~/.bashrc: bash/.bashrc
-    ~/.gitconfig: git-config/.gitconfig
-    ~/.gitignore_global: git-config/.gitignore_global
-    ~/.tmux.conf: tmux/.tmux.conf
-    ~/.zprofile: zsh/.zprofile
-    ~/.zshenv: zsh/.zshenv
-    ~/.zshrc: zsh/.zshrc
-    ~/.config/starship.toml: starship/starship.toml
-    ~/.config/user-dirs.locale: user-dirs.locale
 
-- shell:
-    - command: |
-        if [ ! -d $HOME/seeshellontheseasaw ]; then
-          git clone git@github.com:Ajibaji/seeshellontheseasaw.git $HOME/seeshellontheseasaw
-        fi
-      stderr: true
-      quiet: true
-      description: Git clone seeshellontheseasaw
-    - command: |
-        sudo apt-get install build-essential
-        brew install gcc
-      stderr: true
-      quiet: true
-      description: Install Homebrew deps
-    - command: |
-        if ! command -v fnm; then
-          curl -fsSL https://fnm.vercel.app/install | bash
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing FNM
-    - command: |
-        if ! command -v cargo; then
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing cargo
-    - command: |
-        if [[ ! -x "$(command -v lazygit)" ]] && [[ "$OSTYPE" == "linux-gnu"* ]]; then
-          cd $HOME
-          ARCH=$(uname -m)
-          [[ "$ARCH" == "aarch64" ]] && ARCH="arm64"
-          LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-          curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_${ARCH}.tar.gz"
-          tar xzf lazygit.tar.gz lazygit
-          install lazygit ~/.local/bin
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing Lazygit
-    - command: |
-        if ! command -v delta; then
-          curl -sS https://webi.sh/delta | sh
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing Delta
 - brewfile:
     - brew/Brewfile
 
+- shell:
+    - command: |
+        export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+        if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+          echo "You aren't me. Nothing to see here"
+        else
+          if [ ! -d ~/seeshellontheseasaw ]; then
+            git clone git@github.com:ajibaji/seeshellontheseasaw.git ~/seeshellontheseasaw
+          fi
+        fi
+        unset GIT_SSH_COMMAND
+      stderr: true
+      quiet: true
+      description: git clone seeshellontheseasaw
+    - command: |
+        if ! command -v fnm; then
+          FNM_PATH="/opt/homebrew/bin/fnm"
+          export PATH="$FNM_PATH:$PATH"
+          eval "`fnm env`"
+        fi
+
+        fnm install v20
+        fnm install v18
+        fnm install v16
+        fnm default v20
+      stderr: true
+      quiet: false
+      description: install nodejs versions
+    - command: |
+        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
+      stdin: true
+      stderr: true
+      quiet: false
+      description: installing npm packages

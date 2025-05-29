@@ -25,3 +25,5 @@
 
 # fuzzy finder
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
