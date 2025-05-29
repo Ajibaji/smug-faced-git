@@ -15,6 +15,7 @@
     ~/.config/bat: bat
     ~/.config/brew: brew
     ~/.config/delta: delta
+    ~/.config/ghostty: ghostty
     ~/.config/git-config: git-config
     ~/.config/helix: helix
     ~/.config/karabiner: karabiner
