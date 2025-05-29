@@ -33,12 +33,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     # DTERM
       if [[ $TERM_PROGRAM = "DTerm" && -x /usr/libexec/path_helper ]]
-      then 
+      then
           eval `/usr/libexec/path_helper -s`
       fi
 
     # PERL
-      eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+      # eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 fi
 
 # AWS SET ENV VARS
@@ -90,14 +90,14 @@ fi
   function l () {
     args=$@
     headers="Permissions     Owner         Group    Size     Modified  Name"
-    echo 
+    echo
     printHeader DIRECTORIES
     echo "$headers"
     echo "$(ls -lah $args | grep '^d' | sort -f -k 9)"
-    echo 
+    echo
     printHeader FILES
     echo "$headers"
-    filesList=$(ls -lah $args | grep -v '^d' | grep -v '^t' | sort -f -k 9) 
+    filesList=$(ls -lah $args | grep -v '^d' | grep -v '^t' | sort -f -k 9)
     echo "$filesList"
     echo
   }
@@ -128,7 +128,7 @@ fi
     fi
     local PARAMS=$@
     kubectl delete job,deploy,svc,hpa --all -n $PARAMS
-    kubectl delete pvc -n $PARAMS 
+    kubectl delete pvc -n $PARAMS
     kubectl delete ns $PARAMS
   }
 
@@ -286,5 +286,3 @@ function yy() {
   fi
   rm -f -- "$tmp"
 }
-
-

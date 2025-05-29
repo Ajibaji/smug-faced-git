@@ -17,7 +17,7 @@
     reflog = delta
 
 [delta]
-	features = LIGHT
+    features = LIGHT
     navigate = true
     side-by-side = true 
     file-style = box
@@ -50,10 +50,10 @@
     trustExitCode = true
 
 [pull]
-  	rebase = false
+    rebase = false
 
 [interactive]
-	diffFilter = delta --color-only
+    diffFilter = delta --color-only
 
 [delta "interactive"]
     keep-plus-minus-markers = false
@@ -66,9 +66,10 @@
 
 [alias]
     change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+
 [page]
-  diff = delta
-  show = delta
-  log = delta
-  blame = delta
-  reflog = delta
+    diff = delta
+    show = delta
+    log = delta
+    blame = delta
+    reflog = delta

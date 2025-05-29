@@ -1,0 +1,45 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+- clean:
+    ~/:
+      force: true
+
+- link:
+    ~/.config/amethyst: amethyst
+    ~/.config/atuin: atuin
+    ~/.config/bash: bash
+    ~/.config/bat: bat
+    ~/.config/brew: brew
+    ~/.config/delta: delta
+    ~/.config/git-config: git-config
+    ~/.config/helix: helix
+    ~/.config/karabiner: karabiner
+    ~/.config/kitty: kitty
+    ~/.config/lazygit: lazygit
+    ~/.config/lsd: lsd
+    ~/.config/MacOS: MacOS
+    ~/.config/neofetch: neofetch
+    ~/.config/neovide: neovide
+    ~/.config/nushell: nushell
+    ~/.config/nvim: nvim
+    ~/.config/powershell: powershell
+    ~/.config/shell: shell
+    ~/.config/starship: starship
+    ~/.config/tmux: tmux
+    ~/.config/yazi: yazi
+    ~/.config/zsh: zsh
+    ~/.hushlogin: ./.hushlogin
+    ~/.bashrc: bash/.bashrc
+    ~/.gitconfig: git-config/.gitconfig
+    ~/.gitignore_global: git-config/.gitignore_global
+    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.zprofile: zsh/.zprofile
+    ~/.zshenv: zsh/.zshenv
+    ~/.zshrc: zsh/.zshrc
+    ~/.config/user-dirs.dirs: user-dirs.dirs
+    ~/.config/user-dirs.locale: user-dirs.locale
+    ~/.config/schema-ado-pipelines-custom.json: schema-ado-pipelines-custom.json
