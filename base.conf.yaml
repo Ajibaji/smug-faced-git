@@ -32,6 +32,7 @@
     ~/.config/starship: starship
     ~/.config/tmux: tmux
     ~/.config/yazi: yazi
+    ~/.config/zed: zed
     ~/.config/zsh: zsh
     ~/.hushlogin: ./.hushlogin
     ~/.bashrc: bash/.bashrc
