@@ -17,7 +17,7 @@
     reflog = delta
 
 [delta]
-    features = LIGHT
+	features = LIGHT
     navigate = true
     side-by-side = true 
     file-style = box
