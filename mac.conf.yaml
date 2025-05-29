@@ -52,3 +52,9 @@
       stderr: true
       quiet: false
       description: installing npm packages
+    - command: |
+        launchctl setenv XDG_CONFIG_HOME "$HOME/.config"
+      stdin: true
+      stderr: true
+      quiet: false
+      description: setting XDG_CONFIG_HOME

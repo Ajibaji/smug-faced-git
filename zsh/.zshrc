@@ -129,11 +129,7 @@
 # complete -o nospace -C /usr/local/bin/terraform terraform
 
 # fnm
-FNM_PATH="/Users/aarjomandkhah/Library/Application Support/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/aarjomandkhah/Library/Application Support/fnm:$PATH"
-  eval "`fnm env`"
-fi
+eval "`fnm env`"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
