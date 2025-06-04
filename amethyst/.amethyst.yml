@@ -33,19 +33,31 @@ layouts:
   # - widescreen-tall-right
   - bsp
 
-# First mod (default option + shift).
+# Use for windows focus actions
 mod1:
+  - control
   - option
-  - shift
-  # - control
   # - command
+  # - option
 
-# Second mod (default option + shift + control).
-mod2:
-  - option
+# Use for windows movement actions
+# mod2:
+#   - shift
+#   - command
+#   - option
+
+# Use for screen and spaces movement actions
+mod3:
   - shift
   - control
-  # - command
+  - option
+
+# Use for screen and spaces movement actions
+mod4:
+  - shift
+  - control
+  - option
+
 
 # Commands:
 # special key values
@@ -62,8 +74,8 @@ mod2:
 
 # Move to the next layout in the list.
 cycle-layout:
-  mod: mod1
-  key: space
+  mod: mod3
+  key: enter
 
 # Move to the previous layout in the list.
 # cycle-layout-backward:
@@ -72,12 +84,12 @@ cycle-layout:
 
 # Shrink the main pane by a percentage of the screen dimension as defined by window-resize-step. Note that not all layouts respond to this command.
 shrink-main:
-  mod: mod1
+  mod: mod3
   key: '-'
 
 # Expand the main pane by a percentage of the screen dimension as defined by window-resize-step. Note that not all layouts respond to this command.
 expand-main:
-  mod: mod1
+  mod: mod3
   key: '='
 
 # Increase the number of windows in the main pane. Note that not all layouts respond to this command.
@@ -110,12 +122,12 @@ expand-main:
 # Focus the next window in the list going counter-clockwise.
 focus-ccw:
   mod: mod1
-  key: ','
+  key: left
 
 # Focus the next window in the list going clockwise.
 focus-cw:
   mod: mod1
-  key: '.'
+  key: right
 
 # Focus the main window in the list.
 # focus-main:
@@ -124,33 +136,33 @@ focus-cw:
 
 # Focus the next screen in the list going counter-clockwise.
 focus-screen-ccw:
-  mod: mod1
-  key: 'left'
+  mod: mod3
+  key: left
 
 # Focus the next screen in the list going clockwise.
 focus-screen-cw:
-  mod: mod1
-  key: 'right'
+  mod: mod3
+  key: right
 
 # Move the currently focused window onto the next screen in the list going counter-clockwise.
 swap-screen-ccw:
-  mod: mod2
+  mod: mod3
   key: h
 
 # Move the currently focused window onto the next screen in the list going clockwise.
 swap-screen-cw:
-  mod: mod2
+  mod: mod3
   key: l
 
 # Swap the position of the currently focused window with the next window in the list going counter-clockwise.
 swap-ccw:
-  mod: mod2
-  key: j
+  mod: mod1
+  key: h
 
 # Swap the position of the currently focused window with the next window in the list going clockwise.
 swap-cw:
-  mod: mod2
-  key: k
+  mod: mod1
+  key: l
 
 # Swap the position of the currently focused window with the main window in the list.
 swap-main:
@@ -194,23 +206,23 @@ swap-main:
 
 # Move the currently focused window to the space to the left.
 throw-space-left:
-  mod: mod2
-  key: left
+  mod: mod3
+  key: ','
 
 # Move currently the focused window to the space to the right.
 throw-space-right:
-  mod: mod2
-  key: right
+  mod: mod3
+  key: '.'
 
 # Toggle the floating state of the currently focused window; i.e., if it was floating make it tiled and if it was tiled make it floating.
 toggle-float:
-  mod: mod2
+  mod: mod1
   key: f
 
 # Display the layout HUD with the current layout on each screen.
-display-current-layout:
-  mod: mod2
-  key: space
+# display-current-layout:
+#   mod: mod2
+#   key: space
 
 # Turn on or off tiling entirely.
 # toggle-tiling:
@@ -245,24 +257,25 @@ smart-window-margins: true
 # window-margins: true
 # window-margin-size: 5
 # The size of the margins between windows (in px, default 0).
-window-margin-size: 0
+window-margin-size: 10
 
 # The max number of windows that may be visible on a screen at one time before
 # additional windows are minimized. A value of 0 disables the feature.
-window-max-count: 0
+window-max-count: 6
 
 # The smallest height that a window can be sized to regardless of its layout frame (in px, default 0).
-window-minimum-height: 0
+window-minimum-height: 100
 
 # The smallest width that a window can be sized to regardless of its layout frame (in px, default 0)
-window-minimum-width: 0
+window-minimum-width: 100
 
 # List of bundle identifiers for applications to either be automatically floating or automatically tiled based on floating-is-blacklist (default []).
 floating:
   - com.apple.systempreferences
   - com.apple.ActivityMonitor
-  - come.apple.calculator
+  - com.apple.calculator
   - com.apple.iCal
+  - com.apple.finder
   - com.apple.reminders
   - com.apple.weather
   - com.apple.clock
@@ -277,7 +290,7 @@ floating:
 floating-is-blacklist: true
 
 # true if screen frames should exclude the status bar. false if the screen frames should include the status bar (default false).
-ignore-menu-bar: true
+ignore-menu-bar: false
 
 # true if windows smaller than a 500px square should be floating by default (default true)
 float-small-windows: true
@@ -310,19 +323,19 @@ new-windows-to-main: true
 follow-space-thrown-windows: true
 
 # The integer percentage of the screen dimension to increment and decrement main pane ratios by (default 5).
-window-resize-step: 5
+window-resize-step: 10
 
 # Padding to apply between windows and the left edge of the screen (in px, default 0).
-screen-padding-left: 5
+screen-padding-left: 2
 
 # Padding to apply between windows and the right edge of the screen (in px, default 0).
-screen-padding-right: 5
+screen-padding-right: 2
 
 # Padding to apply between windows and the top edge of the screen (in px, default 0).
-screen-padding-top: 5
+screen-padding-top: 0
 
 # Padding to apply between windows and the bottom edge of the screen (in px, default 0).
-screen-padding-bottom: 5
+screen-padding-bottom: 0
 
 # true to maintain layout state across application executions (default true).
 restore-layouts-on-launch: true
