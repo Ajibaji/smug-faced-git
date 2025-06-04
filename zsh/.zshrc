@@ -111,7 +111,7 @@
       }
 
     # shell history saved to database. searching included
-      # [[ $TERM_PROGRAM != "DTerm" ]] && eval "$(atuin init zsh)"
+      [[ $TERM_PROGRAM != "DTerm" ]] && eval "$(atuin init zsh)"
       # source ~/.config/zsh/.zhistory
 
     # Automatic node version switching (FNM)
@@ -133,3 +133,6 @@ eval "`fnm env`"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# Zoxide
+eval "$(zoxide init zsh)"
