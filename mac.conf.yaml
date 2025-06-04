@@ -20,6 +20,13 @@
 
 - shell:
     - command: |
+        defaults write com.apple.dock workspaces-auto-swoosh -bool NO
+        killall Dock
+      stdin: true
+      stderr: true
+      quiet: false
+      description: disable auto-manage spaces
+    - command: |
         export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
           echo "You aren't me. Nothing to see here"
