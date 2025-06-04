@@ -40,7 +40,7 @@ fi
 
 # PERSONAL BIN
   # export PATH=$PATH:~/Documents/code/ME/bin
-  export PATH=$PATH:~/work/ammar/bin
+  export PATH=$PATH:~/work/tools-and-snippets/bin
 
 # COLOURS
   export COLORTERM='truecolor'
