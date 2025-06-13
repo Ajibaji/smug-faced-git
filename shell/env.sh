@@ -42,6 +42,9 @@ fi
   # export PATH=$PATH:~/Documents/code/ME/bin
   export PATH=$PATH:~/work/tools-and-snippets/bin
 
+# PYTHON
+  export REQUESTS_CA_BUNDLE=${HOME}/CustomCA.pem
+
 # COLOURS
   export COLORTERM='truecolor'
   export LIGHT_FZF_DEFAULT_OPTS="$FZF_COMMON_OPTS --color=fg:#cb719d,bg:#e6dfd6,hl:#5f87af --color=fg+:#575277,bg+:#e6dfd6,hl+:#5f87af --color=info:#afaf87,prompt:#d7005f,pointer:#d7005f --color=marker:#af5fff,spinner:#5cdeff,header:#87afaf"

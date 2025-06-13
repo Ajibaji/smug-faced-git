@@ -42,9 +42,14 @@ o.cmdheight = 1
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 o.updatetime = 250
 
+if g.neovide then
+  opt.guifont = 'JetBrainsMono Nerd Font:h17'
+else
+  opt.guifont = 'JetBrainsMono Nerd Font:h13'
+end
+
 o.termguicolors = true
 opt.termguicolors = true
-opt.guifont = 'JetBrainsMono Nerd Font:h13'
 
 opt.foldmethod = 'manual'
 --o.foldcolumn = '1' -- '0' is not bad
