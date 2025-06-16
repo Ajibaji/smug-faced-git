@@ -210,7 +210,6 @@ fi
 
     pathls | while read line
     do
-      echo "."
       if [[ "$line" != "/mnt/"* && -d $line ]]; then
         if [[ "$OSTYPE" == "darwin"* ]]; then
           gfind $line -maxdepth 1 -name $@ -type f,l -exec echo $line \;
