@@ -2,7 +2,6 @@ local o = vim.o
 local opt = vim.opt
 local g = vim.g
 
-
 -- Don't show the mode, since it's already in the status line
 o.showmode = false
 
