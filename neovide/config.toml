@@ -1,7 +1,7 @@
+title-hidden = true
 wsl = false
-multigrid = true
-vsync = true
+no-multigrid = false
 maximized = false
-srgb = false
-idle = true
-frame = "full"
+frame = "buttonless"
+fork = true
+tabs = false

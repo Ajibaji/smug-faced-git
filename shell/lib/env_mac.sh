@@ -2,13 +2,17 @@
 
 # BREW
   export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
-#  export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+  eval "`brew shellenv`"
+
+# CA-Certs
+  export CUSTOM_CA_CERTS="/opt/homebrew/etc/ca-certificates/cert.pem"
 
 # Java
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home"
 
-# Python
-#  export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+# Ruby
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+  export PATH="$(gem environment gempath):$PATH"
 
 # X11
   export DISPLAY=:0

@@ -8,10 +8,6 @@ if [[ -n "${WSL_DISTRO_NAME}" ]]; then
   export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source ${HOME}/.config/shell/lib/env_mac.sh
-fi
-
 # -------
   export EDITOR=nvim
 
@@ -21,9 +17,11 @@ fi
 # AZURE
   export VSO_AGENT_IGNORE=PIPELINE_AGENT_TOKEN,USER,AWS_SHARED_CREDENTIALS_FILE,API_TOKEN
 
+# Custom CA certs
+  export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
+
 # DOTNET
-  export DOTNET_ROOT=$HOME/.dotnet
-  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+  export PATH=$PATH:$HOME/.dotnet/tools
 
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
@@ -38,12 +36,18 @@ fi
 # MAN
   export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 
+# Nodejs
+  export NODE_EXTRA_CA_CERTS=${CUSTOM_CA_CERTS}
+
 # PERSONAL BIN
   # export PATH=$PATH:~/Documents/code/ME/bin
   export PATH=$PATH:~/work/tools-and-snippets/bin
 
 # PYTHON
-  export REQUESTS_CA_BUNDLE=${HOME}/CustomCA.pem
+  export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
+
+# Ruby
+  export SSL_CERT_FILE=${CUSTOM_CA_CERTS}
 
 # COLOURS
   export COLORTERM='truecolor'
@@ -52,3 +56,8 @@ fi
   export DARK_KITTY_THEME='Nightfox'
   export LIGHT_KITTY_THEME='Dawnfox'
   source ${HOME}/.config/shell/lib/env_colours.sh
+
+# OTHER
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source ${HOME}/.config/shell/lib/env_mac.sh
+fi

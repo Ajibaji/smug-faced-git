@@ -44,36 +44,17 @@ function authGithub() {
   read -p 'When done, press any key to continue...' continue
 }
 
-function cloneAndLink() {
-  function createSymLink () {
-    local directory="$@"
-    directory=$(basename ${directory})
-    local sourceDir="${PWD}/${directory}"
-    local destDir="${HOME}/.config/${directory}"
-    local n="$(( ( RANDOM % 100 )  + 1 ))"
-
-    if [[ -d "$destDir" ]]
-    then
-      mv ${destDir} ${destDir}-${n}.bak
-    fi
-
-    ln -s ${sourceDir} ${destDir}
-  }
-
-  export -f createSymLink
+function clone() {
   export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-  git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git || git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
-
-  cd smug-faced-git
-
-  find . -maxdepth 1 \
-    -type d \
-    -not -path '*.git' \
-    -not -path '.' \
-    -exec createSymLink '{}' \;
+  if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git; then
+    git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
+  else
+    git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
+  fi
 
   unset GIT_SSH_COMMAND
+  cd smug-faced-git
 }
 
 function installBrew() {
@@ -89,27 +70,32 @@ function installBrew() {
 
 function runDotbot() {
   cd ${HOME}/smug-faced-git
-  # exec ./install
-  ./dotbot-run.sh
+  ./dotbot-run.sh $@
   cd -
 }
 
+function printHeading() {
+  printf "%119s\n" ${@}— | sed -e 's/ /—/g';
+}
 function menu() {
-  clear
-
+  echo -e "\n\n\n\n\n\n\n"
+  printHeading Menu
   PS3="Select choice: "
-  select choice in "Authenticate GitHub" "Clone and link dotfiles" "Run DotBot" "Install Brew" Quit
+  select choice in "Authenticate GitHub" "Clone dotfiles repo" "Link only" "Link and run DotBot" "Install Brew" Quit
   do
     case $choice in
       "Authenticate GitHub")
         authGithub 
         break;;
-      "Clone and link dotfiles")
-        cloneAndLink
+      "Clone dotfiles repo")
+        clone
         break;;
-      "Run DotBot")
+      "Link only")
+        runDotbot symlink
+        break;;
+      "Link and run DotBot")
         runDotbot
-	exit 0;;
+        exit 0;;
       "Install Brew")
         installBrew
         break;;

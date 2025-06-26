@@ -9,6 +9,7 @@
       force: true
 
 - link:
+    ~/.config/aerospace: aerospace
     ~/.config/amethyst: amethyst
     ~/.config/atuin: atuin
     ~/.config/bash: bash
@@ -28,16 +29,20 @@
     ~/.config/nushell: nushell
     ~/.config/nvim: nvim
     ~/.config/powershell: powershell
+    ~/.config/raycast: raycast
     ~/.config/shell: shell
+    ~/.config/sketchybar: sketchybar
     ~/.config/starship: starship
     ~/.config/tmux: tmux
     ~/.config/yazi: yazi
     ~/.config/zed: zed
     ~/.config/zsh: zsh
-    ~/.hushlogin: ./.hushlogin
+    ~/.aerospace.toml: aerospace/.aerospace.toml
     ~/.bashrc: bash/.bashrc
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
+    ~/.hushlogin: ./.hushlogin
+    ~/.profile: bash/.profile
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zprofile: zsh/.zprofile
     ~/.zshenv: zsh/.zshenv

@@ -22,10 +22,11 @@
     - command: |
         defaults write com.apple.dock workspaces-auto-swoosh -bool NO
         killall Dock
+        defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
       stdin: true
       stderr: true
       quiet: false
-      description: disable auto-manage spaces
+      description: configure MacOS for TWM
     - command: |
         export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
