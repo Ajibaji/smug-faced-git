@@ -193,3 +193,6 @@ edit = [
 # enabled = false
 # 
 # [headsup]
+
+[flavor]
+use = "monokai-vibrant"
