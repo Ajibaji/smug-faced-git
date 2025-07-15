@@ -262,9 +262,38 @@ fi
     | awk -F  ":" '/1/ {start = $2<5 ? 0 : $2 - 5; end = $2 + 5; print $1 " " $2 " " $3 " " start ":" end}' \
     | fzf \
         --bind 'ctrl-o:execute(nvim +"call cursor({2},{3})" {1})+cancel' \
-        --preview 'batcat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
+        --preview 'bat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
         --preview-window wrap
   }
+
+  function ff () {
+    rm -f /tmp/rg-fzf-{r,f}
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    INITIAL_QUERY="${*:-}"
+    fzf --ansi --disabled --query "$INITIAL_QUERY" \
+        --bind "start:reload:$RG_PREFIX {q}" \
+        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+        --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
+          echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
+          echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
+        --color "hl:-1:underline,hl+:-1:underline:reverse" \
+        --prompt '1. ripgrep> ' \
+        --delimiter : \
+        --header 'CTRL-T: Switch between ripgrep/fzf' \
+        --preview 'bat --color=always {1} --highlight-line {2}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+        --bind 'enter:become(nvim {1} +"call cursor("{2}", "{3}")")'
+  }
+
+function gg () {
+  fd ${*:-} |
+    fzf --prompt 'Files> ' \
+        --header 'CTRL-T: Switch between Files/Directories' \
+        --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
+                echo "change-prompt(Files> )+reload(fd ${*:-})" ||
+                echo "change-prompt(Directories> )+reload(fd --type directory)"' \
+        --preview '[[ $FZF_PROMPT =~ Files ]] && bat --color=always {} || tree -C {}'
+}
 
 # Automatic node version switching (FNM)
   function load-nvmrc() {
