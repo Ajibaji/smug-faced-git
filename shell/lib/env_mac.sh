@@ -1,8 +1,9 @@
 # MAC only stuff to extend env.sh
 
 # BREW
+# this file is sourced BEFORE .bashrc or .zshrc so brew is not in
   export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
-  eval "`brew shellenv`"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # CA-Certs
   export CUSTOM_CA_CERTS="/opt/homebrew/etc/ca-certificates/cert.pem"

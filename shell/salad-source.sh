@@ -17,6 +17,8 @@
     source ${HOME}/.config/shell/lib/theme.sh
 
 #_________________________________________________________________________________SECRETS:
+# this references content pulled from a private repo. it is not nor has it ever been in
+# this one
     if [[ -d ${HOME}/seeshellontheseasaw ]]
     then
         source ${HOME}/seeshellontheseasaw/private.sh
