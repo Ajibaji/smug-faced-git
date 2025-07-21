@@ -93,7 +93,7 @@ sketchybar --update
 sketchybar --add event aerospace_workspace_change
 
 # for sid in $(aerospace list-workspaces --all); do
-workspaces="Teams-1 Teams-2 Web Shell Misc"
+workspaces="Teams Web Shell Misc-1 Misc-2"
 for sid in $workspaces; do
     sketchybar --add item space.$sid left \
         --subscribe space.$sid aerospace_workspace_change \
