@@ -258,6 +258,7 @@ fi
       --ignore-case \
       --hidden \
       --follow \
+      --no-ignore \
       --glob '!.git/*' "$1" \
     | awk -F  ":" '/1/ {start = $2<5 ? 0 : $2 - 5; end = $2 + 5; print $1 " " $2 " " $3 " " start ":" end}' \
     | fzf \
@@ -268,7 +269,7 @@ fi
 
   function ff () {
     rm -f /tmp/rg-fzf-{r,f}
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore"
     INITIAL_QUERY="${*:-}"
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
         --bind "start:reload:$RG_PREFIX {q}" \
@@ -286,7 +287,7 @@ fi
   }
 
 function gg () {
-  fd ${*:-} |
+  fd ${*:-} --no-ignore |
     fzf --prompt 'Files> ' \
         --header 'CTRL-T: Switch between Files/Directories' \
         --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
