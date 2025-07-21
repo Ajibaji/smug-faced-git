@@ -10,7 +10,7 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+    'exec-and-forget borders active_color=0xffffa500 inactive_color=0xff494d64 width=10.0',
     'exec-and-forget sketchybar',
 ]
 
@@ -128,18 +128,18 @@ automatically-unhide-macos-hidden-apps = true
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace Teams-1'
-    alt-2 = 'workspace Teams-2'
-    alt-3 = 'workspace Web'
-    alt-4 = 'workspace Shell'
-    alt-5 = 'workspace Misc'
+    alt-1 = 'workspace Teams'
+    alt-2 = 'workspace Web'
+    alt-3 = 'workspace Shell'
+    alt-4 = 'workspace Misc-1'
+    alt-5 = 'workspace Misc-2'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace --focus-follows-window Teams-1'
-    alt-shift-2 = 'move-node-to-workspace --focus-follows-window Teams-2'
-    alt-shift-3 = 'move-node-to-workspace --focus-follows-window Web'
-    alt-shift-4 = 'move-node-to-workspace --focus-follows-window Shell'
-    alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc'
+    alt-shift-1 = 'move-node-to-workspace --focus-follows-window Teams'
+    alt-shift-2 = 'move-node-to-workspace --focus-follows-window Web'
+    alt-shift-3 = 'move-node-to-workspace --focus-follows-window Shell'
+    alt-shift-4 = 'move-node-to-workspace --focus-follows-window Misc-1'
+    alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc-2'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # alt-tab = 'workspace-back-and-forth'
@@ -150,11 +150,11 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-semicolon = 'mode service'
 
 [workspace-to-monitor-force-assignment]
-    Teams-1 = '^built-in retina display$'
-    Teams-2 = ['VG3456', 'main', '^built-in retina display$']
+    Teams = '^built-in retina display$'
     # Web = 'main'
     # Shell = ['VG3456', 'main']
-    # Misc = ['VG3456', 'main']
+    # Misc-1 = ['VG3456', 'main']
+    # Misc-2 = ['VG3456', 'main', '^built-in retina display$']
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
@@ -176,7 +176,7 @@ run = [
 if.app-id = "com.microsoft.teams2"
 run = [
     "layout tiling",
-    "move-node-to-workspace Teams-1",
+    "move-node-to-workspace Teams",
 ]
 
 [[on-window-detected]]
@@ -197,7 +197,7 @@ run = [
 if.app-id = "com.citrix.receiver.icaviewer.mac"
 run = [
     "layout tiling",
-    "move-node-to-workspace Misc",
+    "move-node-to-workspace Misc-2",
 ]
 
 # 'service' binding mode declaration.
