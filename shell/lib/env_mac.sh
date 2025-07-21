@@ -11,6 +11,9 @@
 # Java
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home"
 
+# MAN
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # Ruby
   export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
   export PATH="$(gem environment gempath):$PATH"
