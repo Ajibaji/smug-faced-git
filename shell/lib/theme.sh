@@ -1,8 +1,4 @@
 # THEME SWITCHER
-  function set-kitty-theme () {
-    kitty +kitten themes --reload-in=all --config-file-name=themes.conf "$KITTY_THEME"
-  }
-
   function set-git-theme () {
     git config --global delta.features "$CURRENT_THEME"
   }
@@ -27,7 +23,6 @@
     fi
     set-session-theme
     set-git-theme
-    # set-kitty-theme
   }
 
   function set-os-theme () {
@@ -50,7 +45,6 @@
     fi
     (set-os-theme $darkMode)
     set-session-theme
-    [ $TERM = 'xterm-kitty' ] && set-kitty-theme
     set-git-theme
     # wait
   }
@@ -58,4 +52,3 @@
 # RUN
   # SILENT=true aws-env & --------------- takes way too long using aws config and cant be thrown to background as env vars dont get set
   get-current-theme
-  [ $TERM = 'xterm-kitty' ] && set-kitty-theme
