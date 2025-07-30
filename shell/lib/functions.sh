@@ -45,7 +45,7 @@ fi
   function aws-env () {
     local ROLE=$@
     [[ $SILENT != "true" ]] && echo $ROLE
-    PROFILE=${ROLE:-WS-00YY-role_DEVOPS}
+    PROFILE=${ROLE:-default}
     [[ $SILENT != "true" ]] && echo "Writing $PROFILE environment variables";
     export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile "$PROFILE");
     export AWS_DEFAULT_REGION=$(aws configure get region --profile "$PROFILE");
@@ -68,7 +68,6 @@ fi
   italic()        { ansi 3 "$@"; }
   underline()     { ansi 4 "$@"; }
   strikethrough() { ansi 9 "$@"; }
-  red()           { ansi 31 "$@"; }
   RED="$(tput setaf 1)"
   GREEN="$(tput setaf 2)"
   YELLOW="$(tput setaf 3)"
@@ -166,9 +165,10 @@ fi
             for directory in $dir_names
             do
               echo "Deleting all '$directory' directories from this tree..."
-              (find . -name $directory -type d -not -path "$exclude" -exec rm -rf '{}' + &)
+              # (find . -name $directory -type d -not -path "$exclude" -exec rm -rf '{}' + &)
+              # (find . -name $directory -type d -not -path "$exclude" -exec bash -c 'rm -rf {} && echo "DELETED: {}"' + &)
+              (find . -name $directory -type d -not -path "$exclude" -exec echo "{}" \; -exec echo "{}" \; | parallel --tagstring 'DELETING: {}' rm -rf {})
             done
-            wait
             echo "Done"
           else
             echo "Cancelled"
@@ -197,7 +197,7 @@ fi
     echo $PATH | tr ":" "\n"
   }
 
-# SHOW WHICH PATH ENTRIES AN EXECUTABLE APPEARS IN
+# SHOW WHICH PATH ENTRIES AN EXECUTABLE APPEARS IN (ORDERED BY POSITION IN $PATH)
   function whichpath () {
     if [ $# -eq 0 ]
     then
@@ -251,50 +251,47 @@ fi
 
 # FIND IN FILES
   function fif () {
-    rg  \
-      --column \
-      --no-heading \
-      --fixed-strings \
-      --ignore-case \
-      --hidden \
-      --follow \
-      --no-ignore \
-      --glob '!.git/*' "$1" \
-    | awk -F  ":" '/1/ {start = $2<5 ? 0 : $2 - 5; end = $2 + 5; print $1 " " $2 " " $3 " " start ":" end}' \
-    | fzf \
-        --bind 'ctrl-o:execute(nvim +"call cursor({2},{3})" {1})+cancel' \
-        --preview 'bat --wrap character --color always {1} --highlight-line {2} --line-range {4}' \
-        --preview-window wrap
-  }
-
-  function ff () {
+    OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+              nvim {1} +{2}     # No selection. Open the current line in Vim.
+            else
+              nvim +cw -q {+f}  # Build quickfix list for the selected items.
+            fi'
     rm -f /tmp/rg-fzf-{r,f}
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore"
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore --multiline"
     INITIAL_QUERY="${*:-}"
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
+        --info inline-right \
+        --no-separator \
         --bind "start:reload:$RG_PREFIX {q}" \
+        --preview-window 'right,60%,border-none,+{2}+3/3,~3' \
+        --border thinblock --border-label ' F I N D   I N   F I L E S ' --border-label-pos top --padding 1,2 \
         --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
         --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
-          echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
-          echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
-        --color "hl:-1:underline,hl+:-1:underline:reverse" \
-        --prompt '1. ripgrep> ' \
+          echo "rebind(change)+change-prompt(ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
+          echo "unbind(change)+change-prompt(fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
+        --prompt 'ripgrep> ' \
         --delimiter : \
         --header 'CTRL-T: Switch between ripgrep/fzf' \
-        --preview 'bat --color=always {1} --highlight-line {2}' \
-        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-        --bind 'enter:become(nvim {1} +"call cursor("{2}", "{3}")")'
+        --header-border none \
+        --preview 'bat {1} --highlight-line {2}' \
+        --bind 'alt-enter:accept' \
+        --bind "enter:become:$OPENER"
   }
 
-function gg () {
-  fd ${*:-} --no-ignore |
-    fzf --prompt 'Files> ' \
-        --header 'CTRL-T: Switch between Files/Directories' \
-        --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
-                echo "change-prompt(Files> )+reload(fd ${*:-})" ||
-                echo "change-prompt(Directories> )+reload(fd --type directory)"' \
-        --preview '[[ $FZF_PROMPT =~ Files ]] && bat --color=always {} || tree -C {}'
-}
+# FIND FILES
+  function ff () {
+    fd ${*:-} --no-ignore | fzf \
+      --info inline-right \
+      --no-separator \
+      --prompt 'Files> ' \
+      --header 'CTRL-T: Switch between Files/Directories' \
+      --list-border thinblock --preview-window border-thinblock \
+      --border line --border-label ' F I L E S   &   D I R E C T O R I E S ' --border-label-pos top --padding 1,2 \
+      --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
+          echo "change-prompt(Files> )+reload(fd ${*:-})" ||
+          echo "change-prompt(Directories> )+reload(fd --type directory)"' \
+      --preview '[[ $FZF_PROMPT =~ Files ]] && bat {} || tree -C {}'
+  }
 
 # Automatic node version switching (FNM)
   function load-nvmrc() {
@@ -307,11 +304,11 @@ function gg () {
   }
 
 # YAZI
-function yy() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(\cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    builtin cd -- "$cwd"
-  fi
-  rm -f -- "$tmp"
-}
+  function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(\cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+  }

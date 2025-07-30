@@ -22,7 +22,8 @@ fi
   alias dokcre='docker $@'
 
 # DOS-style clear-screen
-  alias cls='clear'
+  alias cls='clear -x'
+  # alias clear='clear -x'
 
 # GIT ALIASES
   alias gst='git status'
