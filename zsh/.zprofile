@@ -8,6 +8,9 @@
 # need to be updated frequently. e.g:
 #  - environment variables to configure tools
 #  - configuration which executes commands (as it may take some time to execute)
+# in MacOS, PATH variables must be set here for interactive and non-interactive shells
+# this is because MacOS has a helper utility that runs before .zprofile and re-orders PATH
+# entries
 # =======================================================================================
 
 # auto-suggestions (now included under ~/.config/zsh/.zhistory)
@@ -30,3 +33,8 @@
 # The original version is saved in .zprofile.pysave
 export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:${PATH}"
 export PATH="${HOME}/Library/Python/3.13/bin:${PATH}"
+
+# MORE
+  source "$HOME/.config/shell/env.sh"
+
+. "$HOME/.cargo/env"

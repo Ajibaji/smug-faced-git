@@ -22,12 +22,5 @@
   export DISPLAY=:0
 #  export PATH=$PATH:/usr/X11R6/bin
 
-# GNU - try to keep this last(ish)
-#  export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH" # COREUTILS
-#  export PATH="/usr/local/opt/binutils/bin:$PATH" # BINUTILS
-#  export LDFLAGS="-L/usr/local/opt/binutils/lib" # LD FLAG FOR COMPILER
-#  export CPPFLAGS="-I/usr/local/opt/binutils/include" # CPP FLAG FOR COMPILER
-#  export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" # TAR
-#  export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH" # SED
-#  export PATH="/usr/local/opt/make/libexec/gnubin:$PATH" # MAKE
-#  export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH" # FINDUTILS
+# KEEP THIS LAST
+  export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"

@@ -3,22 +3,39 @@
 #  - frequently updated ENV VARS e.g. PATH
 # =======================================================================================
 
+# BASE VALUES TO BE OVERWRITTEN BY OS-SPECIFIC VALUES (IF PRESENT)
+# =======================================================================================
+
+# -------
+  export EDITOR=nvim
+
+# CA-certs
+  export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
+
+# MAN
+  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+
+# WSL VALUES
+# =======================================================================================
 if [[ -n "${WSL_DISTRO_NAME}" ]]; then
   export KITTY_DISABLE_WAYLAND=1
   export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
 fi
 
-# -------
-  export EDITOR=nvim
+# MACOS VALUES
+# =======================================================================================
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source ${HOME}/.config/shell/lib/env_mac.sh
+fi
+
+# CONCATENATED VALUES
+# =======================================================================================
 
 # AWS CREDENTIALS
   export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
 
 # AZURE
   export VSO_AGENT_IGNORE=PIPELINE_AGENT_TOKEN,USER,AWS_SHARED_CREDENTIALS_FILE,API_TOKEN
-
-# Custom CA certs
-  export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
 
 # DOTNET
   export PATH=$PATH:$HOME/.dotnet/tools
@@ -32,9 +49,6 @@ fi
 
 # KUBERNETES
   export PATH=$PATH:~/.kube/plugins/jordanwilson230
-
-# MAN
-  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 
 # Nodejs
   export NODE_EXTRA_CA_CERTS=${CUSTOM_CA_CERTS}
@@ -56,8 +70,3 @@ fi
   export DARK_KITTY_THEME='Nightfox'
   export LIGHT_KITTY_THEME='Dawnfox'
   source ${HOME}/.config/shell/lib/env_colours.sh
-
-# OTHER
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source ${HOME}/.config/shell/lib/env_mac.sh
-fi

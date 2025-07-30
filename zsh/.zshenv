@@ -12,5 +12,8 @@
 # COLOURS
   export LIGHT_ZSH_AUTOSUGGEST_HL_STYLE='fg=248'
   export DARK_ZSH_AUTOSUGGEST_HL_STYLE='fg=236'
-  source ${HOME}/.config/shell/env.sh
+ 
+# MORE
+  source "$HOME/.config/shell/env.sh"
+
 . "$HOME/.cargo/env"

@@ -8,13 +8,13 @@
 
 
 #_________________________________________________________________________________ALIASES:
-    source ${HOME}/.config/shell/lib/aliases.sh
+    source "$HOME/.config/shell/lib/aliases.sh"
 
 #_______________________________________________________________________________FUNCTIONS:
-    source ${HOME}/.config/shell/lib/functions.sh
+    source "$HOME/.config/shell/lib/functions.sh"
 
 #__________________________________________________________________________THEME_SWITCHER:
-    source ${HOME}/.config/shell/lib/theme.sh
+    source "$HOME/.config/shell/lib/theme.sh"
 
 #_________________________________________________________________________________SECRETS:
 # this references content pulled from a private repo. it is not nor has it ever been in
