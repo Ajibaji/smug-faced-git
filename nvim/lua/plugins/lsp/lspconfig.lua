@@ -4,7 +4,7 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
+    event = 'VeryLazy',
     dependencies = {
       {
         'williamboman/mason.nvim',
@@ -153,9 +153,6 @@ return {
         terraformls = {},
         -- ts_ls = {},
         lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
           settings = {
             Lua = {
               completion = {
@@ -235,9 +232,7 @@ return {
       end
 
       vim.diagnostic.config({
-        virtual_text = {
-          prefix = 'jeff says...',
-        },
+        virtual_text = true,
         virtual_lines = true,
         signs = true,
         underline = true,
