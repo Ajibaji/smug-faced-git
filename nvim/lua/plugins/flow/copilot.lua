@@ -92,7 +92,7 @@ return {
         mode = { 'i' },
       },
       {
-        '<C-//>',
+        '<C-/>',
         function()
           require('copilot.panel').open()
         end,
