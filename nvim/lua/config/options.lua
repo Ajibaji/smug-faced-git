@@ -38,7 +38,6 @@ g.have_nerd_font = true
 --g.python3_host_prog = '/usr/local/bin/python3'
 
 o.cmdheight = 1
-o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 o.updatetime = 250
 
 if g.neovide then
@@ -89,6 +88,8 @@ opt.wrap = false
 opt.fileencoding = 'utf-8'
 
 opt.undofile = true
+
+opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 o.autoread = false       --> disabled due to unstable behaviour e.g. npm i
 o.completeopt = 'menuone,noselect'
