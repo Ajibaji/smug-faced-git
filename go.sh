@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 function authGithub() {
   KEY_PATH="${HOME}/.ssh/github_id_ed25519"
   IS_LINUX=${IS_LINUX:-$(test $(uname -s) = "Linux" && echo 'true')}
@@ -77,6 +75,7 @@ function runDotbot() {
 function printHeading() {
   printf "%119s\n" ${@}— | sed -e 's/ /—/g';
 }
+
 function menu() {
   echo -e "\n\n\n\n\n\n\n"
   printHeading Menu

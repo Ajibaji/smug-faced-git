@@ -2,7 +2,7 @@
 
 # post-install configuration scripts go here
 
-printf "\n\nallowing docker to be used by non-root...\n"
+printf "\n\nAllowing docker to be used by non-root...\n"
 sudo groupadd -f docker
 sudo usermod -aG docker $(whoami)
 rm -rf ~/.docker

@@ -110,6 +110,8 @@
         if ! command -v kitty; then
           echo "my name is $(whoami)"
           curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
+          ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
+          echo 'kitty.desktop' > ~/.config/xdg-terminals.list
         fi
       stdin: true
       stderr: true
@@ -129,14 +131,18 @@
       quiet: true
       description: installing npm packages
     - command: |
-        sudo snap install jqp
+        if ! command -v jqp; then
+          sudo snap install jqp
+        fi
       stdin: true
       stderr: true
       quiet: true
       description: installing jqp
     - command: |
-        curl https://zyedidia.github.io/eget.sh | sh
-        sudo mv ./eget /usr/local/bin/eget
+        if ! command -v eget; then
+          curl https://zyedidia.github.io/eget.sh | sh
+          sudo mv ./eget /usr/local/bin/eget
+        fi
       stdin: true
       stderr: true
       quiet: true
