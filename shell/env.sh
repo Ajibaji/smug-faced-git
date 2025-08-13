@@ -10,7 +10,7 @@
   export EDITOR=nvim
 
 # CA-certs
-  export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
+  [[ -f $CUSTOM_CA_CERTS ]] && export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
 
 # MAN
   export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
@@ -38,7 +38,8 @@ fi
   export VSO_AGENT_IGNORE=PIPELINE_AGENT_TOKEN,USER,AWS_SHARED_CREDENTIALS_FILE,API_TOKEN
 
 # DOTNET
-  export PATH=$PATH:$HOME/.dotnet/tools
+  export DOTNET_ROOT=$HOME/.dotnet
+  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
@@ -51,17 +52,17 @@ fi
   export PATH=$PATH:~/.kube/plugins/jordanwilson230
 
 # Nodejs
-  export NODE_EXTRA_CA_CERTS=${CUSTOM_CA_CERTS}
+  [[ -f $CUSTOM_CA_CERTS ]] && export NODE_EXTRA_CA_CERTS=${CUSTOM_CA_CERTS}
 
 # PERSONAL BIN
   # export PATH=$PATH:~/Documents/code/ME/bin
   export PATH=$PATH:~/work/tools-and-snippets/bin
 
 # PYTHON
-  export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
+  [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
 
 # Ruby
-  export SSL_CERT_FILE=${CUSTOM_CA_CERTS}
+  [[ -f $CUSTOM_CA_CERTS ]] && export SSL_CERT_FILE=${CUSTOM_CA_CERTS}
 
 # COLOURS
   export COLORTERM='truecolor'
