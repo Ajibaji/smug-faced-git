@@ -21,20 +21,10 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('<leader>gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition (Telescope)')
           map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-          map('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences (Telescope)')
           map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-          map('<leader>gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation (Telescope)')
-          -- map('gI', vim.lsp.buf.implementations, '[G]oto [I]mplementation')
-          map('<leader>gD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          map('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          -- map('<leader>F', function() vim.lsp.buf.format { async = true } end, '[F]ormat') -- replaced with conform.nvim
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
@@ -225,16 +215,23 @@ return {
       })
     end,
     init = function()
-      local signs = { Error = '󰅚', Warn = '󰀪', Hint = '󰌶', Info = '' }
-      for type, icon in pairs(signs) do
-        local hl = 'DiagnosticSign' .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
-
       vim.diagnostic.config({
-        virtual_text = true,
-        virtual_lines = true,
-        signs = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '󰅚',
+            [vim.diagnostic.severity.WARN] = '󰀪',
+            [vim.diagnostic.severity.INFO] = '',
+            [vim.diagnostic.severity.HINT] = '󰌶',
+          },
+          linehl = {
+            [vim.diagnostic.severity.ERROR] = "Error",
+            [vim.diagnostic.severity.WARN] = "Warn",
+            [vim.diagnostic.severity.INFO] = "Info",
+            [vim.diagnostic.severity.HINT] = "Hint",
+          }
+        },
+        virtual_text = false,
+        virtual_lines = { current_line = true },
         underline = true,
         update_in_insert = false,
         severity_sort = false,

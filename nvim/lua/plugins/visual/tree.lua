@@ -120,18 +120,64 @@ return {
       hl = "SnacksIndentScope", ---@type string|string[] hl group for scopes
     },
     scroll = { enabled = true },
-    statuscolumn = { enabled = true },
+    statuscolumn = {
+      enabled = true,
+      left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+      right = { "fold", "git" }, -- priority of signs on the right (high to low)
+      folds = {
+        open = false, -- show open fold icons
+        git_hl = false, -- use Git Signs hl for fold icons
+      },
+      git = {
+        -- patterns to match Git signs
+        patterns = { "GitSign", "MiniDiffSign" },
+      },
+      refresh = 50, -- refresh at most every 50ms
+    },
     terminal = { enabled = true },
     words = { enabled = true },
     picker = {
+      files = {
+        finder = "files",
+        format = "file",
+        show_empty = true,
+        hidden = true,
+        ignored = true,
+        follow = false,
+        supports_live = true,
+      },
+      previewers = {
+        diff = {
+          builtin = false, -- use Neovim for previewing diffs (true) or use an external tool (false)
+          cmd = { "delta" }, -- example to show a diff with delta
+        },
+        git = {
+          builtin = false, -- use Neovim for previewing git output (true) or use git (false)
+          args = {}, -- additional arguments passed to the git command. Useful to set pager options usin `-c ...`
+        },
+        file = {
+          max_size = 1024 * 1024, -- 1MB
+          max_line_length = 500, -- max line length
+          ft = nil, ---@type string? filetype for highlighting. Use `nil` for auto detect
+        },
+        man_pager = nil, ---@type string? MANPAGER env to use for `man` preview
+      },
+      ui_select = true,
       sources = {
+        layout = {
+          cycle = true,
+          --- Use the default layout or vertical if the window is too narrow
+          preset = function()
+            return vim.o.columns >= 120 and "default" or "vertical"
+          end,
+        },
         projects = {
           finder = "recent_projects",
           format = "file",
           dev = { "~/work" },
           confirm = "load_session",
           patterns = { ".git", ".svn" },
-          recent = true,
+          recent = false,
           matcher = {
             frecency = true, -- use frecency boosting
             sort_empty = true, -- sort even when the filter is empty
@@ -167,6 +213,8 @@ return {
           supports_live = true,
           tree = true,
           watch = true,
+          hidden = true,
+          ignored = true,
           diagnostics = true,
           diagnostics_open = false,
           git_status = true,
@@ -312,5 +360,7 @@ return {
     { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- OTHER
     { '<C-\\>', function() Snacks.terminal.toggle() end, desc = "Toggle Terminal" },
+    { '<A-c>', function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+    { 'ç', function() Snacks.bufdelete() end, desc = "Delete Buffer" },
   }
 }
