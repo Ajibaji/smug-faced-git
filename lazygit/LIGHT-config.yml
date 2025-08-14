@@ -71,7 +71,7 @@ git:
   allBranchesLogCmds:
     - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
 os:
-  edit: 'nvim' # see 'Configuring File Editing' section
+  edit: 'nvim {{filename}}' # see 'Configuring File Editing' section
   editAtLine: '{{editor}} +{{line}} {{filename}}'
   open: 'open {{filename}}'
 refresher:
