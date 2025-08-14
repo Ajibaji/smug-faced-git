@@ -1,310 +1,316 @@
 return {
-  'nvim-tree/nvim-tree.lua',
+  "folke/snacks.nvim",
   lazy = false,
-  priority = 1000,
-  keys = {
-    { '<leader>w', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
-  },
-  dependencies = {
-    'nvim-tree/nvim-web-devicons',
-    'MunifTanjim/nui.nvim',
-  },
-  config = function()
-    local tree = require('nvim-tree')
-
-    local function run_on_attach(bufnr)
-      local api = require('nvim-tree.api')
-
-      local popup_preview = function(file_path)
-        local Popup = require('nui.popup')
-        local autocmd = require('nui.utils.autocmd')
-        local event = autocmd.event
-
-        local popup_options = {
-          enter = true,
-          border = {
-            style = 'single',
-            highlight = 'Fg',
-            text = {
-              top_align = 'left',
-            },
-          },
-          highlight = 'Normal:Normal',
-          position = '50%',
-          size = {
-            width = '70%',
-            height = '80%',
-          },
-          relative = 'editor',
-          opacity = 1,
-          -- zindex = 50,
-          focusable = true,
-        }
-
-        local popup = Popup(popup_options)
-        popup:mount()
-
-        local fname = vim.fn.fnameescape(file_path)
-        vim.fn.win_execute(popup.winid, 'edit ' .. fname)
-        vim.wo[popup.winid].number = false
-        vim.wo[popup.winid].signcolumn = 'no'
-        vim.bo[vim.fn.winbufnr(popup.winid)].buflisted = false
-
-        popup:on({ event.BufLeave, event.BufWinLeave, event.WinLeave, event.CmdWinEnter }, function()
-          vim.schedule(function()
-            popup:unmount()
-          end)
-        end, { once = true })
-
-        popup:map('n', '<esc>', function()
-          popup:unmount()
-        end, { noremap = true })
-      end
-
-      local function preview()
-        local node = api.tree.get_node_under_cursor()
-        if node ~= nil then
-          local path = node.absolute_path
-          if vim.fn.isdirectory(path) == 1 then
-            return
-          end
-          popup_preview(path)
+  opts = {
+    bigfile = { enabled = true },
+    dashboard = { enabled = true },
+    explorer = {
+      replace_netrw = true,
+    },
+    indent = {
+      priority = 1,
+      enabled = true, -- enable indent guides
+      char = "│",
+      only_scope = false, -- only show indent guides of the scope
+      only_current = false, -- only show indent guides in the current window
+      hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
+    },
+    animate = {
+      enabled = vim.fn.has("nvim-0.10") == 1,
+      style = "out",
+      easing = "linear",
+      duration = {
+        step = 20, -- ms per step
+        total = 500, -- maximum duration
+      },
+    },
+    chunk = {
+      -- when enabled, scopes will be rendered as chunks, except for the
+      -- top-level scope which will be rendered as a scope.
+      enabled = false,
+      -- only show chunk scopes in the current window
+      only_current = false,
+      priority = 200,
+      hl = "SnacksIndentChunk", ---@type string|string[] hl group for chunk scopes
+      char = {
+        corner_top = "┌",
+        corner_bottom = "└",
+        -- corner_top = "╭",
+        -- corner_bottom = "╰",
+        horizontal = "─",
+        vertical = "│",
+        arrow = ">",
+      },
+    },
+    gitbrowse = {
+      notify = true, -- show notification on open
+      -- Handler to open the url in a browser
+      ---@param url string
+      open = function(url)
+        if vim.fn.has("nvim-0.10") == 0 then
+          require("lazy.util").open(url, { system = true })
+          return
         end
-      end
-
-      local function collapse()
-        -- require("nvim-tree.actions.tree-modifiers.collapse-all").fn(true)
-        api.tree.collapse_all(true)
-      end
-
-      local function opts(desc)
-        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-      end
-
-      vim.keymap.set('n', '<s-Tab>', preview, opts('Open Preview'))
-      vim.keymap.set('n', 'w', collapse, opts('Collapse keep open buffers'))
-      -- vim.keymap.set("n", "W", api.tree.collapse_all(true), opts("Collapse keep open buffers"))
-    end
-
-    tree.setup({
-      disable_netrw = false,
-      hijack_netrw = true,
-      create_in_closed_folder = false,
-      open_on_tab = false,
-      hijack_cursor = false,
-      hijack_unnamed_buffer_when_opening = false,
-      auto_reload_on_write = true,
-      update_cwd = false,
-      reload_on_bufenter = true,
-      respect_buf_cwd = false,
-      select_prompts = false,
-      diagnostics = {
-        enable = true,
-        show_on_dirs = false,
-        show_on_open_dirs = true,
-        debounce_delay = 50,
-        severity = {
-          min = vim.diagnostic.severity.INFO,
-          max = vim.diagnostic.severity.ERROR,
-        },
-        icons = {
-          hint = '',
-          info = '',
-          warning = '',
-          error = '',
-        },
+        vim.ui.open(url)
+      end,
+      ---@type "repo" | "branch" | "file" | "commit" | "permalink"
+      what = "file", -- what to open. not all remotes support all types
+      branch = nil, ---@type string?
+      line_start = nil, ---@type number?
+      line_end = nil, ---@type number?
+      -- patterns to transform remotes to an actual URL
+      remote_patterns = {
+        { "^(https?://.*)%.git$"              , "%1" },
+        { "^git@(.+):(.+)%.git$"              , "https://%1/%2" },
+        { "^git@(.+):(.+)$"                   , "https://%1/%2" },
+        { "^git@(.+)/(.+)$"                   , "https://%1/%2" },
+        { "^org%-%d+@(.+):(.+)%.git$"         , "https://%1/%2" },
+        { "^ssh://git@(.*)$"                  , "https://%1" },
+        { "^ssh://([^:/]+)(:%d+)/(.*)$"       , "https://%1/%3" },
+        { "^ssh://([^/]+)/(.*)$"              , "https://%1/%2" },
+        { "ssh%.dev%.azure%.com/v3/(.*)/(.*)$", "dev.azure.com/%1/_git/%2" },
+        { "^https://%w*@(.*)"                 , "https://%1" },
+        { "^git@(.*)"                         , "https://%1" },
+        { ":%d+"                              , "" },
+        { "%.git$"                            , "" },
       },
-      update_focused_file = {
-        enable = true,
-        update_cwd = false,
-        ignore_list = { 'node_modules' },
-      },
-      system_open = {
-        cmd = '',
-        args = {},
-      },
-      filters = {
-        dotfiles = false,
-        custom = {
-          '^.git$',
-          '.vscode$',
-          '.cache$',
-          '.DS_Store$',
+      url_patterns = {
+        ["github%.com"] = {
+          branch = "/tree/{branch}",
+          file = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+          permalink = "/blob/{commit}/{file}#L{line_start}-L{line_end}",
+          commit = "/commit/{commit}",
         },
-        exclude = {
-          '.gitignore',
+        ["gitlab%.com"] = {
+          branch = "/-/tree/{branch}",
+          file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
+          permalink = "/-/blob/{commit}/{file}#L{line_start}-L{line_end}",
+          commit = "/-/commit/{commit}",
+        },
+        ["bitbucket%.org"] = {
+          branch = "/src/{branch}",
+          file = "/src/{branch}/{file}#lines-{line_start}-L{line_end}",
+          permalink = "/src/{commit}/{file}#lines-{line_start}-L{line_end}",
+          commit = "/commits/{commit}",
+        },
+        ["git.sr.ht"] = {
+          branch = "/tree/{branch}",
+          file = "/tree/{branch}/item/{file}",
+          permalink = "/tree/{commit}/item/{file}#L{line_start}",
+          commit = "/commit/{commit}",
         },
       },
-      git = {
-        --enable = true,
-        enable = true,
-        ignore = false,
-        timeout = 500,
-      },
-      view = {
-        centralize_selection = false,
-        cursorline = true,
-        --width = 30,
-        --hide_root_folder = false,
-        side = 'right',
-        adaptive_size = true,
-        preserve_window_proportions = false,
-        -- mappings = {
-        --   custom_only = false,
-        --   list = {
-        --     { key = '[tab]', action = 'preview', action_cb = preview },
-        --     { key = 'W', action = 'collapse_keep_buffers', action_cb = collapse },
-        --   }
-        -- },
-        on_attach = run_on_attach(),
-        number = false,
-        relativenumber = false,
-        signcolumn = 'yes',
-        float = {
-          enable = false,
-          quit_on_focus_loss = true,
-          open_win_config = function()
-            local screen_w = vim.opt.columns:get()
-            local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-            local _width = screen_w * 0.7
-            local _height = screen_h * 0.8
-            local width = math.floor(_width)
-            local height = math.floor(_height)
-            local center_y = ((vim.opt.lines:get() - _height) / 2) - vim.opt.cmdheight:get()
-            --local center_x = (screen_w - _width) / 2
-            local center_x = screen_w * 0.6
-            local layouts = {
-              center = {
-                anchor = 'NW',
-                relative = 'editor',
-                border = 'single',
-                row = center_y,
-                col = center_x,
-                width = width,
-                height = height,
+    },
+    input = {
+      icon = " ",
+      icon_hl = "SnacksInputIcon",
+      icon_pos = "left",
+      prompt_pos = "title",
+      win = { style = "input" },
+      expand = true
+    },
+    -- notifier = { enabled = false, },
+    quickfile = { enabled = true },
+    scope = {
+      enabled = true, -- enable highlighting the current scope
+      priority = 200,
+      char = "│",
+      underline = false, -- underline the start of the scope
+      only_current = false, -- only show scope in the current window
+      hl = "SnacksIndentScope", ---@type string|string[] hl group for scopes
+    },
+    scroll = { enabled = true },
+    statuscolumn = { enabled = true },
+    terminal = { enabled = true },
+    words = { enabled = true },
+    picker = {
+      sources = {
+        projects = {
+          finder = "recent_projects",
+          format = "file",
+          dev = { "~/work" },
+          confirm = "load_session",
+          patterns = { ".git", ".svn" },
+          recent = true,
+          matcher = {
+            frecency = true, -- use frecency boosting
+            sort_empty = true, -- sort even when the filter is empty
+            cwd_bonus = false,
+          },
+          sort = { fields = { "score:desc", "idx" } },
+          win = {
+            preview = { minimal = true },
+            input = {
+              keys = {
+                -- every action will always first change the cwd of the current tabpage to the project
+                ["<c-e>"] = { { "tcd", "picker_explorer" }, mode = { "n", "i" } },
+                ["<c-f>"] = { { "tcd", "picker_files" }, mode = { "n", "i" } },
+                ["<c-g>"] = { { "tcd", "picker_grep" }, mode = { "n", "i" } },
+                ["<c-r>"] = { { "tcd", "picker_recent" }, mode = { "n", "i" } },
+                ["<c-w>"] = { { "tcd" }, mode = { "n", "i" } },
+                ["<c-t>"] = {
+                  function(picker)
+                    vim.cmd("tabnew")
+                    Snacks.notify("New tab opened")
+                    picker:close()
+                    Snacks.picker.projects()
+                  end,
+                  mode = { "n", "i" },
+                },
               },
-            }
-            return layouts.center
+            },
+          },
+        },
+        explorer = {
+          finder = "explorer",
+          sort = { fields = { "sort" } },
+          supports_live = true,
+          tree = true,
+          watch = true,
+          diagnostics = true,
+          diagnostics_open = false,
+          git_status = true,
+          git_status_open = false,
+          git_untracked = true,
+          follow_file = true,
+          focus = "list",
+          auto_close = true,
+          jump = { close = false },
+          layout = { preset = "vscode" },
+          formatters = {
+            file = { filename_only = true },
+            severity = { pos = "right" },
+          },
+          matcher = { sort_empty = false, fuzzy = false },
+          config = function(opts)
+            return require("snacks.picker.source.explorer").setup(opts)
           end,
-        },
-        --width = function()
-        --  return math.floor(vim.opt.columns:get() * 0.7)
-        --end,
-        --height = function()
-        --  return math.floor((vim.opt.lines:get() - vim.opt.cmdheight:get()) * 0.5)
-        --end,
-      },
-      renderer = {
-        add_trailing = false,
-        group_empty = false,
-        highlight_git = false,
-        full_name = false,
-        highlight_opened_files = 'all',
-        root_folder_modifier = ':t:r',
-        indent_width = 2,
-        indent_markers = {
-          enable = true,
-          inline_arrows = true,
-          icons = {
-            corner = '└',
-            edge = '│',
-            item = '│',
-            bottom = '─',
-            none = ' ',
-          },
-        },
-        icons = {
-          webdev_colors = true,
-          git_placement = 'after',
-          modified_placement = 'after',
-          padding = ' ',
-          symlink_arrow = '➛',
-          show = {
-            file = false,
-            folder = true,
-            folder_arrow = true,
-            --git = true,
-            git = true,
-            modified = true,
-          },
-          glyphs = {
-            default = '',
-            symlink = '',
-            bookmark = '',
-            modified = '●',
-            folder = {
-              arrow_closed = '',
-              arrow_open = '',
-              default = '',
-              open = '',
-              empty = '',
-              empty_open = '',
-              symlink = '',
-              symlink_open = '',
-            },
-            git = {
-              unstaged = '✗',
-              staged = '✓',
-              unmerged = '',
-              renamed = '➜',
-              untracked = '★',
-              deleted = '',
-              ignored = '◌',
+          win = {
+            list = {
+              keys = {
+                ["<BS>"] = "explorer_up",
+                ["l"] = "confirm",
+                ["h"] = "explorer_close", -- close directory
+                ["a"] = "explorer_add",
+                ["d"] = "explorer_del",
+                ["r"] = "explorer_rename",
+                ["c"] = "explorer_copy",
+                ["m"] = "explorer_move",
+                ["o"] = "explorer_open", -- open with system application
+                ["P"] = "toggle_preview",
+                ["y"] = { "explorer_yank", mode = { "n", "x" } },
+                ["p"] = "explorer_paste",
+                ["u"] = "explorer_update",
+                ["<c-c>"] = "tcd",
+                ["<leader>/"] = "picker_grep",
+                ["<c-t>"] = "terminal",
+                ["."] = "explorer_focus",
+                ["I"] = "toggle_ignored",
+                ["H"] = "toggle_hidden",
+                ["Z"] = "explorer_close_all",
+                ["]g"] = "explorer_git_next",
+                ["[g"] = "explorer_git_prev",
+                ["]d"] = "explorer_diagnostic_next",
+                ["[d"] = "explorer_diagnostic_prev",
+                ["]w"] = "explorer_warn_next",
+                ["[w"] = "explorer_warn_prev",
+                ["]e"] = "explorer_error_next",
+                ["[e"] = "explorer_error_prev",
+              },
             },
           },
         },
-        special_files = {},
-      },
-      hijack_directories = {
-        enable = true,
-        auto_open = false,
-      },
-      actions = {
-        use_system_clipboard = true,
-        change_dir = {
-          enable = true,
-          global = false,
-          restrict_above_cwd = false,
+      }
+    },
+    styles = {
+      input = {
+        backdrop = false,
+        position = "float",
+        border = "rounded",
+        title_pos = "center",
+        height = 1,
+        width = 60,
+        relative = "editor",
+        noautocmd = true,
+        row = 2,
+        -- relative = "cursor",
+        -- row = -3,
+        -- col = 0,
+        wo = {
+          winhighlight = "NormalFloat:SnacksInputNormal,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
+          cursorline = false,
         },
-        expand_all = {
-          max_folder_discovery = 300,
+        bo = {
+          filetype = "snacks_input",
+          buftype = "prompt",
         },
-        open_file = {
-          quit_on_open = true,
-          resize_window = true,
-          window_picker = {
-            enable = true,
-            chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
-            exclude = {
-              filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-              buftype = { 'nofile', 'terminal', 'help' },
-            },
-          },
+        --- buffer local variables
+        b = {
+          completion = false, -- disable blink completions in input
         },
-        remove_file = {
-          close_window = false,
+        keys = {
+          n_esc = { "<esc>", { "cmp_close", "cancel" }, mode = "n", expr = true },
+          i_esc = { "<esc>", { "cmp_close", "stopinsert" }, mode = "i", expr = true },
+          i_cr = { "<cr>", { "cmp_accept", "confirm" }, mode = { "i", "n" }, expr = true },
+          i_tab = { "<tab>", { "cmp_select_next", "cmp" }, mode = "i", expr = true },
+          i_ctrl_w = { "<c-w>", "<c-s-w>", mode = "i", expr = true },
+          i_up = { "<up>", { "hist_up" }, mode = { "i", "n" } },
+          i_down = { "<down>", { "hist_down" }, mode = { "i", "n" } },
+          q = "cancel",
         },
       },
-      trash = {
-        cmd = 'gio trash',
-        require_confirm = true,
-      },
-      live_filter = {
-        prefix = '[FILTER]: ',
-        always_show_folders = false,
-      },
-      filesystem_watchers = {
-        enable = true,
-        ignore_dirs = { 'node_modules', '.git' },
-      },
-    })
-
-    local events = require('nvim-tree.events')
-    local subscribe = events.subscribe
-    local Event = events.Event
-
-    subscribe(Event.FileCreated, function(data)
-      vim.cmd('edit ' .. data.fname)
-    end)
-  end,
+    },
+  },
+  keys = {
+    -- Top Pickers & Explorer
+    { "<leader>fs", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+    -- find
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+    -- git
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+    { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+    -- Grep
+    -- { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    -- { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    -- search
+    { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+    { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
+    { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+    { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+    { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+    { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+    { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+    { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+    { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+    { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
+    { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
+    -- { "<leader>sp", function() Snacks.picker.lazy() end, desc = "Search for Plugin Spec" },
+    { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+    { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
+    { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    -- LSP
+    { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+    { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+    { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "<leader>gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+    { "<leader>gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+    { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+    -- OTHER
+    { '<C-\\>', function() Snacks.terminal.toggle() end, desc = "Toggle Terminal" },
+  }
 }
