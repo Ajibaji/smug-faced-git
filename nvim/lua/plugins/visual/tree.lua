@@ -1,6 +1,6 @@
 return {
   "folke/snacks.nvim",
-  lazy = false,
+  lazy = true,
   opts = {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
