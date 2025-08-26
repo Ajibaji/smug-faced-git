@@ -33,7 +33,8 @@ g.loaded_netrwPlugin = 1
 g.mapleader = ' '
 g.maplocalleader = ' '
 g.have_nerd_font = true
---g.perl_host_prog = '/usr/local/bin/perl'
+g.perl_host_prog = '/usr/bin/perl'
+g.loaded_perl_provider = 0
 --g.python_host_prog = '/usr/bin/python2'
 --g.python3_host_prog = '/usr/local/bin/python3'
 
