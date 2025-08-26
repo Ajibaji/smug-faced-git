@@ -7,10 +7,20 @@ require('lazy').setup({
     'numToStr/Comment.nvim',
     opts = {},
   },
-  utils.RequireDir 'plugins/lsp',
-  utils.RequireDir 'plugins/visual',
-  utils.RequireDir 'plugins/flow',
-
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+  utils.RequireDir('plugins/lsp'),
+  utils.RequireDir('plugins/visual'),
+  utils.RequireDir('plugins/flow'),
 }, {
   defaults = {
     lazy = true,
