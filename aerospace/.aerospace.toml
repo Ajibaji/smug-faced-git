@@ -131,15 +131,15 @@ automatically-unhide-macos-hidden-apps = true
     alt-1 = 'workspace Teams'
     alt-2 = 'workspace Web'
     alt-3 = 'workspace Shell'
-    alt-4 = 'workspace Misc-1'
-    alt-5 = 'workspace Misc-2'
+    alt-4 = 'workspace Remote'
+    alt-5 = 'workspace Misc'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace --focus-follows-window Teams'
     alt-shift-2 = 'move-node-to-workspace --focus-follows-window Web'
     alt-shift-3 = 'move-node-to-workspace --focus-follows-window Shell'
-    alt-shift-4 = 'move-node-to-workspace --focus-follows-window Misc-1'
-    alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc-2'
+    alt-shift-4 = 'move-node-to-workspace --focus-follows-window Remote'
+    alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # alt-tab = 'workspace-back-and-forth'
@@ -153,8 +153,8 @@ automatically-unhide-macos-hidden-apps = true
     Teams = '^built-in retina display$'
     # Web = 'main'
     # Shell = ['VG3456', 'main']
-    # Misc-1 = ['VG3456', 'main']
-    # Misc-2 = ['VG3456', 'main', '^built-in retina display$']
+    # Remote = ['VG3456', 'main']
+    # Misc = ['VG3456', 'main', '^built-in retina display$']
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
@@ -197,7 +197,7 @@ run = [
 if.app-id = "com.citrix.receiver.icaviewer.mac"
 run = [
     "layout tiling",
-    "move-node-to-workspace Misc-2",
+    "move-node-to-workspace Remote",
 ]
 
 # 'service' binding mode declaration.
