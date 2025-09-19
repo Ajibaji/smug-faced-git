@@ -1,7 +1,7 @@
 return {
   {
     'LuxVim/nvim-luxmotion',
-    event = 'VimEnter',
+    event = 'BufReadPre',
     cond = not vim.g.neovide,
     config = function()
       require('luxmotion').setup({
@@ -25,6 +25,7 @@ return {
   },
   {
     'lewis6991/satellite.nvim',
+    event = 'BufReadPre',
     config = function()
       require('satellite').setup({
         current_only = true,
@@ -35,6 +36,8 @@ return {
         handlers = {
           cursor = {
             enable = true,
+            overlap = true,
+            priority = 100,
             symbols = { '⎺', '⎻', '⎼', '⎽' },
           },
           search = {
@@ -54,11 +57,14 @@ return {
             },
           },
           marks = {
-            enable = true,
+            enable = false,
             show_builtins = false, -- shows the builtin marks like [ ] < >
             key = 'm',
           },
           quickfix = {
+            enable = true,
+            overlap = true,
+            priority = 50,
             signs = { '-', '=', '≡' },
           },
         },

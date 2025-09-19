@@ -4,7 +4,8 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
+    cmd = 'Mason',
+    event = 'BufReadPre',
     dependencies = {
       {
         'williamboman/mason.nvim',
@@ -28,6 +29,10 @@ return {
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
+          if client and client.server_capabilities.documentSymbolProvider then
+            local navic = require('nvim-navic')
+            navic.attach(client, event.buf)
+          end
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -64,91 +69,83 @@ return {
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        angularls = {},
+        -- angularls = {},
         bashls = {},
         bicep = {},
-        biome = {
-          root_dir = require('lspconfig.util').root_pattern('package.json', '.git'),
-        },
         csharp_ls = {},
-        cssls = {},
         cucumber_language_server = {},
         docker_compose_language_service = {},
         dockerls = {},
-        -- eslint = {},
         helm_ls = {},
         html = {},
         markdown_oxide = {},
         neocmake = {},
         powershell_es = {},
-        pylyzer = {},
         r_language_server = {},
         rnix = {},
-        shfmt = {},
-        snyk_ls = {
-          cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
-          filetypes = {
-            'cs',
-            'go',
-            'gomod',
-            'javascript',
-            'typescript',
-            'java',
-            'json',
-            'python',
-            'requirements',
-            'helm',
-            'yaml',
-            'rmd',
-            'ruby',
-            'terraform',
-            'terraform-vars',
-            'vb',
-          },
-          init_options = {
-            activateSnykCode = 'true',
-            activateSnykCodeQuality = 'true',
-            activateSnykIac = 'true',
-            activateSnykOpenSource = 'true',
-            automaticAuthentication = 'true',
-            enableTelemetry = 'false',
-            enableTrustedFoldersFeature = 'false',
-            integrationName = 'Neovim',
-            organization = os.getenv('SNYK_ORG'),
-            token = os.getenv('SNYK_TOKEN'),
-          },
-          root_dir = require('lspconfig.util').root_pattern('.git', '.snyk', '.svn'),
-          settings = {},
-          single_file_support = false,
-        },
+        ruff = {},
+        shellcheck = {},
+        -- snyk_ls = {
+        --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
+        --   filetypes = {
+        --     'cs',
+        --     'go',
+        --     'gomod',
+        --     'javascript',
+        --     'typescript',
+        --     'java',
+        --     'json',
+        --     'python',
+        --     'requirements',
+        --     'helm',
+        --     'yaml',
+        --     'rmd',
+        --     'ruby',
+        --     'terraform',
+        --     'terraform-vars',
+        --     'vb',
+        --   },
+        --   init_options = {
+        --     activateSnykCode = 'true',
+        --     activateSnykCodeQuality = 'true',
+        --     activateSnykIac = 'true',
+        --     activateSnykOpenSource = 'true',
+        --     automaticAuthentication = 'true',
+        --     enableTelemetry = 'false',
+        --     enableTrustedFoldersFeature = 'false',
+        --     integrationName = 'Neovim',
+        --     organization = os.getenv('SNYK_ORG'),
+        --     token = os.getenv('SNYK_TOKEN'),
+        --   },
+        --   root_dir = require('lspconfig.util').root_pattern('.git', '.snyk', '.svn'),
+        --   settings = {},
+        --   single_file_support = false,
+        -- },
         sqlls = {},
         terraformls = {},
-        -- ts_ls = {},
+        ts_ls = {
+          cmd = { 'typescript-language-server', '--stdio' },
+          filetypes = {
+            'javascript',
+            'javascriptreact',
+            'javascript.jsx',
+            'typescript',
+            'typescriptreact',
+            'typescript.tsx',
+          },
+          root_dir = require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
+        },
         lua_ls = {
           settings = {
             Lua = {
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = {
                 disable = { 'missing-fields' },
                 globals = { 'vim' },
@@ -224,11 +221,11 @@ return {
             [vim.diagnostic.severity.HINT] = '󰌶',
           },
           linehl = {
-            [vim.diagnostic.severity.ERROR] = "Error",
-            [vim.diagnostic.severity.WARN] = "Warn",
-            [vim.diagnostic.severity.INFO] = "Info",
-            [vim.diagnostic.severity.HINT] = "Hint",
-          }
+            [vim.diagnostic.severity.ERROR] = 'Error',
+            [vim.diagnostic.severity.WARN] = 'Warn',
+            [vim.diagnostic.severity.INFO] = 'Info',
+            [vim.diagnostic.severity.HINT] = 'Hint',
+          },
         },
         virtual_text = false,
         virtual_lines = { current_line = true },

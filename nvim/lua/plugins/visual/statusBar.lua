@@ -1,11 +1,4 @@
-local section_separators
--- if vim.env.TERM == 'xterm-kitty' and not vim.g.neovide and not vim.g.fvim_loaded then
---   section_separators = { left = '', right = '' }
--- else
---   section_separators = { left = '', right = '' }
--- end
-
-section_separators = { left = '', right = '' }
+local section_separators = { left = '', right = '' }
 
 local lsp_clients = function()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -22,18 +15,9 @@ local lsp_clients = function()
   return '\u{f085} ' .. table.concat(c, '|')
 end
 
--- local function lsp_status()
---   return require("lsp-progress").progress({
---     format = function(messages)
---       return #messages > 0 and table.concat(messages, " ") or ""
---     end,
---   })
--- end
-
 return {
   'nvim-lualine/lualine.nvim',
-  lazy = false,
-  priority = 999,
+  event = 'BufReadPre',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
@@ -66,34 +50,26 @@ return {
       sections = {
         lualine_a = {
           'mode',
-          -- {
-          --   require('noice').api.statusline.mode.get,
-          --   cond = require('noice').api.statusline.mode.has,
-          --   color = {
-          --     fg = '#420D09',
-          --   },
-          -- },
         },
         lualine_b = { 'branch', 'diff' },
         lualine_c = {
-          -- {
-          --   draw_empty = true,
-          --   'navic',
-          --   color_correction = 'dynamic', -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
-          --   -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
-          --   -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
-          --   --	 be enough when the lualine section isn't changing colors based on the mode.
-          --   -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
-          --   --	 the current section.
-          --   {
-          --     highlight = true,
-          --     separator = ' > ',
-          --     depth_limit = 0,
-          --     depth_limit_indicator = '..',
-          --     safe_output = true,
-          --     click = true,
-          --   },
-          -- },
+          {
+            'navic',
+            color_correction = 'dynamic', -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
+            --   -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
+            --   -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
+            --   --	 be enough when the lualine section isn't changing colors based on the mode.
+            --   -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
+            --   --	 the current section.
+            navic_opts = {
+              highlight = true,
+              separator = ' > ',
+              depth_limit = 0,
+              depth_limit_indicator = '..',
+              safe_output = true,
+              click = true,
+            },
+          },
         },
         lualine_x = {
           -- lsp_status,
@@ -102,7 +78,6 @@ return {
           lsp_clients,
         },
         lualine_z = { 'location' },
-        --lualine_z = { "os.date('%H:%M')" }
       },
       tabline = {},
       winbar = {
