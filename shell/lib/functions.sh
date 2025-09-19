@@ -36,6 +36,20 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
       then
           eval `/usr/libexec/path_helper -s`
       fi
+ 
+    # KITTY
+      function kitty-save () {
+        kitty @ ls > ~/kitty-dump.json
+        \cat ~/kitty-dump.json | python3 ~/.config/kitty/save-session.py > ~/kitty-session.kitty
+      }
+
+      function kitty-restore () {
+        if [ -f ~/kitty-session.kitty ]
+        then
+          kitty --session ~/kitty-session.kitty
+          rm -f ~/kitty-session.kitty
+        fi
+      }
 
     # PERL
       # eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
