@@ -68,6 +68,7 @@ if ! command -v dotnet; then
   export DOTNET_ROOT=$HOME/.dotnet
   export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
   dotnet tool install --global csharp-ls
+  dotnet tool install --global csharpier
 fi
 
 if ! command -v az; then

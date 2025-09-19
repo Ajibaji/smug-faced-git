@@ -125,7 +125,7 @@
       quiet: true
       description: installing k9s
     - command: |
-        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
+        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome
       stdin: true
       stderr: true
       quiet: true

@@ -55,7 +55,7 @@
       quiet: false
       description: install nodejs versions
     - command: |
-        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server
+        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome
       stdin: true
       stderr: true
       quiet: false
@@ -73,3 +73,10 @@
       stderr: true
       quiet: false
       description: Set Neovide as default OS editor
+    - command: |
+        echo 'podman "$@"' > ~/.local/bin/docker
+        chmod +x ~/.local/bin/docker
+      stdin: true
+      stderr: true
+      quiet: false
+      description: Docker --> Podman

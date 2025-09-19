@@ -4,18 +4,18 @@ function authGithub() {
   KEY_PATH="${HOME}/.ssh/github_id_ed25519"
   IS_LINUX=${IS_LINUX:-$(test $(uname -s) = "Linux" && echo 'true')}
 
-  mkdir -p ${HOME}/.ssh
-  ssh-keygen -t ed25519 -f $KEY_PATH
+  mkdir -p "${HOME}"/.ssh
+  ssh-keygen -t ed25519 -f "$KEY_PATH"
 
   if [ -n "${IS_LINUX}" ]; then
     sudo apt update
     if ! command -v xsel; then
       sudo apt install xsel -y
     fi
-    cat ${KEY_PATH}.pub | xsel --clipboard --input
+    cat "${KEY_PATH}".pub | xsel --clipboard --input
   fi
 
-  [ -z "${IS_LINUX}" ] && cat ${KEY_PATH}.pub | pbcopy
+  [ -z "${IS_LINUX}" ] && cat "${KEY_PATH}".pub | pbcopy
 
   echo "Public key copied to system register"
 
@@ -46,13 +46,13 @@ function clone() {
   export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
   if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git; then
-    git clone git@github.com:Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
+    git clone git@github.com:Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   else
-    git clone https://github.com/Ajibaji/smug-faced-git.git ${HOME}/smug-faced-git
+    git clone https://github.com/Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   fi
 
   unset GIT_SSH_COMMAND
-  cd smug-faced-git
+  cd smug-faced-git || exit
 }
 
 function installBrew() {
@@ -67,9 +67,9 @@ function installBrew() {
 }
 
 function runDotbot() {
-  cd ${HOME}/smug-faced-git
+  cd "${HOME}"/smug-faced-git || exit
   ./dotbot-run.sh $@
-  cd -
+  cd - || exit
 }
 
 function printHeading() {
