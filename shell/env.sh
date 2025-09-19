@@ -56,7 +56,7 @@ fi
 
 # PERSONAL BIN
   # export PATH=$PATH:~/Documents/code/ME/bin
-  export PATH=$PATH:~/work/tools-and-snippets/bin
+  export PATH=$PATH:~/work/other/tools-and-snippets/bin
 
 # PYTHON
   [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
