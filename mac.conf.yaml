@@ -80,3 +80,16 @@
       stderr: true
       quiet: false
       description: Docker --> Podman
+    - command: |
+        if ! command -v python; then
+          echo 'python3 "$@"' > ~/.local/bin/python
+          chmod +x ~/.local/bin/python
+        fi
+        if ! command -v pip; then
+          echo 'pip3 "$@"' > ~/.local/bin/pip
+          chmod +x ~/.local/bin/pip
+        fi
+      stdin: true
+      stderr: true
+      quiet: false
+      description: python/pip --> python3/pip3
