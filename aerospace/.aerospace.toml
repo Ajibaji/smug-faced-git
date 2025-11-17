@@ -165,7 +165,7 @@ run = [
 ]
 
 [[on-window-detected]]
-if.app-id = "com.kovidgoyal.kitty"
+if.app-id = "net.kovidgoyal.kitty"
 check-further-callbacks = true
 run = [
     "layout tiling",

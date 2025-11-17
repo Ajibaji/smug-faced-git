@@ -73,7 +73,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua', -- AI programming
-    event = 'InsertEnter',
+    event = 'InsertEnter', -- BufReadPost
     keys = {
       {
         '<C-a>',
