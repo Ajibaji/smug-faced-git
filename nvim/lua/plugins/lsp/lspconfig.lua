@@ -11,7 +11,12 @@ return {
         'williamboman/mason.nvim',
         config = true,
       },
-      'williamboman/mason-lspconfig.nvim',
+      {
+        'williamboman/mason-lspconfig.nvim',
+        opts = {
+          auto_install = true,
+        },
+      },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
     config = function()
@@ -90,6 +95,7 @@ return {
         rnix = {},
         ruff = {},
         shellcheck = {},
+        copilot = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
