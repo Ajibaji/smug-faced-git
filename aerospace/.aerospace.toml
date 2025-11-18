@@ -200,6 +200,13 @@ run = [
     "move-node-to-workspace Remote",
 ]
 
+[[on-window-detected]]
+if.app-id = "com.spotify.client"
+run = [
+    "layout tiling",
+    "move-node-to-workspace Misc",
+]
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
