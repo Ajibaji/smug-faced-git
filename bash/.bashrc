@@ -2,10 +2,10 @@
 [ -z "$PS1" ] && return
 
 #________________________________________________________________________________ENV_VARS:
-  source ${HOME}/.config/shell/env.sh
+  source $HOME/.config/shell/env.sh
 
 #_____________________________________________________ALIASES,_FUNCTIONS_&_THEME_SWITCHER:
-  source ${HOME}/.config/shell/salad-source.sh
+  source $HOME/.config/shell/salad-source.sh
 
 #__________________________________________________________________________________PROMPT:
   prompt_symbol="❯"
@@ -61,12 +61,16 @@
     cd ~
   fi
 
+# BREW
+# this file is sourced BEFORE .bashrc or .zshrc so brew is not in
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+
 # fnm
-FNM_PATH="${HOME}/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
   eval "`fnm env`"
-fi
+
 . "$HOME/.cargo/env"
 
 # Zoxide
