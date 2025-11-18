@@ -32,7 +32,7 @@ gui:
   mouseEvents: true
   skipDiscardChangeWarning: false
   skipStashWarning: false
-  showFileTree: false # for rendering changes files in a tree format
+  showFileTree: true # for rendering changes files in a tree format
   showListFooter: true # for seeing the '5 of 20' message in list panels
   showRandomTip: true
   showBottomLine: false
@@ -41,10 +41,9 @@ gui:
   commandLogSize: 8
   splitDiff: 'auto'
 git:
-  paging:
-    colorArg: always
-    pager: delta --light --paging=never
-    # useConfig: true 
+  pagers:
+    - colorArg: always
+      pager: delta --light --paging=never
   commit:
     signOff: false
   merging:
@@ -71,9 +70,9 @@ git:
   allBranchesLogCmds:
     - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
 os:
-  edit: 'nvim {{filename}}' # see 'Configuring File Editing' section
-  editAtLine: '{{editor}} +{{line}} {{filename}}'
+  editPreset: 'nvim'
   open: 'open {{filename}}'
+  openLink: "open {{link}}"
 refresher:
   refreshInterval: 10 # File/submodule refresh interval in seconds. Auto-refresh can be disabled via option 'git.autoRefresh'.
   fetchInterval: 60 # Re-fetch interval in seconds. Auto-fetch can be disabled via option 'git.autoFetch'.
