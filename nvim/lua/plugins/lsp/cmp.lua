@@ -42,6 +42,58 @@ return {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      {
+        'zbirenbaum/copilot-cmp',
+        dependencies = {
+          {
+            'zbirenbaum/copilot.lua', -- AI programming
+            cmd = 'Copilot',
+            build = ':Copilot auth',
+            -- event = 'InsertEnter', -- BufReadPost
+            opts = {
+              suggestion = {
+                enabled = true,
+                auto_trigger = true,
+              },
+              panel = {
+                enabled = false,
+              },
+              nes = {
+                enabled = false,
+              },
+            },
+            keys = {
+              {
+                '<C-a>',
+                function()
+                  require('copilot.suggestion').accept()
+                end,
+                desc = 'Copilot: Accept suggestion',
+                mode = { 'i' },
+              },
+              {
+                '<C-x>',
+                function()
+                  require('copilot.suggestion').dismiss()
+                end,
+                desc = 'Copilot: Dismiss suggestion',
+                mode = { 'i' },
+              },
+              -- {
+              --   '<C-/>',
+              --   function()
+              --     require('copilot.panel').open()
+              --   end,
+              --   desc = 'Copilot: Show panel',
+              --   mode = { 'n', 'i' },
+              -- },
+            },
+          },
+        },
+        config = function()
+          require('copilot_cmp').setup()
+        end,
+      },
     },
     config = function()
       -- See `:help cmp`

@@ -1,132 +1,96 @@
 return {
   {
-    'olimorris/codecompanion.nvim', -- The KING of AI programming
-    cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions' },
-    dependencies = {
-      'ravitemer/codecompanion-history.nvim', -- Save and load conversation history
-      -- { "echasnovski/mini.pick", config = true },
-      -- { "ibhagwan/fzf-lua", config = true },
-    },
+    'folke/sidekick.nvim',
     opts = {
-      extensions = {},
-      adapters = {},
-      prompt_library = {},
-      strategies = {
-        chat = {
-          adapter = 'copilot',
-        },
-        inline = {
-          adapter = 'copilot',
-        },
-      },
-      display = {
-        action_palette = {
-          provider = 'default',
-        },
-        chat = {
-          -- show_references = true,
-          -- show_header_separator = false,
-          -- show_settings = false,
-          icons = {
-            tool_success = '󰸞',
+      cli = {
+        tools = {
+          aider = {
+            cmd = { "aider", "--model", "github_copilot/gemini-2.5-pro" },
           },
         },
-        diff = {
-          provider = 'mini_diff',
-        },
       },
-      opts = {},
     },
     keys = {
       {
-        '<C-a>',
-        '<cmd>CodeCompanionActions<CR>',
-        desc = 'Open the action palette',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<Leader>a',
-        '<cmd>CodeCompanionChat Toggle<CR>',
-        desc = 'Toggle a chat buffer',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<LocalLeader>a',
-        '<cmd>CodeCompanionChat Add<CR>',
-        desc = 'Add code to a chat buffer',
-        mode = { 'v' },
-      },
-    },
-    init = function()
-      vim.cmd([[cab cc CodeCompanion]])
-    end,
-  },
-  {
-    'echasnovski/mini.diff', -- Inline and better diff over the default
-    config = function()
-      local diff = require('mini.diff')
-      diff.setup({
-        -- Disabled by default
-        source = diff.gen_source.none(),
-      })
-    end,
-  },
-  {
-    'zbirenbaum/copilot.lua', -- AI programming
-    event = 'InsertEnter', -- BufReadPost
-    keys = {
-      {
-        '<C-a>',
+        '<tab>',
         function()
-          require('copilot.suggestion').accept()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require('sidekick').nes_jump_or_apply() then
+            return '<Tab>' -- fallback to normal tab
+          end
         end,
-        desc = 'Copilot: Accept suggestion',
-        mode = { 'i' },
+        expr = true,
+        desc = 'Goto/Apply Next Edit Suggestion',
       },
       {
-        '<C-x>',
+        '<c-.>',
         function()
-          require('copilot.suggestion').dismiss()
+          require('sidekick.cli').toggle()
         end,
-        desc = 'Copilot: Dismiss suggestion',
-        mode = { 'i' },
+        desc = 'Sidekick Toggle',
+        mode = { 'n', 't', 'i', 'x' },
       },
       {
-        '<C-/>',
+        '<leader>ac',
         function()
-          require('copilot.panel').open()
+          require('sidekick.cli').toggle()
         end,
-        desc = 'Copilot: Show panel',
-        mode = { 'n', 'i' },
+        desc = 'Sidekick Toggle CLI',
       },
-    },
-    init = function()
-      vim.api.nvim_create_user_command('Copilot', function()
-        require('copilot.suggestion').toggle_auto_trigger()
-      end, {
-        desc = 'Toggle Copilot suggestions',
-        nargs = 0,
-      })
-    end,
-    opts = {
-      panel = { enabled = false },
-      suggestion = {
-        auto_trigger = true, -- Suggest as we start typing
-        keymap = {
-          accept_word = '<C-l>',
-          accept_line = '<C-j>',
-        },
+      {
+        '<leader>as',
+        function()
+          require('sidekick.cli').select()
+        end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = 'Select CLI',
       },
-      filetypes = {
-        yaml = true,
-        markdown = false,
-        help = false,
-        gitcommit = false,
-        gitrebase = false,
-        hgcommit = false,
-        svn = false,
-        cvs = false,
-        ['.'] = false,
+      {
+        '<leader>ad',
+        function()
+          require('sidekick.cli').close()
+        end,
+        desc = 'Detach a CLI Session',
+      },
+      {
+        '<leader>at',
+        function()
+          require('sidekick.cli').send({ msg = '{this}' })
+        end,
+        mode = { 'x', 'n' },
+        desc = 'Send This',
+      },
+      {
+        '<leader>af',
+        function()
+          require('sidekick.cli').send({ msg = '{file}' })
+        end,
+        desc = 'Send File',
+      },
+      {
+        '<leader>av',
+        function()
+          require('sidekick.cli').send({ msg = '{selection}' })
+        end,
+        mode = { 'x' },
+        desc = 'Send Visual Selection',
+      },
+      {
+        '<leader>ap',
+        function()
+          require('sidekick.cli').prompt()
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Sidekick Select Prompt',
+      },
+      -- Example of a keybinding to open Claude directly
+      {
+        '<leader>aa',
+        function()
+          require('sidekick.cli').toggle({ name = 'aider', focus = true })
+        end,
+        desc = 'Sidekick Toggle Aider',
       },
     },
   },
