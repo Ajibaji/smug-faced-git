@@ -1,3 +1,4 @@
+echo "$(date -u '+%S.%N') .zprofile started" >> $HOME/jeff.log
 # =======================================================================================
 # This file gets read at login
 # ———————————————————————————————————————————————————————————————————————————————————————
@@ -25,16 +26,4 @@
     setopt APPEND_HISTORY
     setopt INC_APPEND_HISTORY
     setopt HIST_VERIFY
-
-# fuzzy finder
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Setting PATH for Python 3.13
-# The original version is saved in .zprofile.pysave
-export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:${PATH}"
-export PATH="${HOME}/Library/Python/3.13/bin:${PATH}"
-
-# MORE
-  source "$HOME/.config/shell/env.sh"
-
-. "$HOME/.cargo/env"
+echo "$(date -u '+%S.%N') .zprofile finshed" >> $HOME/jeff.log

@@ -1,3 +1,4 @@
+echo "$(date -u '+%S.%N') .zshrc started" >> $HOME/jeff.log
 # =======================================================================================
 # This file gets read when an interative shell is opened
 # ———————————————————————————————————————————————————————————————————————————————————————
@@ -12,17 +13,19 @@
 #  - history management
 # =======================================================================================
 
-
 #_________________________________________________________________________________ROOT-RC:
     source "$HOME/.config/zsh/.zshroot"
 
 #_______________________________________________________________________AUTO-ADDED-CONFIG:
 
-# fnm
-eval "`fnm env`"
+# fzf
+echo "$(date -u '+%S.%N') fzf started" >> $HOME/jeff.log
+source <(fzf --zsh)
+echo "$(date -u '+%S.%N') fzf finished" >> $HOME/jeff.log
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 # Zoxide
+echo "$(date -u '+%S.%N') zoxide started" >> $HOME/jeff.log
 eval "$(zoxide init zsh)"
+echo "$(date -u '+%S.%N') zoxide finshed" >> $HOME/jeff.log
+echo "$(date -u '+%S.%N') .zshrc finished" >> $HOME/jeff.log

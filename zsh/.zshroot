@@ -1,5 +1,6 @@
+echo "$(date -u '+%S.%N') .zshroot started" >> $HOME/jeff.log
 #_____________________________________________________________________ALIASES_&_FUNCTIONS:
-    source ${HOME}/.config/shell/salad-source.sh
+    source $HOME/.config/shell/salad-source.sh
 
     # ls on directory change
       function chpwd() {
@@ -19,7 +20,9 @@
       git clone --depth 1 git@github.com:zplug/zplug $ZPLUG_HOME
     fi
 
+    echo "$(date -u '+%S.%N') zplug-init started" >> $HOME/jeff.log
     source $ZPLUG_HOME/init.zsh
+    echo "$(date -u '+%S.%N') zplug-init finished" >> $HOME/jeff.log
 
     zplug "zplug/zplug", hook-build:'zplug --self-manage'
 
@@ -40,8 +43,9 @@
         echo; zplug install
       fi
     fi
-
+    echo "$(date -u '+%S.%N') zplug-load started" >> $HOME/jeff.log
     zplug load
+    echo "$(date -u '+%S.%N') zplug-load finished" >> $HOME/jeff.log
 
     # Set TERM variable
     	#export TERM="xterm-256color"
@@ -89,19 +93,25 @@
       precmd () {
         if [ $TERM = 'xterm-kitty' ]
         then
+          echo "$(date -u '+%S.%N') kitty-set-title started" >> $HOME/jeff.log
           kitty @ set-tab-title $(print -Pn "${PWD/${PWD%*\/*\/*}\/}\007")
+          echo "$(date -u '+%S.%N') kitty-set-title finished" >> $HOME/jeff.log
         else
           echo -en "\e]2;$PWD\a"
         fi
       }
 
     # shell history saved to database. searching included
+      echo "$(date -u '+%S.%N') atuin started" >> $HOME/jeff.log
       [[ $TERM_PROGRAM != "DTerm" ]] && eval "$(atuin init zsh)"
+      echo "$(date -u '+%S.%N') atuin finished" >> $HOME/jeff.log
       # source ~/.config/zsh/.zhistory
 
     # Automatic node version switching (FNM)
       add-zsh-hook chpwd load-nvmrc
+      echo "$(date -u '+%S.%N') load-nvmrc started" >> $HOME/jeff.log
       load-nvmrc
+      echo "$(date -u '+%S.%N') load-nvmrc finished" >> $HOME/jeff.log
 
     # Set directory colours (see Nord dir_colors)
       test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
@@ -112,3 +122,4 @@
 
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /usr/local/bin/terraform terraform
+echo "$(date -u '+%S.%N') .zshroot finished" >> $HOME/jeff.log
