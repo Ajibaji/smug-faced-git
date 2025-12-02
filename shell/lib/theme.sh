@@ -10,7 +10,7 @@
     else
       sed -i 's/DARK/LIGHT/gI' ${HOME}/.config/shell/lib/env_colours.sh
     fi
-    source ${HOME}/.config/shell/lib/env_colours.sh
+    source $HOME/.config/shell/lib/env_colours.sh
   }
 
   function get-current-theme () {

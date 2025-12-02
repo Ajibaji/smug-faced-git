@@ -1,3 +1,2 @@
-. "$HOME/.cargo/env"
-. "$HOME/.config/shell/env.sh"
-source "$HOME/.config/shell/lib/aliases.sh"
+echo "$(date -u '+%S.%N') .bash_login started" >> /Users/aarjomandkhah/jeff.log
+echo "$(date -u '+%S.%N') .bash_login finished" >> /Users/aarjomandkhah/jeff.log

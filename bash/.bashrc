@@ -1,11 +1,20 @@
+echo "$(date -u '+%S.%N') ~/.bashrc started" >> $HOME/jeff.log
+
 # if not running interactively, do nothing
 [ -z "$PS1" ] && return
 
-#________________________________________________________________________________ENV_VARS:
-  source $HOME/.config/shell/env.sh
+# load ~/.bash_profile if entrypoint was ~/.bashrc
+export BASH_RC_LOADED="true"
+[ -z "$BASH_PROFILE_LOADED" ] && source "$HOME/.bash_profile"
 
-#_____________________________________________________ALIASES,_FUNCTIONS_&_THEME_SWITCHER:
-  source $HOME/.config/shell/salad-source.sh
+
+#________________________________________________________________________BASH_LINE_EDITOR:
+source -- "$HOME/.local/share/blesh/ble.sh"
+
+
+#______________________________________________________________FUNCTIONS_&_THEME_SWITCHER:
+  source "$HOME/.config/shell/salad-source.sh"
+
 
 #__________________________________________________________________________________PROMPT:
   prompt_symbol="❯"
@@ -55,23 +64,30 @@
 
   command -v git >/dev/null 2>&1 && PROMPT_COMMAND=prompt_command
 
-#_____________________________________________________________________________________RUN:
 
+#_____________________________________________________________________________________RUN:
   if [[ "$PWD" == "/mnt/"* ]]; then
     cd ~
   fi
 
-# BREW
-# this file is sourced BEFORE .bashrc or .zshrc so brew is not in
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
 
-# fnm
-  eval "`fnm env`"
+#___________________________________________________________________________________ATUIN:
+  eval "$(atuin init bash)"
 
-. "$HOME/.cargo/env"
 
-# Zoxide
-eval "$(zoxide init bash)"
+#_____________________________________________________________________________________FNM:
+  eval "$(fnm env)"
+
+
+#_____________________________________________________________________________________FZF:
+  source <(fzf --bash)
+
+
+#__________________________________________________________________________________ZOXIDE:
+  eval "$(zoxide init bash)"
+
+
+#________________________________________________________________________BASH_LINE_EDITOR:
+  #   KEEP THIS LINE LAST
+  [[ ! ${BLE_VERSION-} ]] || ble-attach
+echo "$(date -u '+%S.%N') ~/.bashrc finished" >> $HOME/jeff.log

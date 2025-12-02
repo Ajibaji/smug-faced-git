@@ -93,3 +93,12 @@
       stderr: true
       quiet: false
       description: python/pip --> python3/pip3
+    - command: |
+        if ! command -v ble-bind; then
+          curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf -
+          bash ble-nightly/ble.sh --install ~/.local/share
+        fi
+      stdin: true
+      stderr: true
+      quiet: false
+      description: installing ble.sh
