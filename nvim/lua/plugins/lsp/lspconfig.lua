@@ -95,7 +95,7 @@ return {
         rnix = {},
         ruff = {},
         shellcheck = {},
-        copilot = {},
+        -- copilot = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
