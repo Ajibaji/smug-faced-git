@@ -27,3 +27,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --    command = "silent !kill -SIGUSR1 $(pgrep -a kitty)"
 --  }
 --)
+
+vim.api.nvim_create_autocmd('VimResized', {
+  desc = 'Automatically resize all windows on VimResize event',
+  command = "wincmd ="
+})
