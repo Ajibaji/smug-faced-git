@@ -4,7 +4,7 @@ theme = "naysayer"
 line-number = "relative"
 mouse = false
 # shell = ["nu", "--env-config", "~\\.config\\nushell\\env.nu", "--config", "~\\.config\\nushell\\config.nu", "-c"]
-shell = ["powershell"]
+# shell = ["powershell"]
 
 [editor.auto-save]
 after-delay.enable = true
@@ -31,15 +31,6 @@ C-g = [
     ":buffer-close!", 
     ":redraw", 
     ":reload-all"
-]
-C-f = [
-    ":new", 
-    ":insert-output lf -print-selection",
-    "select_all",
-    "split_selection_on_newline",
-    ':open ctrl-r "',
-    "goto_last_modified_file",
-    ":buffer-close!"
 ]
 "*" = [
     "move_char_right",
