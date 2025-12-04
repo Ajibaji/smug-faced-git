@@ -20,9 +20,12 @@ o.timeoutlen = 500
 -- Preview substitutions live, as you type!
 o.inccommand = 'split'
 
--- set OS window title to repo name. fallback to working directory
+-- set OS window title to repo name as base path. fallback to working directory
+local repo_name = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'")
+local git_working_dir = string.find(vim.fn.getcwd(), vim.fn.fnamemodify(repo_name, ':t'), 1, true)
+local title = repo_name ~= '' and string.sub(vim.fn.getcwd(), git_working_dir) or vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 o.title = true
--- o.titlestring = "%{FugitiveHead()}%{getcwd()}"
+o.titlestring = title
 
 if g.neovide then
   require('/config/neovide')
