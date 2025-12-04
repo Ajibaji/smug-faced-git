@@ -180,6 +180,7 @@ return {
       only_current = false, -- only show scope in the current window
       hl = 'SnacksIndentScope', ---@type string|string[] hl group for scopes
     },
+    scratch = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = {
       enabled = true,
@@ -732,6 +733,20 @@ return {
         Snacks.bufdelete()
       end,
       desc = 'Delete Buffer',
+    },
+    {
+      '<leader>.',
+      function()
+        Snacks.scratch()
+      end,
+      desc = 'Toggle Scratch Buffer',
+    },
+    {
+      '<leader>S',
+      function()
+        Snacks.scratch.select()
+      end,
+      desc = 'Select Scratch Buffer',
     },
   },
 }

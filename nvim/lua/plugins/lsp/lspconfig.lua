@@ -78,12 +78,10 @@ return {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
         -- angularls = {},
         bashls = {},
         bicep = {},
         csharp_ls = {},
-        cucumber_language_server = {},
         docker_compose_language_service = {},
         dockerls = {},
         helm_ls = {},
@@ -95,7 +93,9 @@ return {
         rnix = {},
         ruff = {},
         shellcheck = {},
-        -- copilot = {},
+        copilot = {},
+        jsonls = {},
+        pylsp = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
