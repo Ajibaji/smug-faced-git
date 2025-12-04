@@ -20,6 +20,10 @@ o.timeoutlen = 500
 -- Preview substitutions live, as you type!
 o.inccommand = 'split'
 
+-- set OS window title to repo name. fallback to working directory
+o.title = true
+-- o.titlestring = "%{FugitiveHead()}%{getcwd()}"
+
 if g.neovide then
   require('/config/neovide')
 end
