@@ -271,7 +271,7 @@ fi
               nvim +cw -q {+f}  # Build quickfix list for the selected items.
             fi'
     rm -f /tmp/rg-fzf-{r,f}
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore --multiline"
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore --multiline --hidden"
     INITIAL_QUERY="${*:-}"
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
         --info inline-right \
@@ -294,7 +294,7 @@ fi
 
 # FIND FILES
   function ff () {
-    fd ${*:-} --no-ignore | fzf \
+    fd ${*:-} --no-ignore --hidden | fzf \
       --info inline-right \
       --no-separator \
       --prompt 'Files> ' \
