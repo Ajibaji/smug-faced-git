@@ -1,5 +1,3 @@
-echo "$(date -u '+%S.%N') ~/.bashrc started" >> $HOME/jeff.log
-
 # if not running interactively, do nothing
 [ -z "$PS1" ] && return
 
@@ -90,4 +88,3 @@ source -- "$HOME/.local/share/blesh/ble.sh"
 #________________________________________________________________________BASH_LINE_EDITOR:
   #   KEEP THIS LINE LAST
   [[ ! ${BLE_VERSION-} ]] || ble-attach
-echo "$(date -u '+%S.%N') ~/.bashrc finished" >> $HOME/jeff.log
