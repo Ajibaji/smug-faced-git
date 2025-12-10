@@ -271,7 +271,9 @@ fi
               nvim +cw -q {+f}  # Build quickfix list for the selected items.
             fi'
     rm -f /tmp/rg-fzf-{r,f}
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore --multiline --hidden"
+    export RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --no-ignore --multiline --hidden"
+    TRANSFORMER='printf "reload:sleep 0.1; %b %b || true" "$RG_PREFIX" {q}'
+
     INITIAL_QUERY="${*:-}"
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
         --info inline-right \
@@ -279,7 +281,7 @@ fi
         --bind "start:reload:$RG_PREFIX {q}" \
         --preview-window 'right,60%,border-none,+{2}+3/3,~3' \
         --border thinblock --border-label ' F I N D   I N   F I L E S ' --border-label-pos top --padding 1,2 \
-        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+        --bind "change:transform:$TRANSFORMER" \
         --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
           echo "rebind(change)+change-prompt(ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
           echo "unbind(change)+change-prompt(fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
