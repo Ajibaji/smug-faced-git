@@ -7,11 +7,11 @@
 
 
 #_______________________________________________________________________________FUNCTIONS:
-    source "$HOME/.config/shell/lib/functions.sh"
+    source "$HOME/.config/shell/lib/theme.sh"
 
 
 #__________________________________________________________________________THEME_SWITCHER:
-    source "$HOME/.config/shell/lib/theme.sh"
+    source "$HOME/.config/shell/lib/functions.sh"
 
 
 #_________________________________________________________________________________SECRETS:

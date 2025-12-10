@@ -26,6 +26,7 @@ fi
   # alias clear='clear -x'
 
 # GIT ALIASES
+  alias git='git --config-env=delta.features=CURRENT_THEME'
   alias gst='git status'
   alias gco='git checkout $@'
 

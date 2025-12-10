@@ -1,16 +1,16 @@
+# COLOURS
+  export COLORTERM='truecolor'
+
 # THEME SWITCHER
   function set-git-theme () {
     git config --global delta.features "$CURRENT_THEME"
   }
 
   function set-session-theme () {
-    if [[ "$CURRENT_THEME" = "DARK" ]]
-    then
-      sed -i 's/LIGHT/DARK/gI' ${HOME}/.config/shell/lib/env_colours.sh
-    else
-      sed -i 's/DARK/LIGHT/gI' ${HOME}/.config/shell/lib/env_colours.sh
-    fi
-    source $HOME/.config/shell/lib/env_colours.sh
+    export FZF_DEFAULT_OPTS="$FZF_COMMON_OPTS --color=${CURRENT_THEME,,}"
+    export LG_CONFIG_FILE="$HOME/.config/lazygit/$CURRENT_THEME-config.yml"
+    export THEME_ZSH_AUTOSUGGEST_HL_STYLE=${CURRENT_THEME}_ZSH_AUTOSUGGEST_HL_STYLE
+    export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=${!THEME_ZSH_AUTOSUGGEST_HL_STYLE}
   }
 
   function get-current-theme () {
@@ -22,7 +22,7 @@
       export CURRENT_THEME=LIGHT
     fi
     set-session-theme
-    set-git-theme
+    # set-git-theme
   }
 
   function set-os-theme () {
@@ -45,7 +45,7 @@
     fi
     (set-os-theme $darkMode)
     set-session-theme
-    set-git-theme
+    # set-git-theme
     # wait
   }
 

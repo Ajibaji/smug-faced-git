@@ -64,12 +64,6 @@ fi
 # Ruby
   [[ -f $CUSTOM_CA_CERTS ]] && export SSL_CERT_FILE=${CUSTOM_CA_CERTS}
 
-# COLOURS
-  export COLORTERM='truecolor'
-  # export LIGHT_FZF_DEFAULT_OPTS="--color=fg:#cb719d,bg:#e6dfd6,hl:#5f87af --color=fg+:#575277,bg+:#e6dfd6,hl+:#5f87af --color=info:#afaf87,prompt:#d7005f,pointer:#d7005f --color=marker:#af5fff,spinner:#5cdeff,header:#87afaf"
-  # export DARK_FZF_DEFAULT_OPTS="--color=fg:#967a87,bg:#203042,hl:#5880a8 --color=fg+:#e8e8e8,bg+:#203042,hl+:#73a6d9 --color=info:#707053,prompt:#994c6d,pointer:#bd7aff --color=marker:#84ff00,spinner:#7f738c,header:#009e9e"
-  source $HOME/.config/shell/lib/env_colours.sh
-
 # GRADLE
   # export GRADLE_HOME=$HOME/Downloads/gradle
   # export PATH=$GRADLE_HOME/bin:$PATH
