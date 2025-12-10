@@ -42,6 +42,7 @@
     ~/.aider.model.settings.yml: aider/.aider.model.settings.yml
     ~/.bashrc: bash/.bashrc
     ~/.bash_profile: bash/.bash_profile
+    ~/.blerc: ble/.blerc
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.hushlogin: ./.hushlogin
