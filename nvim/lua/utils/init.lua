@@ -17,39 +17,40 @@ function M.OpenTerminalHere()
 end
 
 -- Toggle-Theme (tt)
+-- call this function from outside Neovim with a simple 1 or 0 argument
 function M.tt(arg)
-  if arg == 1 then
-    utils.SwitchTheme('light', LightTheme)
-  else
-    utils.SwitchTheme('dark', DarkTheme)
-  end
+  local mode = arg == 1 and 'light' or 'dark'
+  utils.SetTheme(mode)
 end
 
-function M.SwitchTheme(mode, scheme)
+function M.SetTheme(arg)
+  local mode = string.lower(arg)
+  local theme = mode == 'dark' and DarkTheme or LightTheme
   vim.api.nvim_set_option_value('background', mode, { scope = 'global' })
-  vim.cmd.colorscheme(scheme)
+  vim.cmd.colorscheme(theme)
+  CURRENT_THEME = mode
 end
 
-function M.compare_to_clipboard()
-  local ftype = vim.api.nvim_eval('&filetype')
-  vim.cmd(string.format(
-    [[
-    execute "normal! \"xy"
-    vsplit
-    enew
-    normal! P
-    setlocal buftype=nowrite
-    set filetype=%s
-    diffthis
-    execute "normal! \<C-w>\<C-w>"
-    enew
-    set filetype=%s
-    normal! "xP
-    diffthis
-  ]],
-    ftype,
-    ftype
-  ))
-end
+-- function M.compare_to_clipboard()
+--   local ftype = vim.api.nvim_eval('&filetype')
+--   vim.cmd(string.format(
+--     [[
+--     execute "normal! \"xy"
+--     vsplit
+--     enew
+--     normal! P
+--     setlocal buftype=nowrite
+--     set filetype=%s
+--     diffthis
+--     execute "normal! \<C-w>\<C-w>"
+--     enew
+--     set filetype=%s
+--     normal! "xP
+--     diffthis
+--   ]],
+--     ftype,
+--     ftype
+--   ))
+-- end
 
 return M

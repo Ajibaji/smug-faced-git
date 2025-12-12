@@ -6,27 +6,32 @@ gui:
   expandFocusedSidePanel: true
   mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
   language: 'en' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl'
+  nerdFontsVersion: "3"
   theme:
-    lightTheme: true
     activeBorderColor:
-      - '#df8e1d'
-      - bold
+      - "#b15c00"
+      - "bold"
     inactiveBorderColor:
-      - '#6c6f85'
-    optionsTextColor:
-      - '#1e66f5'
-    selectedLineBgColor:
-      - '#ccd0da'
-    cherryPickedCommitBgColor:
-      - '#bcc0cc'
-    cherryPickedCommitFgColor:
-      - '#df8e1d'
-    unstagedChangesColor:
-      - '#d20f39'
-    defaultFgColor:
-      - '#4c4f69'
+      - "#4094a3"
     searchingActiveBorderColor:
-      - '#df8e1d'
+      - "#b15c00"
+      - "bold"
+    optionsTextColor:
+      - "#2e7de9"
+    selectedLineBgColor:
+      - "#b7c1e3"
+    cherryPickedCommitFgColor:
+      - "#2e7de9"
+    cherryPickedCommitBgColor:
+      - "#9854f1"
+    markedBaseCommitFgColor:
+      - "#2e7de9"
+    markedBaseCommitBgColor:
+      - "#8c6c3e"
+    unstagedChangesColor:
+      - "#c64343"
+    defaultFgColor:
+      - "#3760bf"
   commitLength:
     show: true
   mouseEvents: true

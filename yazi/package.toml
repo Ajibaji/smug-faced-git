@@ -1,14 +1,24 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:zoom"
-rev = "e95c7b3"
-hash = "4a47a9cd4d8b3a963cb4cc593664b77e"
+rev = "19dc890"
+hash = "9dee2bf990ea941ccf67df74bca45468"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "e95c7b3"
+rev = "19dc890"
 hash = "3996fc74044bc44144b323686f887e1"
 
 [[flavor.deps]]
 use = "sanjinso/monokai-vibrant"
 rev = "8b68223"
 hash = "f4458ebaf8961d714eba05fe5ba40166"
+
+[[flavor.deps]]
+use = "kalidyasin/yazi-flavors:tokyonight-storm"
+rev = "fa19b40"
+hash = "b9aa812b133d03b4445beac37c28caa8"
+
+[[flavor.deps]]
+use = "kalidyasin/yazi-flavors:tokyonight-day"
+rev = "fa19b40"
+hash = "13c91fa66e369081d01969b930199620"

@@ -1,5 +1,5 @@
-[include]
-    path = .config/delta/themes.config
+; [include]
+;     path = ~/.config/delta/themes.config
 
 [user]
     name = Ammar Arjomand
@@ -37,6 +37,7 @@
     merge-conflict-begin-symbol = ⌃
     merge-conflict-end-symbol = ⌄
     keep-plus-minus-markers = false
+    syntax-theme = None
 
 [diff]
     colorMoved = default
@@ -57,11 +58,13 @@
 [delta "interactive"]
     keep-plus-minus-markers = false
 
-[delta "LIGHT"]
-    features = chameleon zebra-light
-
-[delta "DARK"]
-    features = gruvmax-fang zebra-dark
+; [delta "LIGHT"]
+;     ; features = mirthful-willow
+;     features = chameleon zebra-light
+;
+; [delta "DARK"]
+;     features = mellow-barbet
+;     ; features = gruvmax-fang zebra-dark
 
 [alias]
     change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
@@ -72,3 +75,31 @@
     log = delta
     blame = delta
     reflog = delta
+
+[delta "tokyonight_day"]
+    light                         = true
+    minus-style                   = syntax "#dababe"
+    minus-non-emph-style          = syntax "#dababe"
+    minus-emph-style              = syntax "#d59a9d"
+    minus-empty-line-marker-style = syntax "#dababe"
+    line-numbers-minus-style      = "#c47981"
+    plus-style                    = syntax "#b7ced5"
+    plus-non-emph-style           = syntax "#b7ced5"
+    plus-emph-style               = syntax "#95bec7"
+    plus-empty-line-marker-style  = syntax "#b7ced5"
+    line-numbers-plus-style       = "#4197a4"
+    line-numbers-zero-style       = "#a8aecb"
+
+[delta "tokyonight_storm"]
+    dark                          = true
+    minus-style                   = syntax "#52313f"
+    minus-non-emph-style          = syntax "#52313f"
+    minus-emph-style              = syntax "#763842"
+    minus-empty-line-marker-style = syntax "#52313f"
+    line-numbers-minus-style      = "#914c54"
+    plus-style                    = syntax "#2b485a"
+    plus-non-emph-style           = syntax "#2b485a"
+    plus-emph-style               = syntax "#316172"
+    plus-empty-line-marker-style  = syntax "#2b485a"
+    line-numbers-plus-style       = "#449dab"
+    line-numbers-zero-style       = "#3b4261"

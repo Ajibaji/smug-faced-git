@@ -12,13 +12,14 @@ window-inherit-font-size = false
 font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 13
 font-thicken = true
-font-thicken-strength = 100
+font-thicken-strength = 220
 adjust-cell-height = 20%
 macos-option-as-alt = true
 copy-on-select = clipboard
 background-opacity = 0.9
 background-blur = 20
-theme = light:Bluloco Light,dark:Atom
+# theme = light:Bluloco Light,dark:Ciapre
+theme = light:TokyoNight Day,dark:TokyoNight_Storm.txt
 keybind = cmd+f=write_scrollback_file:open
 keybind = global:cmd+grave_accent=toggle_quick_terminal
 keybind = cmd+up=jump_to_prompt:-1

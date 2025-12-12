@@ -25,7 +25,7 @@ return {
     require('lualine').setup({
       options = {
         icons_enabled = true,
-        theme = 'tokyonight-moon',
+        theme = 'auto',
         component_separators = { left = '', right = '' },
         section_separators = section_separators,
         disabled_filetypes = {

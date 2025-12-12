@@ -195,4 +195,6 @@ edit = [
 # [headsup]
 
 [flavor]
-use = "monokai-vibrant"
+dark  = "tokyonight-storm"
+light = "tokyonight-day"
+# use = "monokai-vibrant"

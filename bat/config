@@ -1,6 +1,4 @@
 --theme="auto:system"
---theme-dark="Monokai Extended Bright"
---theme-light="Monokai Extended Light"
 --style="numbers,changes" 
 --italic-text=always
 --color=always

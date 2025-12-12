@@ -7,20 +7,21 @@ return {
     'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     opts = {
-      style = 'moon',
+      style = 'storm',
+      light_style = 'day',
       transparent = true,
       styles = {
         comments = { italic = true },
         -- Background styles. Can be "dark", "transparent" or "normal"
-        sidebars = 'dark', -- style for sidebars, see below
-        floats = 'dark', -- style for floating windows
+        sidebars = 'normal', -- style for sidebars, see below
+        floats = 'normal', -- style for floating windows
       },
     },
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme('tokyonight-moon')
+      vim.cmd.colorscheme('tokyonight')
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi('Comment gui=none')
