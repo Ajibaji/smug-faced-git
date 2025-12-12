@@ -80,7 +80,6 @@ return {
       local servers = {
         -- angularls = {},
         bashls = {},
-        bicep = {},
         csharp_ls = {},
         docker_compose_language_service = {},
         dockerls = {},
@@ -89,11 +88,10 @@ return {
         markdown_oxide = {},
         neocmake = {},
         powershell_es = {},
-        r_language_server = {},
         rnix = {},
         ruff = {},
         shellcheck = {},
-        copilot = {},
+        -- copilot = {}, -- i think this is included in copilot-cmp
         jsonls = {},
         pylsp = {},
         -- snyk_ls = {

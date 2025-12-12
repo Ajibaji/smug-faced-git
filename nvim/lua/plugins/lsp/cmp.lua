@@ -44,6 +44,7 @@ return {
       'hrsh7th/cmp-path',
       {
         'zbirenbaum/copilot-cmp',
+        event = { "InsertEnter", "LspAttach" },
         dependencies = {
           {
             'zbirenbaum/copilot.lua', -- AI programming
@@ -52,7 +53,7 @@ return {
             -- event = 'InsertEnter', -- BufReadPost
             opts = {
               suggestion = {
-                enabled = true,
+                enabled = false, -- use false when using with copilot-cmp
                 auto_trigger = true,
               },
               panel = {
