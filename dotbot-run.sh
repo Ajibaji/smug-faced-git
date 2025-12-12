@@ -43,9 +43,10 @@ else
     echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c apt.conf.yaml -v"
     sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c apt.conf.yaml -v
     sudo apt autoremove -y
-
-    printHeading 'LINUX-POST-RUN'
-    echo "command: ${BASEDIR}/post-run.sh"
-    ${BASEDIR}/post-run.sh
   fi
+
+  printHeading 'LINUX-POST-RUN'
+  echo "command: ${BASEDIR}/post-run.sh"
+  ${BASEDIR}/post-run.sh
+
 fi
