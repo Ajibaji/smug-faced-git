@@ -49,4 +49,4 @@ map('v', '∆', ":m '>+1<CR>gv=gv", opts)
 map('v', '<A-k>', ":m '<-2<CR>gv=gv", opts)
 map('v', '˚', ":m '<-2<CR>gv=gv", opts)
 
-vim.keymap.set('n', '<Space>d', utils.compare_to_clipboard)
+-- vim.keymap.set('n', '<Space>d', utils.compare_to_clipboard)
