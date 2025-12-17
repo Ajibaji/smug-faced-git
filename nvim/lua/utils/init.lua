@@ -11,11 +11,6 @@ function M.RequireDir(targetDir)
   return allDirModules
 end
 
-function M.OpenTerminalHere()
-  local command = 'ToggleTerm dir=%:h'
-  vim.cmd(command)
-end
-
 -- Toggle-Theme (tt)
 -- call this function from outside Neovim with a simple 1 or 0 argument
 function M.tt(arg)

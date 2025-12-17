@@ -29,15 +29,14 @@ return {
         component_separators = { left = '', right = '' },
         section_separators = section_separators,
         disabled_filetypes = {
-          'NvimTree',
           'SidebarNvim',
-          'TelescopePrompt',
           statusline = {},
+          winbar = {
+            'snacks_terminal',
+          },
         },
         ignore_focus = {
-          'NvimTree',
           'SidebarNvim',
-          'TelescopePrompt',
         },
         always_divide_middle = false,
         globalstatus = true,
@@ -123,9 +122,9 @@ return {
         },
       },
       extensions = {
-        'nvim-tree',
+        'lazy',
+        'mason',
         'quickfix',
-        'toggleterm',
       },
     })
   end,

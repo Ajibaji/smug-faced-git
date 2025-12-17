@@ -721,6 +721,13 @@ return {
       desc = 'Toggle Terminal',
     },
     {
+      '<C-S-\\>',
+      function()
+        Snacks.terminal.toggle(nil, {cwd = vim.fn.expand('%:p:h')})
+      end,
+      desc = 'Toggle Terminal here',
+    },
+    {
       '<A-c>',
       function()
         Snacks.bufdelete()
