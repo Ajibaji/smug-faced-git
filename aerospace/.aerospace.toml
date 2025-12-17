@@ -11,7 +11,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
     'exec-and-forget borders active_color=0xffffa500 inactive_color=0xff494d64 width=10.0',
-    'exec-and-forget sketchybar',
+    'exec-and-forget sketchybar --reload',
 ]
 
 exec-on-workspace-change = ['/bin/bash', '-c',
@@ -133,6 +133,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-3 = 'workspace Shell'
     alt-4 = 'workspace Remote'
     alt-5 = 'workspace Misc'
+    alt-6 = 'workspace Meeting'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace --focus-follows-window Teams'
@@ -140,6 +141,7 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-3 = 'move-node-to-workspace --focus-follows-window Shell'
     alt-shift-4 = 'move-node-to-workspace --focus-follows-window Remote'
     alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc'
+    alt-shift-6 = 'move-node-to-workspace --focus-follows-window Meeting'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # alt-tab = 'workspace-back-and-forth'
@@ -176,9 +178,18 @@ run = [
 
 [[on-window-detected]]
 if.app-id = "com.microsoft.teams2"
+if.workspace = "Meeting"
+check-further-callbacks = false
 run = [
-    "layout tiling",
-    "move-node-to-workspace Teams",
+    "exec-and-forget $HOME/.config/aerospace/resize.sh Meeting 75",
+]
+
+[[on-window-detected]]
+if.app-id = "com.microsoft.teams2"
+if.workspace = "Teams"
+check-further-callbacks = true
+run = [
+    "exec-and-forget $HOME/.config/aerospace/msTeams.sh",
 ]
 
 [[on-window-detected]]
