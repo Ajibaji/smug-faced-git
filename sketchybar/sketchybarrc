@@ -93,7 +93,7 @@ sketchybar --update
 sketchybar --add event aerospace_workspace_change
 
 # for sid in $(aerospace list-workspaces --all); do
-workspaces="Teams Web Shell Remote Misc"
+workspaces="Teams Web Shell Remote Misc Meeting"
 for sid in $workspaces; do
     sketchybar --add item space.$sid left \
         --subscribe space.$sid aerospace_workspace_change \
