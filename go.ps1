@@ -49,7 +49,7 @@ do
       git clone git@github.com:Ajibaji/smug-faced-git.git
     } '3'
     {
-      Invoke-Command -FilePath smug-faced-git/dotbot-run.ps1
+      ./smug-faced-git/dotbot-run.ps1
     }
   }
   pause
