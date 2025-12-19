@@ -9,19 +9,39 @@
       force: true
 
 - link:
+    ~/.config/atuin: atuin
+    ~/.config/bat: bat
+    ~/.config/delta: delta
+    ~/.config/ghostty: ghostty
+    ~/.config/git-config: git-config
+    ~/.config/helix: helix
+    ~/.config/lazygit: lazygit
+    ~/.config/lsd: lsd
+    ~/.config/neovide: neovide
+    ~/.config/nushell: nushell
+    ~/.config/nvim: nvim
+    ~/.config/powershell: powershell
+    ~/.config/starship: starship
+    ~/.config/yazi: yazi
+    ~/.config/zed: zed
+    ~/.aider.conf.yml: aider/.aider.conf.yml
+    ~/.aider.model.settings.yml: aider/.aider.model.settings.yml
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
+    ~/.config/user-dirs.dirs: user-dirs.dirs
+    ~/.config/user-dirs.locale: user-dirs.locale
+    ~/.config/schema-ado-pipelines-custom.json: schema-ado-pipelines-custom.json
     ~/Documents/PowerShell: powershell/Microsoft.PowerShell_profile.ps1
 
 - shell:
     - command: |
+        winget install -e --id sharkdp.bat
         winget install -e --id Microsoft.WindowsTerminal
         winget install -e --id Microsoft.PowerShell
         winget install -e --id 7zip.7zip
-        winget install -e --id Microsoft.VisualStudio.2022.Community
+        winget install -e --id Microsoft.VisualStudio.2026.Community
         winget install -e --id Neovim.Neovim
         winget install -e --id Microsoft.VisualStudioCode
-        winget install -e --id JetBrains.Rider
         winget install -e --id chrisant996.Clink
         winget install -e --id Schniz.fnm
         winget install -e --id sharkdp.fd
@@ -30,17 +50,24 @@
         winget install -e --id MikeFarah.yq
         winget install -e --id Microsoft.AzureCLI
         winget install -e --id Hashicorp.Terraform
-        winget install aztfexport
+        winget install -e --id Microsoft.Azure.AztfExport
         winget install -e --id Microsoft.Azure.StorageExplorer
         winget install -e --id Microsoft.SQLServerManagementStudio
         winget install -e --id JesseDuffield.lazygit
         winget install -e --id GoLang.Go
         winget install -e --id JernejSimoncic.Wget
-        winget install Microsoft.DotNet.SDK.3_1 Microsoft.DotNet.Runtime.3_1 Microsoft.DotNet.AspNetCore.3_1 Microsoft.DotNet.DesktopRuntime.3_1
-        winget install Microsoft.DotNet.SDK.6 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.AspNetCore.6 Microsoft.DotNet.DesktopRuntime.6
-        winget install Microsoft.DotNet.SDK.7 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.AspNetCore.7 Microsoft.DotNet.DesktopRuntime.7
         winget install Microsoft.DotNet.SDK.8 Microsoft.DotNet.Runtime.8 Microsoft.DotNet.AspNetCore.8 Microsoft.DotNet.DesktopRuntime.8
+        winget install Microsoft.DotNet.SDK.9 Microsoft.DotNet.Runtime.9 Microsoft.DotNet.AspNetCore.9 Microsoft.DotNet.DesktopRuntime.9
         winget install -e --id gokcehan.lf
+        winget install -e --id sxyazi.yazi
+        winget install -e --id junegunn.fzf
+        winget install -e --id ajeetdsouza.zoxide
+        winget install -e --id dandavison.delta
+        winget install -e --id Nushell.Nushell
+        winget install -e --id ZedIndustries.Zed
+        winget install -e --id Derailed.k9s
+        winget install -e --id RedHat.Podman-Desktop
+        winget install -e --id Clement.bottom
       stdin: true
       stderr: true
       quiet: true
@@ -51,4 +78,28 @@
       stderr: true
       quiet: true
       description: installing eget
+    - command: |
+        if (! (Get-Command -Name aider -ErrorAction Ignore -CommandType Application)){
+          python -m pip install aider-install
+        }
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing aider
+    - command: |
+        if (! (Get-Command -Name jqp -ErrorAction Ignore -CommandType Application)){
+          eget noahgorstein/jqp
+        }
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing jqp
+    - command: |
+        if (! (Get-Command -Name atuin -ErrorAction Ignore -CommandType Application)){
+          eget noahgorstein/jqp
+        }
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing 
 
