@@ -3,7 +3,7 @@ function authGithub
   $KEY_PATH = "${HOME}\.ssh\github_id_ed25519"
   mkdir -p ${HOME}/.ssh
   ssh-keygen -t ed25519 -f $KEY_PATH
-  Get-Content $KEY_PATH | Set-Clipboard
+  Get-Content $KEY_PATH.pub | Set-Clipboard
   Write-Output "Public key copied to system register"
 
   Write-Output "Host github.com" >> ~/.ssh/config
@@ -12,26 +12,11 @@ function authGithub
   Write-Output "  IdentityFile $KEY_PATH" >> ~/.ssh/config
 
   Write-Output "Opening browser. Paste key into your GitHub account and save"
+  sleep 3
   Start-Process "https://github.com/settings/ssh/new"
 
-  sleep 5
+  sleep 3
   $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | Out-Null
-}
-
-function cloneAndMerge
-{
-  # rm -rf ${HOME}/.config.bak
-  # remove-item -ErrorAction Ignore ${HOME}/.config.bak
-
-  # mv ${HOME}/.config ${HOME}/.config.bak
-  git clone git@github.com:Ajibaji/smug-faced-git.git
-  # mv -n ${HOME}/.config.bak/* ${HOME}/.config/ && rm -rf ${HOME}/.config.bak
-}
-
-function runDotbot
-{
-  ./dotbot-run.ps1
-  # Invoke-Command -FilePath C:\Users\aarjomandkhah\.config\install.ps1
 }
 
 function Show-Menu
@@ -43,7 +28,7 @@ function Show-Menu
   Write-Host "================ $Title ================"
 
   Write-Host "1: Authenticate GitHub"
-  Write-Host "2: Clone and merge dotfiles"
+  Write-Host "2: Clone dotfiles repo"
   Write-Host "3: Run DotBot"
   Write-Host "Q: Press 'Q' to quit."
 }
@@ -61,10 +46,10 @@ do
       authGithub
     } '2'
     {
-      cloneAndMerge
+      git clone git@github.com:Ajibaji/smug-faced-git.git
     } '3'
     {
-      runDotBot
+      Invoke-Command -FilePath smug-faced-git/dotbot-run.ps1
     }
   }
   pause
