@@ -73,7 +73,7 @@ fi
 
 # fix tabs (mixed tabs and spaces error in eslint)
   function fixtabs () {
-    find . -name '*.ts' ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+    find . -name '*.ts' -type f -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
   }
 
 # text formatting
@@ -153,58 +153,11 @@ fi
     done
   }
 
-# REMOVE ALL NODE_MODULES DIRS
+# REMOVE LIST OF DIRS RECURSIVELY
   function  rmm() {
-    local dir_names=($@)
-    case $dir_names in
-      node_modules)
-        if whiptail --yesno "Delete all $( echo $dir_names) directories from this tree?" 20 60
-        then
-          echo "Deleting all 'node_modules' directories from this tree..."
-          # consider replacing with fd -g '{dir,*anotherDir,*.tmp,*.zip,*.spec.*,*test*}' | xargs rm -rf -v
-          find . -name $dir_names -type d -prune -exec rm -rf '{}' +
-          echo "Done"
-        fi
-        ;;
-      *)
-        if [[ $dir_names ]]
-        then
-          local answer=$(whiptail --title "Delete matching subdirectories" --radiolist \
-            "Include subdirectories in node_modules?" 20 78 2 \
-            "EXCLUDE" "" ON\
-            "INCLUDE" "" OFF 3>&1 1>&2 2>&3)
-          if [[ $? == "0" ]]
-          then
-            [[ $answer == "EXCLUDE" ]] && local exclude=*/node_modules/*
-            for directory in $dir_names
-            do
-              echo "Deleting all '$directory' directories from this tree..."
-              # (find . -name $directory -type d -not -path "$exclude" -exec rm -rf '{}' + &)
-              # (find . -name $directory -type d -not -path "$exclude" -exec bash -c 'rm -rf {} && echo "DELETED: {}"' + &)
-              (find . -name $directory -type d -not -path "$exclude" -exec echo "{}" \; -exec echo "{}" \; | parallel --tagstring 'DELETING: {}' rm -rf {})
-            done
-            echo "Done"
-          else
-            echo "Cancelled"
-          fi
-        else
-          echo "No directory parameters passed"
-        fi
-        ;;
-    esac
+    local items=$@
+    fd -g "{$items}" -t d -u --prune -x echo deleting \; -x rm -rf {}
   }
-
-#function jeff () {
-#	DISTROS=$(whiptail --title "Delete directories" --checklist "Choose which directories to remove from this tree:" 15 60 4 "-or -name \"node_modules\"" "node_modules" ON "-or -name \"dist\"" "dist" OFF "-or -name \"built\"" "built" OFF "-or -name \"build\"" "build" OFF 3>&1 1>&2 2>&3)
-#	DISTROS=$(whiptail --title "Delete directories" --checklist "Choose which directories to remove from this tree:" 15 60 4 node_modules '' ON dist '' OFF built '' OFF build '' OFF 3>&1 1>&2 2>&3)
-#	echo "result: $DISTROS"
-#	exitstatus=$?
-#	if [ $exitstatus = 0 ]; then
-#		find . \( -name "itsNeverGoingToFindAFileWithThisNameIsIt" $DISTROS\) -type d -prune
-#	else
-#	    echo "Nope."
-#	fi
-#}
 
 # SHOW $PATH ENTRIES CLEARLY
   function pathls () {
@@ -225,11 +178,7 @@ fi
     pathls | while read line
     do
       if [[ "$line" != "/mnt/"* && -d $line ]]; then
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-          gfind $line -maxdepth 1 -name $@ -type f,l -exec echo $line \;
-        else
-          find $line -maxdepth 1 -name $@ -type f,l -exec echo $line \;
-        fi
+        find $line/ -name $@ -type f
       fi
     done
   }
