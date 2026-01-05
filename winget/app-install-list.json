@@ -1,0 +1,51 @@
+{
+	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
+	"CreationDate" : "2025-12-30T20:47:01.493-00:00",
+	"Sources" : 
+	[
+		{
+			"Packages" : 
+			[
+				{"PackageIdentifier" : "sharkdp.bat"},
+        {"PackageIdentifier" : "Microsoft.WindowsTerminal"},
+        {"PackageIdentifier" : "Microsoft.PowerShell"},
+        {"PackageIdentifier" : "7zip.7zip"},
+        {"PackageIdentifier" : "Microsoft.VisualStudio.2026.Community"},
+        {"PackageIdentifier" : "Neovim.Neovim"},
+        {"PackageIdentifier" : "Microsoft.VisualStudioCode"},
+        {"PackageIdentifier" : "chrisant996.Clink"},
+        {"PackageIdentifier" : "Schniz.fnm"},
+        {"PackageIdentifier" : "sharkdp.fd"},
+        {"PackageIdentifier" : "BurntSushi.ripgrep.GNU"},
+        {"PackageIdentifier" : "stedolan.jq"},
+        {"PackageIdentifier" : "MikeFarah.yq"},
+        {"PackageIdentifier" : "Microsoft.AzureCLI"},
+        {"PackageIdentifier" : "Hashicorp.Terraform"},
+        {"PackageIdentifier" : "Microsoft.Azure.AztfExport"},
+        {"PackageIdentifier" : "Microsoft.Azure.StorageExplorer"},
+        {"PackageIdentifier" : "Microsoft.SQLServerManagementStudio"},
+        {"PackageIdentifier" : "JesseDuffield.lazygit"},
+        {"PackageIdentifier" : "GoLang.Go"},
+        {"PackageIdentifier" : "JernejSimoncic.Wget"},
+        {"PackageIdentifier" : "gokcehan.lf"},
+        {"PackageIdentifier" : "sxyazi.yazi"},
+        {"PackageIdentifier" : "junegunn.fzf"},
+        {"PackageIdentifier" : "ajeetdsouza.zoxide"},
+        {"PackageIdentifier" : "dandavison.delta"},
+        {"PackageIdentifier" : "Nushell.Nushell"},
+        {"PackageIdentifier" : "ZedIndustries.Zed"},
+        {"PackageIdentifier" : "Derailed.k9s"},
+        {"PackageIdentifier" : "RedHat.Podman-Desktop"},
+        {"PackageIdentifier" : "Clement.bottom"},
+			],
+			"SourceDetails" : 
+			{
+				"Argument" : "https://cdn.winget.microsoft.com/cache",
+				"Identifier" : "Microsoft.Winget.Source_8wekyb3d8bbwe",
+				"Name" : "winget",
+				"Type" : "Microsoft.PreIndexed.Package"
+			}
+		}
+	],
+	"WinGetVersion" : "1.12.350"
+}
