@@ -36,10 +36,27 @@ local homer = [[
 ⠀⠀⠀⠀⠀⢻⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠓⠒⠶⠦⢤⣀⣼
 ]]
 
-local topLevelProjectDirs = {}
-for dir in io.popen([[find ~/work/* -type d -mindepth 1 -maxdepth 1]]):lines() do
-  table.insert(topLevelProjectDirs, dir)
-end
+local projectDirs = {}
+
+-- local on_exit = function(obj)
+--   if obj.stdout ~= nil then
+--     for _, project in ipairs(vim.split(obj.stdout, '\n')) do
+--       table.insert(projectDirs, project)
+--     end
+--   end
+-- end
+--
+-- local cmd =
+--   { 'fd', '-p', [[/home/ammar/'(code|work)\/.*$']], '--search-path', '/home/ammar', '--min-depth', '3', '--max-depth', '3', '-t', 'd', '--prune', '-x', 'echo', [[{.}]] }
+-- vim.system(cmd, { text = true }, on_exit)
+
+local projectsOpts = {
+    dev = projectDirs,
+  }
+  -- for dir in io.popen([[fd -p $HOME/'(code|work).*\.git$' --search-path $HOME -t d -u --prune -x echo {//}]]):lines() do
+  for dir in io.popen([[fd -p $HOME/'(code|work)\/.*$' --search-path $HOME --min-depth 3 --max-depth 3 -t d -x echo {.}]]):lines() do
+    table.insert(projectDirs, dir)
+  end
 
 return {
   'folke/snacks.nvim',
@@ -51,7 +68,7 @@ return {
         keys = {
           { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
           { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
-          { icon = ' ', key = 'p', desc = 'Projects', action = ':lua Snacks.picker.projects()' },
+          { icon = ' ', key = 'p', desc = 'Projects', action = ':lua Snacks.picker.projects(projectsOpts)' },
           { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
           { icon = '󱁤 ', key = 'm', desc = 'Mason', action = ':Mason' },
           { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
@@ -341,7 +358,7 @@ return {
         projects = {
           finder = 'recent_projects',
           format = 'file',
-          dev = topLevelProjectDirs,
+          dev = nil,
           confirm = 'load_session',
           patterns = { '.git', '.svn' },
           recent = false,
@@ -723,7 +740,7 @@ return {
     {
       '<C-S-\\>',
       function()
-        Snacks.terminal.toggle(nil, {cwd = vim.fn.expand('%:p:h')})
+        Snacks.terminal.toggle(nil, { cwd = vim.fn.expand('%:p:h') })
       end,
       desc = 'Toggle Terminal here',
     },
