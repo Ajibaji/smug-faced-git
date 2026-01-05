@@ -18,17 +18,19 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-$env:FNM_DIR = "C:\Users\aarjomandkhah\AppData\Local\fnm"
+$env:FNM_DIR = "$HOME\AppData\Local\fnm"
 $env:FNM_NODE_DIST_MIRROR = "https://nodejs.org/dist"
 $env:FNM_VERSION_FILE_STRATEGY = "local"
 $env:FNM_COREPACK_ENABLED = "false"
 $env:FNM_LOGLEVEL = "info"
-$env:FNM_MULTISHELL_PATH = "C:\Users\aarjomandkhah\AppData\Local\fnm_multishells\39336_1706870237743"
+$env:FNM_MULTISHELL_PATH = "$HOME\AppData\Local\fnm_multishells\39336_1706870237743"
 $env:FNM_RESOLVE_ENGINES = "false"
 $env:FNM_ARCH = "x64"
 
-$env:PATH += ";C:\Users\aarjomandkhah\AppData\Local\Programs\unarWindows"
+$env:EGET_BIN = "$HOME\AppData\Local\eget\bin"
 
+$env:PATH += ";$HOME\AppData\Local\Programs\unarWindows"
+$env:PATH += ";$HOME\AppData\Local\eget\bin"
 function ya {
     $tmp = [System.IO.Path]::GetTempFileName()
     yazi $args --cwd-file="$tmp"
