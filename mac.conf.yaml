@@ -42,14 +42,11 @@
       description: git clone seeshellontheseasaw
     - command: |
         if ! command -v fnm; then
-          FNM_PATH="/opt/homebrew/bin/fnm"
-          export PATH="$FNM_PATH:$PATH"
-          eval "`fnm env`"
+          echo "ERROR: ensure FNM is installed and try again"
         fi
 
         fnm install v20
         fnm install v18
-        fnm install v16
         fnm default v20
       stderr: true
       quiet: false

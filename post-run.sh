@@ -8,7 +8,7 @@ function printHeading() {
 
 if command -v pip3; then
   printHeading 'PIP-TRUST-SYSTEM-CERTS'
-  pip3 install -trusted-host files.pythonhosted.org pip_system_certs
+  pip3 install --trusted-host files.pythonhosted.org pip_system_certs
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

@@ -70,10 +70,12 @@ source -- "$HOME/.local/share/blesh/ble.sh"
 
 
 #___________________________________________________________________________________ATUIN:
+  test $(uname -s) = "Linux" && export PATH="$HOME/.atuin/bin:$PATH"
   eval "$(atuin init bash)"
 
 
 #_____________________________________________________________________________________FNM:
+  test $(uname -s) = "Linux" && export PATH="$HOME/.local/share/fnm:$PATH"
   eval "$(fnm env)"
 
 

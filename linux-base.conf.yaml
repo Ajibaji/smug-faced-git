@@ -20,6 +20,7 @@
       description: git clone seeshellontheseasaw
     - command: |
         if ! command -v atuin; then
+          export NO_MODIFY_PATH=1
           curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
         fi
       stdin: true
@@ -125,6 +126,7 @@
       quiet: true
       description: installing k9s
     - command: |
+        source ~/.bashrc
         npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome
       stdin: true
       stderr: true

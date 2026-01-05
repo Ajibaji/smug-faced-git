@@ -12,14 +12,13 @@ sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg s
 
 if ! command -v fnm; then
   printHeading 'FNM/NODEJS'
-  curl -fssl https://fnm.vercel.app/install | bash
+  curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
   FNM_PATH="/home/ammar/.local/share/fnm"
   export PATH="$FNM_PATH:$PATH"
   eval "`fnm env`"
   fnm install v22
   fnm install v20
   fnm install v18
-  fnm install v16
   fnm default v22
 fi
 
@@ -61,8 +60,6 @@ if ! command -v dotnet; then
   chmod +x ./dotnet-install.sh 
   ./dotnet-install.sh --channel 9.0
   ./dotnet-install.sh --channel 8.0
-  ./dotnet-install.sh --channel 7.0
-  ./dotnet-install.sh --channel 6.0
   ./dotnet-install.sh --channel 3.1
   rm dotnet-install.sh
   export DOTNET_ROOT=$HOME/.dotnet
