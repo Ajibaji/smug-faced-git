@@ -44,7 +44,7 @@
       quiet: true
       description: installing yazi
     - command: |
-        if ! command -v ripgrep; then
+        if ! command -v rg; then
           cargo binstall -y ripgrep
         fi
       stdin: true
@@ -134,14 +134,6 @@
       quiet: true
       description: installing npm packages
     - command: |
-        if ! command -v jqp; then
-          sudo snap install jqp
-        fi
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing jqp
-    - command: |
         if ! command -v eget; then
           curl https://zyedidia.github.io/eget.sh | sh
           sudo mv ./eget /usr/local/bin/eget
@@ -150,6 +142,15 @@
       stderr: true
       quiet: true
       description: installing eget
+    - command: |
+        source ~/.bashrc
+        if ! command -v jqp; then
+          eget noahgorstein/jqp
+        fi
+      stdin: true
+      stderr: true
+      quiet: true
+      description: installing jqp
     - command: |
         if ! command -v ble-bind; then
           curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf -

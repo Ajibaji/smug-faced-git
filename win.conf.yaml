@@ -94,12 +94,3 @@
       stderr: true
       quiet: true
       description: installing jqp
-    - command: |
-        if (! (Get-Command -Name atuin -ErrorAction Ignore -CommandType Application)){
-          eget noahgorstein/jqp
-        }
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing 
-
