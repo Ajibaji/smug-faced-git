@@ -16,7 +16,7 @@
         fi
         unset GIT_SSH_COMMAND
       stderr: true
-      quiet: true
+      quiet: false
       description: git clone seeshellontheseasaw
     - command: |
         if ! command -v atuin; then
@@ -26,7 +26,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing atuin
     - command: |
         if ! command -v zoxide; then
@@ -34,7 +34,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing zoxide
     - command: |
         if ! command -v yazi; then
@@ -42,7 +42,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing yazi
     - command: |
         if ! command -v rg; then
@@ -50,7 +50,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing ripgrep
     - command: |
         if ! command -v btm; then
@@ -58,7 +58,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing bottom
     - command: |
         if ! command -v fd; then
@@ -66,7 +66,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing fd-find
     - command: |
         if ! command -v delta; then
@@ -74,7 +74,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing delta
     - command: |
         if ! command -v lazygit; then
@@ -86,7 +86,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing lazygit
     - command: |
         if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
@@ -99,7 +99,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing jetbrains font
     - command: |
         if ! command -v fx; then
@@ -107,7 +107,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing fx
     - command: |
         if ! command -v kitty; then
@@ -118,21 +118,21 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing kitty
     - command: |
         if ! command -v k9s; then
           curl -ss https://webinstall.dev/k9s | bash
         fi
       stderr: true
-      quiet: true
+      quiet: false
       description: installing k9s
     - command: |
         source ~/.bashrc
         npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing npm packages
     - command: |
         if ! command -v eget; then
@@ -141,7 +141,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing eget
     - command: |
         source ~/.bashrc
@@ -150,7 +150,7 @@
         fi
       stdin: true
       stderr: true
-      quiet: true
+      quiet: false
       description: installing jqp
     - command: |
         if ! command -v ble-bind; then
@@ -162,3 +162,22 @@
       stderr: true
       quiet: false
       description: installing ble.sh
+    - command: |
+        if ! command -v bat; then
+          echo 'batcat "$@"' > ./bat && chmod +x ./bat
+          sudo mv ./bat /usr/local/bin/
+          git checkout -- .
+        fi
+      stdin: true
+      stderr: true
+      quiet: false
+      description: creating batcat wrapper
+    - command: |
+        source ~/.bashrc
+        if ! command -v fzf; then
+          eget junegunn/fzf
+        fi
+      stdin: true
+      stderr: true
+      quiet: false
+      description: installing fzf

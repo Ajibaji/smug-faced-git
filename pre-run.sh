@@ -60,13 +60,13 @@ if ! command -v dotnet; then
   printf "\n\ninstalling dotnet...\n"
   curl -fsSLO https://dot.net/v1/dotnet-install.sh
   chmod +x ./dotnet-install.sh 
-  ./dotnet-install.sh --channel 9.0
-  ./dotnet-install.sh --channel 8.0
   ./dotnet-install.sh --channel 3.1
+  ./dotnet-install.sh --channel 8.0
+  ./dotnet-install.sh --channel 9.0
   rm dotnet-install.sh
   export DOTNET_ROOT=$HOME/.dotnet
   export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-  dotnet tool install --global csharp-ls
+  dotnet tool install --global csharp-ls --version 0.20.0
   dotnet tool install --global csharpier
 fi
 

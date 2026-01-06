@@ -5,7 +5,6 @@
     - ca-certificates
     - dolphin
     - dos2unix
-    - fzf
     - gnupg
     - imagemagick
     - jq
