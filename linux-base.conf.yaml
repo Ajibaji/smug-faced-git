@@ -22,6 +22,7 @@
         if ! command -v atuin; then
           export NO_MODIFY_PATH=1
           curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
+          git checkout -- .
         fi
       stdin: true
       stderr: true
