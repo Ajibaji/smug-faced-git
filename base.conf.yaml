@@ -43,6 +43,7 @@
     ~/.bashrc: bash/.bashrc
     ~/.bash_profile: bash/.bash_profile
     ~/.blerc: ble/.blerc
+    ~/.eget.toml: eget/.eget.toml
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.hushlogin: ./.hushlogin

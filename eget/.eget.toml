@@ -1,0 +1,6 @@
+[global]
+target = "~/.local/eget/bin"
+
+["noahgorstein/jqp"]
+["junegunn/fzf"]
+[""]
