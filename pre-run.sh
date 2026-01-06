@@ -20,6 +20,7 @@ if ! command -v fnm; then
   fnm install v20
   fnm install v18
   fnm default v22
+  git checkout -- .
 fi
 
 if ! command -v cargo; then
@@ -30,6 +31,7 @@ if ! command -v cargo; then
   export PATH="${HOME}/.cargo/bin:${PATH}"
   cargo binstall -y cargo-update
   cargo install-update -a
+  git checkout -- .
 fi
 
 if ! command -v docker; then

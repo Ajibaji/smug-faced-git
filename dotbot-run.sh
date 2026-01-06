@@ -3,13 +3,16 @@
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
+RANDOM_INT="$(awk -v min=1 -v max=100000 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')"
 function printHeading() {
   printf "%119s\n" ${@}— | sed -e 's/ /—/g';
 }
 
 export -f printHeading
 
+function saveGitAndClean() {
+  git diff > ~/${RANDOM_INT}.txt
+}
 function runSymlink() {
   printHeading LINKING-FILES
   echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c base.conf.yaml -v"
