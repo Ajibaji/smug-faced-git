@@ -19,7 +19,7 @@
   fi
 
 # MAN
-  export MANPAGER="bash -c 'col -bx | ${BAT_CMD:-batcat} -l man -p'"
+  export MANPAGER="bash -c 'col -bx | bat -l man -p'"
 
 # WSL VALUES
 # =======================================================================================
@@ -44,6 +44,7 @@ fi
 # EGET
   export EGET_BIN=$HOME/.local/eget/bin
   [[ ! -d $EGET_BIN ]] && mkdir -p $EGET_BIN
+  export PATH=$EGET_BIN:$PATH
 
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
