@@ -39,7 +39,11 @@ fi
 
 # DOTNET
   export DOTNET_ROOT=$HOME/.dotnet
-  # export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+# EGET
+  export EGET_BIN=$HOME/.local/eget/bin
+  [[ ! -d $EGET_BIN ]] && mkdir -p $EGET_BIN
 
 # FZF
   export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
