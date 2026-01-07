@@ -1,6 +1,23 @@
 [global]
 target = "~/.local/eget/bin"
 
-["noahgorstein/jqp"]
-["junegunn/fzf"]
 ["terraform-linters/tflint"]
+
+["noahgorstein/jqp"]
+
+["junegunn/fzf"]
+
+["ajeetdsouza/zoxide"]
+
+["sxyazi/yazi"]
+    asset_filters = [ "gnu", ".zip" ]
+    upgrade_only = true
+
+["BurntSushi/ripgrep"]
+    asset_filters = [ "x86_64" ]
+    upgrade_only = true
+
+["ClementTsang/bottom"]
+    asset_filters = [ "gnu" ]
+    all = true
+    upgrade_only = true
