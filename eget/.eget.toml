@@ -3,4 +3,4 @@ target = "~/.local/eget/bin"
 
 ["noahgorstein/jqp"]
 ["junegunn/fzf"]
-[""]
+["terraform-linters/tflint"]

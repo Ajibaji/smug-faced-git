@@ -37,6 +37,7 @@
         {"PackageIdentifier" : "Derailed.k9s"},
         {"PackageIdentifier" : "RedHat.Podman-Desktop"},
         {"PackageIdentifier" : "Clement.bottom"},
+        {"PackageIdentifier" : "TerraformLinters.tflint"}
 			],
 			"SourceDetails" : 
 			{

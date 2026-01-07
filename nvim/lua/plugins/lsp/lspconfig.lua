@@ -85,15 +85,31 @@ return {
         dockerls = {},
         helm_ls = {},
         html = {},
+        jsonls = {},
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+              diagnostics = {
+                disable = { 'missing-fields' },
+                globals = { 'vim' },
+              },
+            },
+          },
+          flags = {
+            debounce_text_changes = 150,
+          },
+        },
         markdown_oxide = {},
         neocmake = {},
         powershell_es = {},
+        pylsp = {},
         rnix = {},
         ruff = {},
         shellcheck = {},
         -- copilot = {}, -- i think this is included in copilot-cmp
-        jsonls = {},
-        pylsp = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
@@ -132,6 +148,7 @@ return {
         -- },
         sqlls = {},
         terraformls = {},
+        tflint = {},
         ts_ls = {
           cmd = { 'typescript-language-server', '--stdio' },
           filetypes = {
@@ -143,22 +160,6 @@ return {
             'typescript.tsx',
           },
           root_dir = require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
-        },
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              diagnostics = {
-                disable = { 'missing-fields' },
-                globals = { 'vim' },
-              },
-            },
-          },
-          flags = {
-            debounce_text_changes = 150,
-          },
         },
         yamlls = {
           settings = {

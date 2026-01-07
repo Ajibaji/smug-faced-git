@@ -30,10 +30,13 @@
     ~/.config/nvim: nvim
     ~/.config/powershell: powershell
     ~/.config/raycast: raycast
+    ~/.config/schema-ado-pipelines-custom.json: schema-ado-pipelines-custom.json
     ~/.config/shell: shell
     ~/.config/sketchybar: sketchybar
     ~/.config/starship: starship
     ~/.config/tmux: tmux
+    ~/.config/user-dirs.dirs: user-dirs.dirs
+    ~/.config/user-dirs.locale: user-dirs.locale
     ~/.config/yazi: yazi
     ~/.config/zed: zed
     ~/.config/zsh: zsh
@@ -47,10 +50,8 @@
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.hushlogin: ./.hushlogin
+    ~/.tflint.hcl: tflint/.tflint.hcl
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zprofile: zsh/.zprofile
     ~/.zshenv: zsh/.zshenv
     ~/.zshrc: zsh/.zshrc
-    ~/.config/user-dirs.dirs: user-dirs.dirs
-    ~/.config/user-dirs.locale: user-dirs.locale
-    ~/.config/schema-ado-pipelines-custom.json: schema-ado-pipelines-custom.json
