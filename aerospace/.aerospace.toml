@@ -163,9 +163,8 @@ if.app-id = "com.mitchellh.ghostty"
 # check-further-callbacks = true
 run = [
     "layout floating",
-    "exec-and-forget osascript $HOME/.config/MacOS/max_window_resize.applescript",
-    # "layout floating",
     "move-node-to-workspace Shell",
+    "exec-and-forget $HOME/.config/MacOS/max_window_resize.sh",
 ]
 
 [[on-window-detected]]
