@@ -29,38 +29,6 @@
       quiet: false
       description: installing atuin
     - command: |
-        if ! command -v zoxide; then
-          cargo binstall -y zoxide
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing zoxide
-    - command: |
-        if ! command -v yazi; then
-          cargo binstall -y yazi-fm yazi-cli
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing yazi
-    - command: |
-        if ! command -v rg; then
-          cargo binstall -y ripgrep
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing ripgrep
-    - command: |
-        if ! command -v btm; then
-          cargo binstall -y bottom
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing bottom
-    - command: |
         if ! command -v fd; then
           cargo binstall -y fd-find
         fi
