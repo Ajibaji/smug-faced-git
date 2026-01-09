@@ -13,6 +13,8 @@
 ["sxyazi/yazi"]
 
 ["BurntSushi/ripgrep"]
+  target = "~/.local/eget/bin/rg"
 
 ["ClementTsang/bottom"]
   file = "btm"
+  asset_filters = [ "^musl"]
