@@ -104,8 +104,12 @@
       description: installing npm packages
     - command: |
         if ! command -v eget; then
-          curl https://zyedidia.github.io/eget.sh | sh
-          sudo mv ./eget /usr/local/bin/eget
+          git clone https://github.com/rjshrjndrn/eget
+          cd eget
+          go build -trimpath -ldflags "-s -w -X main.Version=1.3.2-dev.23" -o dist/bin/eget .
+          sudo mv ./dist/bin/eget /usr/local/bin/eget
+          cd -
+          rm -rf eget
         fi
       stdin: true
       stderr: true

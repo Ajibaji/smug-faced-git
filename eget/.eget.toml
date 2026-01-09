@@ -1,5 +1,6 @@
 [global]
-target = "~/.local/eget/bin"
+  target = "~/.local/eget/bin"
+  upgrade_only = true
 
 ["terraform-linters/tflint"]
 
@@ -10,14 +11,8 @@ target = "~/.local/eget/bin"
 ["ajeetdsouza/zoxide"]
 
 ["sxyazi/yazi"]
-    asset_filters = [ "gnu", ".zip" ]
-    upgrade_only = true
 
 ["BurntSushi/ripgrep"]
-    asset_filters = [ "x86_64" ]
-    upgrade_only = true
 
 ["ClementTsang/bottom"]
-    asset_filters = [ "gnu" ]
-    all = true
-    upgrade_only = true
+  file = "btm"
