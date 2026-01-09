@@ -16,5 +16,6 @@
   target = "~/.local/eget/bin/rg"
 
 ["ClementTsang/bottom"]
+  asset_filters = [ "^gnu"]
   file = "btm"
-  asset_filters = [ "^musl"]
+  target = "~/.local/eget/bin/btm"
