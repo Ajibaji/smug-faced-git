@@ -65,7 +65,7 @@
       description: setting XDG_CONFIG_HOME
     - command: |
         defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers \
-          -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=com.neovide.neovide;}'
+          -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=dev.zed.Zed;}'
       stdin: true
       stderr: true
       quiet: false

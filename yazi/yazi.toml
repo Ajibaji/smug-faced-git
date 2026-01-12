@@ -27,7 +27,7 @@ show_symlink   = true
 [opener]
 edit = [
 	{ run = 'nvim "$@"', desc = "neovim", block = true, for = "unix" },
-	{ run = 'neovide "%*"',    orphan = true, desc = "neovide",       for = "windows" },
+	{ run = 'zed "%*"',    orphan = true, desc = "zed",       for = "windows" },
 ]
 # open = [
 # 	{ run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
