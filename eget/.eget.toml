@@ -16,6 +16,19 @@
   target = "~/.local/eget/bin/rg"
 
 ["ClementTsang/bottom"]
-  asset_filters = [ "^gnu"]
+  asset_filters = [ "^gnu" ]
   file = "btm"
   target = "~/.local/eget/bin/btm"
+
+["derailed/k9s"]
+  asset_filters = [ "^json", "^deb", "^rpm", "^apk" ]
+
+["sharkdp/bat"]
+  asset_filters = [ "^musl", "^deb" ]
+
+["jqlang/jq"]
+  asset_filters = [ "{{.Arch}}" ]
+
+["neovim/neovim"]
+  asset_filters = [ "^appimage" ]
+  file = "all"
