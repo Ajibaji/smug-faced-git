@@ -25,4 +25,4 @@
 #  export PATH=$PATH:/usr/X11R6/bin
 
 # KEEP THIS LAST
-  export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"
+  # export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"

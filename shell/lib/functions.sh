@@ -178,7 +178,7 @@ fi
     pathls | while read line
     do
       if [[ "$line" != "/mnt/"* && -d $line ]]; then
-        find $line/ -name $@ -type f
+        fd --glob "$@" --type x --type l $line --exact-depth 1
       fi
     done
   }
