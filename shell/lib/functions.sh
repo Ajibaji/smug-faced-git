@@ -53,6 +53,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     # PERL
       # eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+
+    # SCREEN-RESOLUTION
+      function get-focused-monitor-resolution () {
+        targetMonitor="$(aerospace list-monitors --format '%{monitor-name}' --focused)"
+        [[ "$targetMonitor" = "Built-in Retina Display" ]] && targetMonitor="Color LCD"
+        resolution="$(system_profiler -json SPDisplaysDataType | jq -r --arg monitor "$targetMonitor" '.SPDisplaysDataType[].spdisplays_ndrvs[] | select(._name == $monitor)._spdisplays_resolution')"
+        echo $resolution | awk '{print $1,$3}'
+      }
 fi
 
 # AWS SET ENV VARS
