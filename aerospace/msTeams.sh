@@ -10,6 +10,7 @@ if [[ $(echo $teamsWindows | wc -w) -gt 1 ]]; then
     secondWindow=$(echo $teamsWindows | awk '{print $2}')
     aerospace move-node-to-workspace --window-id $secondWindow Meeting
     aerospace layout --window-id $secondWindow tiling
+    aerospace workspace Meeting
 else
     aerospace move-node-to-workspace --window-id $teamsWindows Teams
     aerospace layout --window-id $teamsWindows tiling
