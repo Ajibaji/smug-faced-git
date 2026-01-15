@@ -53,6 +53,11 @@ fi
   export CXXFLAGS="-Wno-format-security"
   export CFLAGS="-Wno-format-security"
 
+# GO
+  export GOPATH=${HOME}/go
+  export GOBIN=${GOPATH}/bin
+  export PATH=$PATH:${GOBIN}
+
 # KUBERNETES
   export PATH=$PATH:${HOME}/.kube/plugins/jordanwilson230
 
