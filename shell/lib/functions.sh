@@ -288,4 +288,5 @@ fi
 # GIT-RELATED FUNCTIONS
   function gcoall() {
     fd '\.git$' -t d -u --strip-cwd-prefix --prune -x echo {//} | parallel --plus --color --tagstring '{:0:20}' git -C '{}' pull
+    #TODO: make gco conditional on .git being below a certain size to avoid pulling large repos
   }
