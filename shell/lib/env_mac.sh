@@ -26,3 +26,4 @@
 
 # KEEP THIS LAST
   # export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH"
+  export PATH="$HOME/Library/Python/3.13/bin:$PATH"
