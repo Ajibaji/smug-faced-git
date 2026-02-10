@@ -50,13 +50,10 @@ local projectDirs = {}
 --   { 'fd', '-p', [[/home/ammar/'(code|work)\/.*$']], '--search-path', '/home/ammar', '--min-depth', '3', '--max-depth', '3', '-t', 'd', '--prune', '-x', 'echo', [[{.}]] }
 -- vim.system(cmd, { text = true }, on_exit)
 
-local projectsOpts = {
-    dev = projectDirs,
-  }
-  -- for dir in io.popen([[fd -p $HOME/'(code|work).*\.git$' --search-path $HOME -t d -u --prune -x echo {//}]]):lines() do
-  for dir in io.popen([[fd -p $HOME/'(code|work)\/.*$' --search-path $HOME --min-depth 3 --max-depth 3 -t d -x echo {.}]]):lines() do
-    table.insert(projectDirs, dir)
-  end
+-- for dir in io.popen([[fd -p $HOME/'(code|work).*\.git$' --search-path $HOME -t d -u --prune -x echo {//}]]):lines() do
+for dir in io.popen([[fd -p $HOME/'(code|work)\/.*$' --search-path $HOME --min-depth 3 --max-depth 3 -t d -x echo {.}]]):lines() do
+  table.insert(projectDirs, dir)
+end
 
 return {
   'folke/snacks.nvim',
