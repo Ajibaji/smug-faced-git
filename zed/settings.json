@@ -1,4 +1,9 @@
 {
+  "completions": {
+    "lsp_fetch_timeout_ms": 0,
+    "words": "enabled"
+  },
+  "completion_menu_scrollbar": "auto",
   "terminal": {
     "shell": "system"
   },
