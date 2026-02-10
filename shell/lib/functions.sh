@@ -284,3 +284,8 @@ fi
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
   }
+
+# GIT-RELATED FUNCTIONS
+  function gcoall() {
+    fd '\.git$' -t d -u --strip-cwd-prefix --prune -x echo {//} | parallel --plus --color --tagstring '{:0:20}' git -C '{}' pull
+  }
