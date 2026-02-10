@@ -50,7 +50,6 @@ return {
             'zbirenbaum/copilot.lua', -- AI programming
             cmd = 'Copilot',
             build = ':Copilot auth',
-            -- event = 'InsertEnter', -- BufReadPost
             opts = {
               suggestion = {
                 enabled = false, -- use false when using with copilot-cmp

@@ -234,17 +234,38 @@ return {
           },
         },
         virtual_text = false,
-        virtual_lines = { current_line = true },
+        virtual_lines = false,
         underline = true,
         update_in_insert = false,
         severity_sort = false,
         float = {
-          focusable = false,
-          style = 'minimal',
+          focusable = true,
           border = 'rounded',
-          source = 'if_many',
+          source = false,
           header = '',
-          prefix = '',
+          prefix = function(diagnostic)
+            local severity, hlgroup
+            if diagnostic.severity == 1 then
+              severity = 'Error'
+              hlgroup = 'DiagnosticError'
+            elseif diagnostic.severity == 2 then
+              severity = 'Warn'
+              hlgroup = 'DiagnosticWarn'
+            elseif diagnostic.severity == 3 then
+              severity = 'Info'
+              hlgroup = 'DiagnosticInfo'
+            elseif diagnostic.severity == 4 then
+              severity = 'Hint'
+              hlgroup = 'DiagnosticHint'
+            end
+            return '[' .. severity .. '] - ', hlgroup
+          end,
+          suffix = function(diagnostic)
+            return " [" .. diagnostic.source .. "]", "DiagnosticUnnecessary"
+          end,
+          scope = 'line',
+          offset_x = 10,
+          anchor_bias = 'above',
         },
       })
     end,
