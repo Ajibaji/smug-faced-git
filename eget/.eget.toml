@@ -31,4 +31,39 @@
 
 ["neovim/neovim"]
   asset_filters = [ "^appimage" ]
-  file = "all"
+  file = "nvim*/*"
+  all = true
+  target = "~/.local/eget/bin/nvim"
+  binary = "~/.local/eget/bin/nvim/bin/nvim"
+
+["opentofu/opentofu"]
+  asset_filters = [ "{{.OS}}_{{.Arch}}.tar.gz", "^.gpgsig", "^.pem", "^.sig" ]
+  file = "tofu"
+  target = "~/.local/eget/bin/tofu"
+
+["sharkdp/fd"]
+
+["dandavison/delta"]
+
+["jesseduffield/lazygit"]
+
+["antonmedv/fx"]
+
+["charmbracelet/glow"]
+  asset_filters = [ "^json", ]
+
+["charmbracelet/freeze"]
+  asset_filters = [ "^json", ]
+
+["charmbracelet/gum"]
+  asset_filters = [ "^json", ]
+
+["charmbracelet/mods"]
+  asset_filters = [ "^json", ]
+
+["pulumi/pulumi"]
+  asset_filters = [ "^sig", ]
+  all = true
+  binary = "~/.local/eget/bin/pulumi"
+
+["zaproxy/zaproxy"]

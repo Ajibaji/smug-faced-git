@@ -84,19 +84,6 @@ architectures: $(dpkg --print-architecture)
 signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
 fi
 
-if ! command -v terraform; then
-  printHeading 'HASHICORP-APT-REPO'
-  printf "\n\nadding hashicorp apt repo...\n"
-  wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-  echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-fi
-
-if ! command -v nvim; then
-  printHeading 'NEOVIM-APT-REPO'
-  printf "\n\nAdding neovim apt repo...\n"
-  sudo add-apt-repository ppa:neovim-ppa/unstable -y
-fi
-
 printHeading 'MESA-APT-REPO'
 printf "\n\nAdding mesa apt repo...\n"
 sudo add-apt-repository ppa:kisak/kisak-mesa -y

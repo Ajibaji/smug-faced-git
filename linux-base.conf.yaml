@@ -29,34 +29,6 @@
       quiet: false
       description: installing atuin
     - command: |
-        if ! command -v fd; then
-          cargo binstall -y fd-find
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing fd-find
-    - command: |
-        if ! command -v delta; then
-          cargo binstall -y git-delta
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing delta
-    - command: |
-        if ! command -v lazygit; then
-          cd ~
-          LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-          curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-          tar xzf lazygit.tar.gz lazygit
-          sudo install lazygit -D -t /usr/local/bin/
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing lazygit
-    - command: |
         if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
           sudo mkdir -p ~/.local/share/fonts
           sudo curl -fsSLO ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
@@ -70,14 +42,6 @@
       quiet: false
       description: installing jetbrains font
     - command: |
-        if ! command -v fx; then
-          curl https://fx.wtf/install.sh | sudo sh
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing fx
-    - command: |
         if ! command -v kitty; then
           echo "my name is $(whoami)"
           curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
@@ -88,13 +52,6 @@
       stderr: true
       quiet: false
       description: installing kitty
-    - command: |
-        if ! command -v k9s; then
-          curl -ss https://webinstall.dev/k9s | bash
-        fi
-      stderr: true
-      quiet: false
-      description: installing k9s
     - command: |
         source ~/.bashrc
         npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome

@@ -12,7 +12,6 @@
     - libvulkan-dev
     - lsb-release
     - lsof
-    - neovim
     - p7zip
     - parallel
     - poppler-utils
@@ -28,5 +27,3 @@
     - docker-buildx-plugin
     - docker-compose-plugin
     - kubectl
-    - terraform
-    - vault
