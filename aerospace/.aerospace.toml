@@ -178,19 +178,8 @@ run = [
 
 [[on-window-detected]]
 if.app-id = "com.microsoft.teams2"
-if.workspace = "Meeting"
-check-further-callbacks = false
-run = [
-    "layout tiling",
-    "exec-and-forget $HOME/.config/aerospace/resize.sh Meeting 75",
-]
-
-[[on-window-detected]]
-if.app-id = "com.microsoft.teams2"
-if.workspace = "Teams"
 check-further-callbacks = true
 run = [
-    "layout tiling",
     "exec-and-forget $HOME/.config/aerospace/msTeams.sh",
 ]
 
