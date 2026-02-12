@@ -15,6 +15,7 @@
     ~/.config/bash: bash
     ~/.config/bat: bat
     ~/.config/brew: brew
+    ~/.config/crush: crush
     ~/.config/delta: delta
     ~/.config/ghostty: ghostty
     ~/.config/git-config: git-config
