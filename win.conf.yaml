@@ -24,8 +24,6 @@
     ~/.config/starship: starship
     ~/.config/yazi: yazi
     ~/.config/zed: zed
-    ~/.aider.conf.yml: aider/.aider.conf.yml
-    ~/.aider.model.settings.yml: aider/.aider.model.settings.yml
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.config/user-dirs.dirs: user-dirs.dirs
@@ -85,14 +83,6 @@
       stderr: true
       quiet: true
       description: installing eget
-    - command: |
-        if (! (Get-Command -Name aider -ErrorAction Ignore -CommandType Application)){
-          python -m pip install aider-install
-        }
-      stdin: true
-      stderr: true
-      quiet: true
-      description: installing aider
     - command: |
         if (! (Get-Command -Name jqp -ErrorAction Ignore -CommandType Application)){
           eget noahgorstein/jqp

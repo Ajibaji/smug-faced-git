@@ -41,8 +41,6 @@
     ~/.config/zed: zed
     ~/.config/zsh: zsh
     ~/.aerospace.toml: aerospace/.aerospace.toml
-    ~/.aider.conf.yml: aider/.aider.conf.yml
-    ~/.aider.model.settings.yml: aider/.aider.model.settings.yml
     ~/.bashrc: bash/.bashrc
     ~/.bash_profile: bash/.bash_profile
     ~/.blerc: ble/.blerc
