@@ -38,19 +38,6 @@ local homer = [[
 
 local projectDirs = {}
 
--- local on_exit = function(obj)
---   if obj.stdout ~= nil then
---     for _, project in ipairs(vim.split(obj.stdout, '\n')) do
---       table.insert(projectDirs, project)
---     end
---   end
--- end
---
--- local cmd =
---   { 'fd', '-p', [[/home/ammar/'(code|work)\/.*$']], '--search-path', '/home/ammar', '--min-depth', '3', '--max-depth', '3', '-t', 'd', '--prune', '-x', 'echo', [[{.}]] }
--- vim.system(cmd, { text = true }, on_exit)
-
--- for dir in io.popen([[fd -p $HOME/'(code|work).*\.git$' --search-path $HOME -t d -u --prune -x echo {//}]]):lines() do
 for dir in io.popen([[fd -p $HOME/'(code|work)\/.*$' --search-path $HOME --min-depth 3 --max-depth 3 -t d -x echo {.}]]):lines() do
   table.insert(projectDirs, dir)
 end
