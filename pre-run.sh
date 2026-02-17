@@ -13,7 +13,7 @@ sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg s
 if ! command -v fnm; then
   printHeading 'FNM/NODEJS'
   curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
-  FNM_PATH="/home/ammar/.local/share/fnm"
+  FNM_PATH="$HOME/.local/share/fnm"
   export PATH="$FNM_PATH:$PATH"
   eval "`fnm env`"
   fnm install v22
