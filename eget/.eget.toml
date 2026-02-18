@@ -65,5 +65,3 @@
   asset_filters = [ "^sig", ]
   all = true
   binary = "~/.local/eget/bin/pulumi"
-
-["zaproxy/zaproxy"]
