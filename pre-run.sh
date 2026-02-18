@@ -7,7 +7,7 @@ function printHeading() {
 }
 
 printHeading 'APT-INSTALL-BASE-DEPS'
-sudo apt update -q
+sudo apt update -qq
 sudo apt install \
   apt-transport-https \
   build-essential \
@@ -49,9 +49,9 @@ sudo apt install \
   xz-utils \
   zip \
   zlib1g-dev \
-  -y -q
+  -y -qq
 
-if ! command -v fnm; then
+if ! command -v fnm > /dev/null 2>&1; then
   printHeading 'FNM/NODEJS'
   curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
   FNM_PATH="$HOME/.local/share/fnm"
@@ -63,7 +63,7 @@ if ! command -v fnm; then
   git checkout -- .
 fi
 
-if ! command -v pyenv; then
+if ! command -v pyenv > /dev/null 2>&1; then
   printHeading 'INSTALLING-PYENV'
   curl -fsSL https://pyenv.run | bash
   export PATH="$HOME/.pyenv/bin:$PATH"
@@ -73,7 +73,7 @@ if ! command -v pyenv; then
   git checkout -- .
 fi
 
-if ! command -v cargo; then
+if ! command -v cargo > /dev/null 2>&1; then
   printHeading 'INSTALLING-CARGO'
   printf "\n\ninstalling cargo-binstall...\n"
   curl https://sh.rustup.rs -ssf | sh -s -- -y
@@ -84,7 +84,7 @@ if ! command -v cargo; then
   git checkout -- .
 fi
 
-if ! command -v dotnet; then
+if ! command -v dotnet > /dev/null 2>&1; then
   printHeading 'INSTALLING-DOTNET'
   printf "\n\ninstalling dotnet...\n"
   curl -fsSLO https://dot.net/v1/dotnet-install.sh
@@ -100,24 +100,24 @@ if ! command -v dotnet; then
   dotnet tool install --global csharpier
 fi
 
-if ! command -v az; then
+if ! command -v az > /dev/null 2>&1; then
   printHeading 'AZURE-CLI'
   printf "\n\installing azure-cli...\n"
   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 
-if ! command -v R; then
+if ! command -v R > /dev/null 2>&1; then
   printHeading 'CRAN-APT-REPO'
   printf "\n\nAdding CRAN (R lang) apt repo...\n"
   wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
   sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
-  sudo apt update -q
-  sudo apt install r-base -y -q
+  sudo apt update -qq
+  sudo apt install r-base -y -qq
 fi
 
 printHeading 'SEESHELLONTHESEASAW'
 export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git > /dev/null 2>&1; then
   echo "You aren't me. Nothing to see here"
 else
   if [ ! -d ~/seeshellontheseasaw ]; then
@@ -126,7 +126,7 @@ else
 fi
 unset GIT_SSH_COMMAND
 
-if ! command -v atuin; then
+if ! command -v atuin > /dev/null 2>&1; then
 printHeading 'ATUIN'
   export NO_MODIFY_PATH=1
   curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
@@ -144,7 +144,7 @@ if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
   cd -
 fi
 
-if ! command -v ghostty; then
+if ! command -v ghostty > /dev/null 2>&1; then
   printHeading 'GHOSTTY'
   snap install ghostty --classic
 fi
@@ -161,7 +161,7 @@ npm i -g \
   typescript-language-server \
   --loglevel error
 
-if ! command -v go; then
+if ! command -v go > /dev/null 2>&1; then
   printHeading 'INSTALLING-GO'
   LATEST_VERSION="$(curl --silent https://go.dev/VERSION?m=text | head -n 1)";
   URL="https://go.dev/dl/${LATEST_VERSION}.linux-amd64.tar.gz"
@@ -175,7 +175,7 @@ if ! command -v go; then
   go version
 fi
 
-if ! command -v eget; then
+if ! command -v eget > /dev/null 2>&1; then
   printHeading 'INSTALLING-EGET'
   # TODO: fork the repo and add changes when you get the chance
   cd eget/eget
@@ -188,7 +188,7 @@ printHeading 'EGET-DEPS'
 eget -D
 
 # TODO: is this still needed after installing via eget?
-# if ! command -v bat; then
+# if ! command -v bat > /dev/null 2>&1; then
 #   printHeading 'BAT-WRAPPER'
 #   echo 'batcat "$@"' > ./bat && chmod +x ./bat
 #   sudo mv ./bat /usr/local/bin/
