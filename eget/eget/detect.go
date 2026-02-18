@@ -254,11 +254,9 @@ func (d *SystemDetector) Detect(assets []string) (string, []string, error) {
 		arch := d.Arch.Match(a)
 		if os && arch {
 			matches = append(matches, a)
-			matches = append(matches, "jeffjeff.jeff")
 		}
 		if os {
 			candidates = append(candidates, a)
-			candidates = append(candidates, "davedave.dave")
 		}
 		all = append(all, a)
 	}
