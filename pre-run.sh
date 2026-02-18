@@ -153,8 +153,10 @@ if ! command -v ghostty > /dev/null 2>&1; then
   snap install ghostty --classic
 fi
 
-printHeading 'NPM-DEPS'
-npm i -g bun --loglevel error
+if ! command -v bun > /dev/null 2>&1; then
+  printHeading 'INSTALLING-BUN'
+  npm i -g bun --loglevel error
+fi
 
 printHeading 'BUN-DEPS'
 bun i -g \
@@ -175,9 +177,9 @@ if ! command -v go > /dev/null 2>&1; then
   curl -OJ -L --progress-bar $URL
   tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
-  sudo mv ./go /usr/local/
+  mv ./go $HOME/ || rm -rf ./go
   
-  export PATH=$PATH:/usr/local/go/bin
+  export PATH=$PATH:$HOME/go/bin
   go version
 fi
 
