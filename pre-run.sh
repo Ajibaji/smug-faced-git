@@ -8,7 +8,10 @@ function printHeading() {
 
 printHeading 'APT-INSTALL-BASE-DEPS'
 sudo apt update
-sudo apt install wget zip unzip apt-transport-https ca-certificates curl gnupg software-properties-common fontconfig -y
+sudo apt install make build-essential libssl-dev zlib1g-dev \
+  libbz2-dev libreadline-dev libsqlite3-dev curl git \
+  libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libzstd-dev \
+  wget zip unzip apt-transport-https ca-certificates gnupg software-properties-common fontconfig -y
 
 if ! command -v fnm; then
   printHeading 'FNM/NODEJS'
@@ -18,8 +21,18 @@ if ! command -v fnm; then
   eval "`fnm env`"
   fnm install v22
   fnm install v20
-  fnm install v18
   fnm default v22
+  git checkout -- .
+fi
+
+if ! command -v pyenv; then
+  printHeading 'INSTALLING-PYENV'
+  curl -fsSL https://pyenv.run | bash
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --bash)"
+  local latestPyhonVersion="$(pyenv latest -k 3)"
+  pyenv install $latestPyhonVersion
+  pyenv global $latestPyhonVersion
   git checkout -- .
 fi
 
@@ -34,27 +47,6 @@ if ! command -v cargo; then
   git checkout -- .
 fi
 
-if ! command -v docker; then
-  printHeading 'DOCKER-APT-REPO'
-  printf "\n\nadding docker apt repo...\n"
-  sudo install -m 0755 -d /etc/apt/keyrings
-  sudo curl -fssl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-  sudo chmod a+r /etc/apt/keyrings/docker.asc
-  echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-fi
-
-if ! command -v kubectl; then
-  printHeading 'K8S-APT-REPO'
-  printf "\n\nadding kubernetes apt repo...\n"
-  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-  sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
-fi
-
 if ! command -v dotnet; then
   printHeading 'INSTALLING-DOTNET'
   printf "\n\ninstalling dotnet...\n"
@@ -63,6 +55,7 @@ if ! command -v dotnet; then
   ./dotnet-install.sh --channel 3.1
   ./dotnet-install.sh --channel 8.0
   ./dotnet-install.sh --channel 9.0
+  ./dotnet-install.sh --channel 10.0
   rm dotnet-install.sh
   export DOTNET_ROOT=$HOME/.dotnet
   export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
@@ -71,22 +64,10 @@ if ! command -v dotnet; then
 fi
 
 if ! command -v az; then
-  printHeading 'AZURE-CLI-APT-REPO'
-  printf "\n\nadding azure-cli apt repo...\n"
-  curl -sls https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
-  sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
-  az_dist=$(lsb_release -cs)
-  echo "types: deb
-uris: https://packages.microsoft.com/repos/azure-cli
-suites: ${az_dist}
-components: main
-architectures: $(dpkg --print-architecture)
-signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
+  printHeading 'AZURE-CLI'
+  printf "\n\installing azure-cli...\n"
+  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
-
-printHeading 'MESA-APT-REPO'
-printf "\n\nAdding mesa apt repo...\n"
-sudo add-apt-repository ppa:kisak/kisak-mesa -y
 
 if ! command -v R; then
   printHeading 'CRAN-APT-REPO'
