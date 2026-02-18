@@ -11,6 +11,7 @@
 ["ajeetdsouza/zoxide"]
 
 ["sxyazi/yazi"]
+  asset_filters = [ "^musl", ".zip" ]
 
 ["BurntSushi/ripgrep"]
   target = "~/.local/eget/bin/rg"
@@ -42,8 +43,10 @@
   target = "~/.local/eget/bin/tofu"
 
 ["sharkdp/fd"]
+  asset_filters = [ "^musl" ]
 
 ["dandavison/delta"]
+  asset_filters = [ "^musl" ]
 
 ["jesseduffield/lazygit"]
 
