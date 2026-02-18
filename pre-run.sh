@@ -174,7 +174,7 @@ if ! command -v go > /dev/null 2>&1; then
   LATEST_VERSION="$(curl --silent https://go.dev/VERSION?m=text | head -n 1)";
   URL="https://go.dev/dl/${LATEST_VERSION}.linux-amd64.tar.gz"
   
-  curl -OJ -L --progress-bar $URL
+  curl -OJ -L $URL
   tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
   mv ./go $HOME/ || rm -rf ./go
