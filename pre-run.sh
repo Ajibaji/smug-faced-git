@@ -154,7 +154,10 @@ if ! command -v ghostty > /dev/null 2>&1; then
 fi
 
 printHeading 'NPM-DEPS'
-npm i -g \
+npm i -g bun --loglevel error
+
+printHeading 'BUN-DEPS'
+bun i -g \
   @biomejs/biome \
   azure-pipelines-language-server \
   corepack \
@@ -162,8 +165,7 @@ npm i -g \
   neovim \
   sql-language-server \
   typescript \
-  typescript-language-server \
-  --loglevel error
+  typescript-language-server
 
 if ! command -v go > /dev/null 2>&1; then
   printHeading 'INSTALLING-GO'
