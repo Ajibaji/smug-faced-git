@@ -30,9 +30,8 @@ if ! command -v pyenv; then
   curl -fsSL https://pyenv.run | bash
   export PATH="$HOME/.pyenv/bin:$PATH"
   eval "$(pyenv init --bash)"
-  local latestPyhonVersion="$(pyenv latest -k 3)"
-  pyenv install $latestPyhonVersion
-  pyenv global $latestPyhonVersion
+  pyenv install $(pyenv latest -k 3)
+  pyenv global $(pyenv latest -k 3)
   git checkout -- .
 fi
 
