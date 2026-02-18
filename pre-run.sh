@@ -7,11 +7,49 @@ function printHeading() {
 }
 
 printHeading 'APT-INSTALL-BASE-DEPS'
-sudo apt update
-sudo apt install make build-essential libssl-dev zlib1g-dev \
-  libbz2-dev libreadline-dev libsqlite3-dev curl git \
-  libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libzstd-dev \
-  wget zip unzip apt-transport-https ca-certificates gnupg software-properties-common fontconfig -y
+sudo apt update -q
+sudo apt install \
+  apt-transport-https \
+  build-essential \
+  ca-certificates \
+  curl \
+  dirmngr \
+  dolphin \
+  dos2unix \
+  fontconfig \
+  git \
+  gnupg \
+  imagemagick \
+  libbz2-dev \
+  libcurl4-openssl-dev \
+  libffi-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  libvulkan-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  libzstd-dev \
+  lsb-release \
+  lsof \
+  make \
+  parallel \
+  podman \
+  poppler-utils \
+  progress \
+  siege \
+  socat \
+  software-properties-common \
+  strace \
+  tk-dev \
+  unzip \
+  wget \
+  xz-utils \
+  zip \
+  zlib1g-dev \
+  -y -q
 
 if ! command -v fnm; then
   printHeading 'FNM/NODEJS'
@@ -71,14 +109,11 @@ fi
 if ! command -v R; then
   printHeading 'CRAN-APT-REPO'
   printf "\n\nAdding CRAN (R lang) apt repo...\n"
-  sudo apt install --no-install-recommends software-properties-common dirmngr
   wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
   sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
+  sudo apt update -q
+  sudo apt install r-base -y -q
 fi
-
-printHeading 'APT-UPGRADE'
-sudo apt update
-sudo apt upgrade -y
 
 printHeading 'SEESHELLONTHESEASAW'
 export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
@@ -122,7 +157,8 @@ npm i -g \
   neovim \
   sql-language-server \
   typescript \
-  typescript-language-server
+  typescript-language-server \
+  --loglevel error
 
 if ! command -v eget; then
   printHeading 'INSTALLING-EGET'
@@ -143,23 +179,3 @@ eget -D
 #   sudo mv ./bat /usr/local/bin/
 #   git checkout -- .
 # fi
-
-printHeading 'APT-INSTALL'
-sudo apt install \
-  azure-cli \
-  dolphin \
-  dos2unix \
-  imagemagick \
-  libcurl4-openssl-dev \
-  libvulkan-dev \
-  lsb-release \
-  lsof \
-  parallel \
-  podman \
-  poppler-utils \
-  progress \
-  r-base \
-  siege \
-  socat \
-  strace \
-  -y
