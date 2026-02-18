@@ -150,7 +150,7 @@ fi
 
 if ! command -v ghostty > /dev/null 2>&1; then
   printHeading 'GHOSTTY'
-  snap install ghostty --classic
+  sudo snap install ghostty --classic
 fi
 
 if ! command -v bun > /dev/null 2>&1; then
@@ -174,13 +174,10 @@ if ! command -v go > /dev/null 2>&1; then
   LATEST_VERSION="$(curl --silent https://go.dev/VERSION?m=text | head -n 1)";
   URL="https://go.dev/dl/${LATEST_VERSION}.linux-amd64.tar.gz"
   
-  curl -OJ -L $URL
+  curl -OJ -L --progress-bar $URL
   tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
-  mv ./go $HOME/ || rm -rf ./go
-  
-  export PATH=$PATH:$HOME/go/bin
-  go version
+  sudo mv ./go /usr/local/ || rm -rf ./go
 fi
 
 if ! command -v eget > /dev/null 2>&1; then

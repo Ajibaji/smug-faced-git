@@ -23,10 +23,10 @@
 
 # WSL VALUES
 # =======================================================================================
-if [[ -n "${WSL_DISTRO_NAME}" ]]; then
-  export KITTY_DISABLE_WAYLAND=1
-  export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
-fi
+# Disabling this while WSLg is in use over VcXsrv
+# if [[ -n "${WSL_DISTRO_NAME}" ]]; then
+#   export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+# fi
 
 # CONCATENATED VALUES
 # =======================================================================================
@@ -55,8 +55,9 @@ fi
 
 # GO
   export GOPATH=${HOME}/go
+  export GOROOT=/usr/local/go
   export GOBIN=${GOPATH}/bin
-  export PATH=$PATH:${GOBIN}
+  export PATH=$PATH:${GOROOT}:${GOBIN}
 
 # KUBERNETES
   export PATH=$PATH:${HOME}/.kube/plugins/jordanwilson230
