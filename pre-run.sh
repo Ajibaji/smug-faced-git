@@ -79,3 +79,87 @@ fi
 printHeading 'APT-UPGRADE'
 sudo apt update
 sudo apt upgrade -y
+
+printHeading 'SEESHELLONTHESEASAW'
+export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
+  echo "You aren't me. Nothing to see here"
+else
+  if [ ! -d ~/seeshellontheseasaw ]; then
+    git clone git@github.com:ajibaji/seeshellontheseasaw.git ~/seeshellontheseasaw
+  fi
+fi
+unset GIT_SSH_COMMAND
+
+if ! command -v atuin; then
+printHeading 'ATUIN'
+  export NO_MODIFY_PATH=1
+  curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
+  git checkout -- .
+fi
+
+if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
+  printHeading 'JETBRAINS-FONT'
+  sudo mkdir -p ~/.local/share/fonts
+  sudo curl -fsSLO ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
+    cd ~/.local/share/fonts && \
+    sudo unzip -o jetbrainsmono.zip
+  sudo rm jetbrainsmono.zip && \
+    fc-cache -fv
+fi
+
+if ! command -v ghostty; then
+  printHeading 'GHOSTTY'
+  snap install ghostty --classic
+fi
+
+printHeading 'NPM-DEPS'
+npm i -g \
+  @biomejs/biome \
+  azure-pipelines-language-server \
+  corepack \
+  dockerfile-language-server-nodejs \
+  neovim \
+  sql-language-server \
+  typescript \
+  typescript-language-server
+
+if ! command -v eget; then
+  printHeading 'INSTALLING-EGET'
+  # TODO: fork the repo and add changes when you get the chance
+  cd eget/eget
+  go build -trimpath -ldflags "-s -w -X main.Version=1.3.2-dev.99" -o dist/bin/eget .
+  sudo mv ./dist/bin/eget /usr/local/bin/eget
+  cd -
+fi
+
+printHeading 'EGET-DEPS'
+eget -D
+
+# TODO: is this still needed after installing via eget?
+# if ! command -v bat; then
+#   printHeading 'BAT-WRAPPER'
+#   echo 'batcat "$@"' > ./bat && chmod +x ./bat
+#   sudo mv ./bat /usr/local/bin/
+#   git checkout -- .
+# fi
+
+printHeading 'APT-INSTALL'
+sudo apt install \
+  azure-cli \
+  dolphin \
+  dos2unix \
+  imagemagick \
+  libcurl4-openssl-dev \
+  libvulkan-dev \
+  lsb-release \
+  lsof \
+  parallel \
+  podman \
+  poppler-utils \
+  progress \
+  r-base \
+  siege \
+  socat \
+  strace \
+  -y
