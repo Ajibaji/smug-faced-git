@@ -126,7 +126,7 @@ else
   else
     git -C ~/seeshellontheseasaw pull --quiet
   fi
-  exec $SHELL
+  source ~/.bashrc
 fi
 unset GIT_SSH_COMMAND
 
