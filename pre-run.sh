@@ -141,6 +141,7 @@ if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
     sudo unzip -o jetbrainsmono.zip
   sudo rm jetbrainsmono.zip && \
     fc-cache -fv
+  cd -
 fi
 
 if ! command -v ghostty; then
@@ -159,6 +160,20 @@ npm i -g \
   typescript \
   typescript-language-server \
   --loglevel error
+
+if ! command -v go; then
+  printHeading 'INSTALLING-GO'
+  LATEST_VERSION="$(curl --silent https://go.dev/VERSION?m=text | head -n 1)";
+  URL="https://go.dev/dl/${LATEST_VERSION}.linux-amd64.tar.gz"
+  
+  curl -OJ -L --progress-bar $URL
+  tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
+  rm ${LATEST_VERSION}.linux-amd64.tar.gz 
+  sudo mv ./go /usr/local/
+  
+  export PATH=$PATH:/usr/local/go/bin
+  go version
+fi
 
 if ! command -v eget; then
   printHeading 'INSTALLING-EGET'
