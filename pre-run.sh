@@ -115,14 +115,18 @@ if ! command -v R > /dev/null 2>&1; then
   sudo apt install r-base -y -qq
 fi
 
-printHeading 'SEESHELLONTHESEASAW'
 export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git > /dev/null 2>&1; then
+  printHeading 'SEESHELLONTHESEASAW'
   echo "You aren't me. Nothing to see here"
 else
+  printHeading 'SEESHELLONTHESEASAW'
   if [ ! -d ~/seeshellontheseasaw ]; then
     git clone git@github.com:ajibaji/seeshellontheseasaw.git ~/seeshellontheseasaw
+  else
+    git -C ~/seeshellontheseasaw pull --quiet
   fi
+  exec $SHELL
 fi
 unset GIT_SSH_COMMAND
 
