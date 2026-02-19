@@ -40,18 +40,18 @@ function authGithub() {
 
   sleep 5
   read -p 'When done, press any key to continue...' continue
+
+  # populate known_hosts file
+  ssh -T git@github.com -o StrictHostKeyChecking=accept-new > /dev/null 2>&1
 }
 
 function clone() {
-  export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-
-  if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git; then
+  if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git > /dev/null 2>&1; then
     git clone git@github.com:Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   else
     git clone https://github.com/Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   fi
 
-  unset GIT_SSH_COMMAND
   cd smug-faced-git || exit
 }
 
