@@ -12,7 +12,7 @@ if command -v pip > /dev/null 2>&1; then
   pip install --trusted-host files.pythonhosted.org pip_system_certs
 fi
 
-if [[ -f $HOME/.cache/bat/themes.bin ]]; then
+if [[ ! -f $HOME/.cache/bat/themes.bin ]]; then
   printHeading 'BAT-CACHE-BUILD'
   bat cache --build
 fi
