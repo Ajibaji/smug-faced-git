@@ -35,6 +35,7 @@ sudo apt install \
   lsb-release \
   lsof \
   make \
+  neovim \
   parallel \
   podman \
   poppler-utils \
