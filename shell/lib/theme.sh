@@ -18,12 +18,16 @@ source "$HOME/.config/shell/lib/colours.sh"
   }
 
   function get-current-theme () {
-    defaults read -g AppleInterfaceStyle > /dev/null 2>&1
-    if [[ "$?" = "0" ]]
-    then
-      export CURRENT_THEME=DARK
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      defaults read -g AppleInterfaceStyle > /dev/null 2>&1
+      if [[ "$?" = "0" ]]
+      then
+        export CURRENT_THEME=DARK
+      else
+        export CURRENT_THEME=LIGHT
+      fi
     else
-      export CURRENT_THEME=LIGHT
+      export CURRENT_THEME=DARK
     fi
     set-session-theme
   }
