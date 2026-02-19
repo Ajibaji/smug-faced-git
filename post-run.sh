@@ -12,6 +12,10 @@ if command -v pip > /dev/null 2>&1; then
   pip install --trusted-host files.pythonhosted.org pip_system_certs
 fi
 
+if [[ ! -f $HOME/.cache/bat/themes.bin ]]; then
+  bat cache --build
+fi
+
 # OS-specific scripts go here
 if [[ "$OSTYPE" == "darwin"* ]]; then
   printHeading 'MAC-ONLY'
