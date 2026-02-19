@@ -7,7 +7,7 @@ function printHeading() {
 }
 
 # OS-agnostic scripts go here
-if command -v pip; then
+if command -v pip > /dev/null 2>&1; then
   printHeading 'PIP-TRUST-SYSTEM-CERTS'
   pip install --trusted-host files.pythonhosted.org pip_system_certs
 fi

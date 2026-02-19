@@ -9,7 +9,7 @@ function authGithub() {
 
   if [ -n "${IS_LINUX}" ]; then
     sudo apt update
-    if ! command -v xsel; then
+    if ! command -v xsel > /dev/null 2>&1; then
       sudo apt install xsel -y
     fi
     cat "${KEY_PATH}".pub | xsel --clipboard --input
@@ -27,7 +27,7 @@ function authGithub() {
   githubKeyUrl="https://github.com/settings/ssh/new"
 
   if [ -n "${WSLENV}" ]; then
-    if ! command -v wslview; then
+    if ! command -v wslview > /dev/null 2>&1; then
       sudo apt install wslu -y
     fi
 
@@ -57,7 +57,7 @@ function clone() {
 
 function installBrew() {
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    if ! command -v brew; then
+    if ! command -v brew > /dev/null 2>&1; then
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
   else

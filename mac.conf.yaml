@@ -41,7 +41,7 @@
       quiet: true
       description: git clone seeshellontheseasaw
     - command: |
-        if ! command -v fnm; then
+        if ! command -v fnm > /dev/null 2>&1; then
           echo "ERROR: ensure FNM is installed and try again"
         fi
 
@@ -78,11 +78,11 @@
       quiet: false
       description: Docker --> Podman
     - command: |
-        if ! command -v python; then
+        if ! command -v python > /dev/null 2>&1; then
           echo 'python3 "$@"' > ~/.local/bin/python
           chmod +x ~/.local/bin/python
         fi
-        if ! command -v pip; then
+        if ! command -v pip > /dev/null 2>&1; then
           echo 'pip3 "$@"' > ~/.local/bin/pip
           chmod +x ~/.local/bin/pip
         fi
@@ -91,7 +91,7 @@
       quiet: false
       description: python/pip --> python3/pip3
     - command: |
-        if ! command -v eget; then
+        if ! command -v eget > /dev/null 2>&1; then
           git clone https://github.com/rjshrjndrn/eget
           cd eget
           go build -trimpath -ldflags "-s -w -X main.Version=1.3.2-dev.23" -o dist/bin/eget .
@@ -103,15 +103,6 @@
       stderr: true
       quiet: false
       description: installing eget
-    - command: |
-        if ! command -v ble-bind; then
-          curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf -
-          bash ble-nightly/ble.sh --install ~/.local/share
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing ble.sh
     - command: |
         # ctrl + cmd to drag windows
         defaults write -g NSWindowShouldDragOnGesture -bool true
