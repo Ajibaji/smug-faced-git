@@ -3,7 +3,7 @@
 # post-install configuration scripts go here
 
 function printHeading() {
-  printf "%119s\n" ${@}— | sed -e 's/ /—/g';
+  printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
 # OS-agnostic scripts go here
@@ -12,7 +12,8 @@ if command -v pip > /dev/null 2>&1; then
   pip install --trusted-host files.pythonhosted.org pip_system_certs
 fi
 
-if [[ ! -f $HOME/.cache/bat/themes.bin ]]; then
+if [[ -f $HOME/.cache/bat/themes.bin ]]; then
+  printHeading 'BAT-CACHE-BUILD'
   bat cache --build
 fi
 

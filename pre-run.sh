@@ -3,7 +3,7 @@
 # install dotbot dependencies and add required apt repositories
 
 function printHeading() {
-  printf "%119s\n" ${@}— | sed -e 's/ /—/g';
+  printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
 BOATING_JEFF=true source $HOME/.bashrc

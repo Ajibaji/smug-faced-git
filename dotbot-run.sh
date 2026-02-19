@@ -6,7 +6,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STASH=0
 
 function printHeading() {
-  printf "%119s\n" ${@}— | sed -e 's/ /—/g';
+  printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
 export -f printHeading
