@@ -44,6 +44,7 @@ sudo apt install \
   software-properties-common \
   strace \
   tk-dev \
+  tree \
   unzip \
   wget \
   xz-utils \
