@@ -174,12 +174,12 @@ if ! command -v go > /dev/null 2>&1; then
   printHeading 'INSTALLING-GO'
   LATEST_VERSION="$(curl --silent https://go.dev/VERSION?m=text | head -n 1)";
   URL="https://go.dev/dl/${LATEST_VERSION}.linux-amd64.tar.gz"
-  
+
   curl -OJ -L --progress-bar $URL
   tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
   sudo mv ./go /usr/local/ || rm -rf ./go
-  [[ -z "$GOBIN" ]] && mkdir -p $GOBIN
+  mkdir -p $HOME/go/bin
 fi
 
 if ! command -v eget > /dev/null 2>&1; then
