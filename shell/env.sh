@@ -54,10 +54,8 @@
   export CFLAGS="-Wno-format-security"
 
 # GO
-  export GOROOT=/usr/local/go/bin
-  export GOPATH=${HOME}/go
-  export GOBIN=${GOPATH}/bin
-  export PATH=$PATH:${GOROOT}:${GOBIN}
+  export GOBIN=${HOME}/go/bin
+  export PATH=$PATH:/usr/local/go/bin:${GOBIN}
 
 # KUBERNETES
   export PATH=$PATH:${HOME}/.kube/plugins/jordanwilson230

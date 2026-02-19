@@ -178,6 +178,7 @@ if ! command -v go > /dev/null 2>&1; then
   tar -xf ${LATEST_VERSION}.linux-amd64.tar.gz
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
   sudo mv ./go /usr/local/ || rm -rf ./go
+  [[ -z "$GOBIN" ]] && mkdir -p $GOBIN
 fi
 
 if ! command -v eget > /dev/null 2>&1; then
