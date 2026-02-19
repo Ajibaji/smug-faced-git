@@ -54,8 +54,8 @@
   export CFLAGS="-Wno-format-security"
 
 # GO
+  export GOROOT=/usr/local/go/bin
   export GOPATH=${HOME}/go
-  export GOROOT=/usr/local/go
   export GOBIN=${GOPATH}/bin
   export PATH=$PATH:${GOROOT}:${GOBIN}
 
