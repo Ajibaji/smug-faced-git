@@ -46,7 +46,7 @@ function authGithub() {
 }
 
 function clone() {
-  if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git > /dev/null 2>&1; then
+  if command git ls-remote git@github.com:Ajibaji/smug-faced-git.git > /dev/null 2>&1; then
     git clone git@github.com:Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   else
     git clone https://github.com/Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
