@@ -6,10 +6,6 @@ export BASH_RC_LOADED="true"
 [ -z "$BASH_PROFILE_LOADED" ] && source "$HOME/.bash_profile"
 
 
-#________________________________________________________________________BASH_LINE_EDITOR:
-source -- "$HOME/.local/share/blesh/ble.sh"
-
-
 #______________________________________________________________FUNCTIONS_&_THEME_SWITCHER:
   source "$HOME/.config/shell/salad-source.sh"
 
@@ -74,6 +70,10 @@ source -- "$HOME/.local/share/blesh/ble.sh"
   eval "$(atuin init bash)"
 
 
+#_____________________________________________________________________________________BUN:
+  export PATH="$HOME/.bun/bin:$PATH"
+
+
 #_____________________________________________________________________________________FNM:
   test $(uname -s) = "Linux" && export PATH="$HOME/.local/share/fnm:$PATH"
   eval "$(fnm env)"
@@ -85,8 +85,3 @@ source -- "$HOME/.local/share/blesh/ble.sh"
 
 #__________________________________________________________________________________ZOXIDE:
   eval "$(zoxide init bash)"
-
-
-#________________________________________________________________________BASH_LINE_EDITOR:
-  #   KEEP THIS LINE LAST
-  [[ ! ${BLE_VERSION-} ]] || ble-attach
