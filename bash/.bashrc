@@ -1,5 +1,5 @@
 # if not running interactively, do nothing
-[ -z "$PS1" ] && return
+[ -z "$PS1" ] && [ -z $BOATING_JEFF ] && return
 
 # load ~/.bash_profile if entrypoint was ~/.bashrc
 export BASH_RC_LOADED="true"

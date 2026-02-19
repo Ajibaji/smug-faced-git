@@ -6,7 +6,7 @@ function printHeading() {
   printf "%119s\n" ${@}— | sed -e 's/ /—/g';
 }
 
-source $HOME/.bashrc
+BOATING_JEFF=true source $HOME/.bashrc
 
 printHeading 'APT-INSTALL-BASE-DEPS'
 sudo apt update -qq
