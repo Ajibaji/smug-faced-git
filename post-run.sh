@@ -6,19 +6,17 @@ function printHeading() {
   printf "%119s\n" ${@}— | sed -e 's/ /—/g';
 }
 
-if command -v pip3; then
+# OS-agnostic scripts go here
+if command -v pip; then
   printHeading 'PIP-TRUST-SYSTEM-CERTS'
-  pip3 install --trusted-host files.pythonhosted.org pip_system_certs
+  pip install --trusted-host files.pythonhosted.org pip_system_certs
 fi
 
+# OS-specific scripts go here
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  printHeading 'MAC-CONFIG'
+  printHeading 'MAC-ONLY'
   echo "There are no MacOS-only post-install scripts yet"
-else
-  printHeading 'DOCKER-PERMISSIONS'
-  printf "\n\nAllowing docker to be used by non-root...\n"
-  sudo groupadd -f docker
-  sudo usermod -aG docker $(whoami)
-  rm -rf ~/.docker
-  newgrp docker
+elif [[ "$OSTYPE" == "linux"* ]]; then
+  printHeading 'LINUX-ONLY'
+  echo "There are no Linux-only post-install scripts yet"
 fi

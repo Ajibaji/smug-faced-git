@@ -28,7 +28,6 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 │
 ├── dotbot/                  # Git submodule - Dotbot core
 ├── dotbot-brew/             # Git submodule - Homebrew plugin
-├── dotbot-apt/              # Git submodule - APT plugin
 │
 └── <app>/                   # Per-application config directories
     └── config files...
@@ -129,7 +128,6 @@ The repo includes these Git submodules:
 
 - `dotbot/` - Core Dotbot framework
 - `dotbot-brew/` - Homebrew plugin for Dotbot
-- `dotbot-apt/` - APT plugin for Dotbot
 
 To update submodules:
 ```bash

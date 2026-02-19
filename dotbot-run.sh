@@ -43,19 +43,9 @@ else
     printHeading 'LINUX-PRE-RUN'
     echo "command: ${BASEDIR}/pre-run.sh"
     ${BASEDIR}/pre-run.sh
-    export PATH="${HOME}/.cargo/bin:${PATH}"
-
-    printHeading 'LINUX-BASE-CONFIG'
-    echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v"
-    ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -c linux-base.conf.yaml -v
-
-    printHeading 'APT-INSTALL'
-    echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c apt.conf.yaml -v"
-    sudo ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} -p dotbot-apt/apt.py -c apt.conf.yaml -v
-    sudo apt autoremove -y
   fi
 
-  printHeading 'LINUX-POST-RUN'
+  printHeading 'POST-RUN-SCRIPTS'
   echo "command: ${BASEDIR}/post-run.sh"
   ${BASEDIR}/post-run.sh
 

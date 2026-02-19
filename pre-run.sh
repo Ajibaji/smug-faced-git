@@ -199,3 +199,5 @@ eget -D
 #   sudo mv ./bat /usr/local/bin/
 #   git checkout -- .
 # fi
+
+sudo apt autoremove -y
