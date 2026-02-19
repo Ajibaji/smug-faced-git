@@ -122,12 +122,7 @@ fi
   alias azi='az interactive'
 
 # BAT ALIASES
-  alias cat='batcat -pp'
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias batcat='bat'
-  else
-    alias bat='batcat'
-  fi
+  alias cat='bat -pp'
 
 # DOCKER ALIASES
   # alias docker='lima nerctl'

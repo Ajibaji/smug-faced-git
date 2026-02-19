@@ -193,12 +193,5 @@ fi
 printHeading 'EGET-DEPS'
 eget -D
 
-# TODO: is this still needed after installing via eget?
-# if ! command -v bat > /dev/null 2>&1; then
-#   printHeading 'BAT-WRAPPER'
-#   echo 'batcat "$@"' > ./bat && chmod +x ./bat
-#   sudo mv ./bat /usr/local/bin/
-#   git checkout -- .
-# fi
-
+printHeading 'APT-CLEAN-UP'
 sudo apt autoremove -y
