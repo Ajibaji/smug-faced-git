@@ -44,6 +44,7 @@
 # EGET
   export EGET_BIN=$HOME/.local/eget/bin
   [[ ! -d $EGET_BIN ]] && mkdir -p $EGET_BIN
+  [[ -d $EGET_BIN/nvim/bin ]] && export PATH=$EGET_BIN/nvim/bin:$PATH
   export PATH=$EGET_BIN:$PATH
 
 # FZF
