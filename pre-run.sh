@@ -8,51 +8,53 @@ function printHeading() {
 
 BOATING_JEFF=true source $HOME/.bashrc
 
-printHeading 'APT-INSTALL-BASE-DEPS'
-sudo apt update -qq
-sudo apt install \
-  apt-transport-https \
-  build-essential \
-  ca-certificates \
-  curl \
-  dirmngr \
-  dolphin \
-  dos2unix \
-  fontconfig \
-  git \
-  gnupg \
-  imagemagick \
-  libbz2-dev \
-  libcurl4-openssl-dev \
-  libffi-dev \
-  liblzma-dev \
-  libncursesw5-dev \
-  libreadline-dev \
-  libsqlite3-dev \
-  libssl-dev \
-  libvulkan-dev \
-  libxml2-dev \
-  libxmlsec1-dev \
-  libzstd-dev \
-  lsb-release \
-  lsof \
-  make \
-  parallel \
-  podman \
-  poppler-utils \
-  progress \
-  siege \
-  socat \
-  software-properties-common \
-  strace \
-  tk-dev \
-  tree \
-  unzip \
-  wget \
-  xz-utils \
-  zip \
-  zlib1g-dev \
-  -y -qq
+if command -v apt > /dev/null 2>&1; then
+  printHeading 'APT-INSTALL-BASE-DEPS'
+  sudo apt update -qq
+  sudo apt install \
+    apt-transport-https \
+    build-essential \
+    ca-certificates \
+    curl \
+    dirmngr \
+    dolphin \
+    dos2unix \
+    fontconfig \
+    git \
+    gnupg \
+    imagemagick \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    libffi-dev \
+    liblzma-dev \
+    libncursesw5-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libvulkan-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libzstd-dev \
+    lsb-release \
+    lsof \
+    make \
+    parallel \
+    podman \
+    poppler-utils \
+    progress \
+    siege \
+    socat \
+    software-properties-common \
+    strace \
+    tk-dev \
+    tree \
+    unzip \
+    wget \
+    xz-utils \
+    zip \
+    zlib1g-dev \
+    -y -qq
+fi
 
 if ! command -v fnm > /dev/null 2>&1; then
   printHeading 'FNM/NODEJS'
@@ -109,16 +111,17 @@ if ! command -v az > /dev/null 2>&1; then
   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 
-if ! command -v R > /dev/null 2>&1; then
-  printHeading 'CRAN-APT-REPO'
-  printf "\n\nAdding CRAN (R lang) apt repo...\n"
-  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
-  sudo apt update -qq
-  sudo apt install r-base -y -qq
+if command -v apt > /dev/null 2>&1; then
+  if ! command -v R > /dev/null 2>&1; then
+    printHeading 'CRAN-APT-REPO'
+    printf "\n\nAdding CRAN (R lang) apt repo...\n"
+    wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+    sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
+    sudo apt update -qq
+    sudo apt install r-base -y -qq
+  fi
 fi
 
-export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git > /dev/null 2>&1; then
   printHeading 'SEESHELLONTHESEASAW'
   echo "You aren't me. Nothing to see here"
@@ -131,14 +134,13 @@ else
   fi
   source ~/.bashrc
 fi
-unset GIT_SSH_COMMAND
 
-if ! command -v atuin > /dev/null 2>&1; then
-printHeading 'ATUIN'
-  export NO_MODIFY_PATH=1
-  curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
-  git checkout -- .
-fi
+# if ! command -v atuin > /dev/null 2>&1; then
+#   printHeading 'ATUIN'
+#   export NO_MODIFY_PATH=1
+#   curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
+#   git checkout -- .
+# fi
 
 if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
   printHeading 'JETBRAINS-FONT'
@@ -161,16 +163,18 @@ if ! command -v bun > /dev/null 2>&1; then
   npm i -g bun --loglevel error
 fi
 
-printHeading 'BUN-DEPS'
-bun i -g \
-  @biomejs/biome \
-  azure-pipelines-language-server \
-  corepack \
-  dockerfile-language-server-nodejs \
-  neovim \
-  sql-language-server \
-  typescript \
-  typescript-language-server
+if command -v bun > /dev/null 2>&1; then
+  printHeading 'BUN-DEPS'
+  bun i -g \
+    @biomejs/biome \
+    azure-pipelines-language-server \
+    corepack \
+    dockerfile-language-server-nodejs \
+    neovim \
+    sql-language-server \
+    typescript \
+    typescript-language-server
+fi
 
 if ! command -v go > /dev/null 2>&1; then
   printHeading 'INSTALLING-GO'
@@ -189,12 +193,16 @@ if ! command -v eget > /dev/null 2>&1; then
   # TODO: fork the repo and add changes when you get the chance
   cd eget/eget
   go build -trimpath -ldflags "-s -w -X main.Version=1.3.2-dev.99" -o dist/bin/eget .
-  sudo mv ./dist/bin/eget /usr/local/bin/eget
+  mv ./dist/bin/eget $EGET_BIN
   cd -
 fi
 
-printHeading 'EGET-DEPS'
-eget -D
+if command -v eget > /dev/null 2>&1; then
+  printHeading 'EGET-DEPS'
+  eget -D
+fi
 
-printHeading 'APT-CLEAN-UP'
-sudo apt autoremove -y
+if command -v apt > /dev/null 2>&1; then
+  printHeading 'APT-CLEAN-UP'
+  sudo apt autoremove -y
+fi
