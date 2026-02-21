@@ -6,7 +6,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STASH=0
 
 function printHeading() {
-  printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
+  printf "\n\n\n\n%139s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
 export -f printHeading
@@ -30,6 +30,9 @@ STASH=$(git status -u -s | wc -l)
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive
 
+export BOATING_JEFF=true source $HOME/.bashrc
+export OS="$(source /etc/os-release; echo $NAME)"
+
 if [[ "$1" == "symlink" ]]; then
   runSymlink
 else
@@ -37,13 +40,26 @@ else
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
     printHeading 'MAC-CONFIG'
-    echo "command: ${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN} -d ${BASEDIR} --plugin-dir dotbot-brew -c mac.conf.yaml"
-    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "mac.conf.yaml"
-  else
-    printHeading 'LINUX-PRE-RUN'
-    echo "command: ${BASEDIR}/pre-run.sh"
-    ${BASEDIR}/pre-run.sh
+    ${BASEDIR}/run-macos.sh
   fi
+
+  if [[ "$OSTYPE" == "linux"* ]]; then
+    if [[ "$OS" == "NixOS" ]]; then
+      printHeading 'NIXOS-CONFIG'
+      ${BASEDIR}/run-linux-nixos.sh
+    else
+      printHeading 'LINUX-CONFIG'
+      ${BASEDIR}/run-linux.sh
+    fi
+  fi
+
+  if [[ "$OS" != "NixOS" ]]; then
+    printHeading 'NOT-NOT-YOU-NIXOS'
+    ${BASEDIR}/run-not-nixos.sh
+  fi
+
+  printHeading 'COMMON-CONFIG'
+  ${BASEDIR}/run-common.sh
 
   printHeading 'POST-RUN-SCRIPTS'
   echo "command: ${BASEDIR}/post-run.sh"

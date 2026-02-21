@@ -55,17 +55,6 @@ function clone() {
   cd smug-faced-git || exit
 }
 
-function installBrew() {
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    if ! command -v brew > /dev/null 2>&1; then
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-  else
-    echo "This option is Mac only"
-    sleep 2
-  fi
-}
-
 function runDotbot() {
   cd "${HOME}"/smug-faced-git || exit
   ./dotbot-run.sh $@
@@ -80,7 +69,7 @@ function menu() {
   echo -e "\n\n\n\n\n\n\n"
   printHeading Menu
   PS3="Select choice: "
-  select choice in "Authenticate GitHub" "Clone dotfiles repo" "Link only" "Link and run DotBot" "Install Brew" Quit
+  select choice in "Authenticate GitHub" "Clone dotfiles repo" "Link only" "Link and run DotBot" Quit
   do
     case $choice in
       "Authenticate GitHub")
@@ -95,9 +84,6 @@ function menu() {
       "Link and run DotBot")
         runDotbot
         exit 0;;
-      "Install Brew")
-        installBrew
-        break;;
       "Quit")
         exit 0;;
       *)

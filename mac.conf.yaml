@@ -23,53 +23,11 @@
         defaults write com.apple.dock workspaces-auto-swoosh -bool NO
         killall Dock
         defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
-      stdin: true
-      stderr: true
-      quiet: false
-      description: configure MacOS for TWM
-    - command: |
-        export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-        if ! command git ls-remote git@github.com:Ajibaji/seeshellontheseasaw.git; then
-          echo "You aren't me. Nothing to see here"
-        else
-          if [ ! -d ~/seeshellontheseasaw ]; then
-            git clone git@github.com:ajibaji/seeshellontheseasaw.git ~/seeshellontheseasaw
-          fi
-        fi
-        unset GIT_SSH_COMMAND
-      stderr: true
-      quiet: true
-      description: git clone seeshellontheseasaw
-    - command: |
-        if ! command -v fnm > /dev/null 2>&1; then
-          echo "ERROR: ensure FNM is installed and try again"
-        fi
 
-        fnm install v20
-        fnm install v18
-        fnm default v20
-      stderr: true
-      quiet: false
-      description: install nodejs versions
-    - command: |
-        npm i -g neovim typescript azure-pipelines-language-server typescript-language-server sql-language-server @biomejs/biome
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing npm packages
-    - command: |
         launchctl setenv XDG_CONFIG_HOME "$HOME/.config"
-      stdin: true
-      stderr: true
-      quiet: false
-      description: setting XDG_CONFIG_HOME
-    - command: |
+
         defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers \
           -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=dev.zed.Zed;}'
-      stdin: true
-      stderr: true
-      quiet: false
-      description: Set Neovide as default OS editor
     - command: |
         echo 'podman "$@"' > ~/.local/bin/docker
         chmod +x ~/.local/bin/docker
@@ -78,32 +36,18 @@
       quiet: false
       description: Docker --> Podman
     - command: |
-        if ! command -v python > /dev/null 2>&1; then
-          echo 'python3 "$@"' > ~/.local/bin/python
-          chmod +x ~/.local/bin/python
-        fi
-        if ! command -v pip > /dev/null 2>&1; then
-          echo 'pip3 "$@"' > ~/.local/bin/pip
-          chmod +x ~/.local/bin/pip
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: python/pip --> python3/pip3
-    - command: |
-        if ! command -v eget > /dev/null 2>&1; then
-          git clone https://github.com/rjshrjndrn/eget
-          cd eget
-          go build -trimpath -ldflags "-s -w -X main.Version=1.3.2-dev.23" -o dist/bin/eget .
-          sudo mv ./dist/bin/eget /usr/local/bin/eget
-          cd -
-          rm -rf eget
-        fi
-      stdin: true
-      stderr: true
-      quiet: false
-      description: installing eget
-    - command: |
+        # TWM
+        defaults write com.apple.dock workspaces-auto-swoosh -bool NO
+        killall Dock
+        defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+
+        # set XDG_CONFIG_HOME
+        launchctl setenv XDG_CONFIG_HOME "$HOME/.config"
+
+        # set default editor
+        defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers \
+          -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=dev.zed.Zed;}'
+
         # ctrl + cmd to drag windows
         defaults write -g NSWindowShouldDragOnGesture -bool true
 
