@@ -59,6 +59,7 @@ if ! command -v fnm > /dev/null 2>&1; then
   curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
   FNM_PATH="$HOME/.local/share/fnm"
   export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env)"
   git checkout -- .
 fi
 

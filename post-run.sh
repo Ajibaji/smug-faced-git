@@ -17,7 +17,7 @@ if [[ "$OS" != "NixOS" ]]; then
   # pyenv
   if command -v pyenv > /dev/null 2>&1; then
     printHeading 'PYENV-INSTALLS'
-    eval "$(pyenv init --bash)"
+    eval "$(pyenv init - --bash)"
     pyenv install $(pyenv latest -k 3)
     pyenv global $(pyenv latest -k 3)
     pip install --trusted-host files.pythonhosted.org pip_system_certs
