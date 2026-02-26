@@ -26,9 +26,9 @@ if [[ "$OS" != "NixOS" ]]; then
   # fnm
   if command -v fnm > /dev/null 2>&1; then
     printHeading 'FNM-INSTALLS'
-    eval "`fnm env`"
     fnm install v22
     fnm default v22
+    eval "`fnm env`"
   fi
 fi
 
@@ -39,6 +39,11 @@ if [[ ! -f $HOME/.cache/bat/themes.bin ]] && command -v bat > /dev/null 2>&1; th
 fi
 
 # bun
+if ! command -v bun > /dev/null 2>&1; then
+  printHeading 'INSTALLING-BUN'
+  npm i -g bun --loglevel error
+fi
+
 if command -v bun > /dev/null 2>&1; then
   printHeading 'BUN-DEPS'
   bun i -g \

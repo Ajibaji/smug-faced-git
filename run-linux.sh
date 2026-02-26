@@ -59,7 +59,6 @@ if ! command -v fnm > /dev/null 2>&1; then
   curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
   FNM_PATH="$HOME/.local/share/fnm"
   export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env)"
   git checkout -- .
 fi
 
@@ -114,11 +113,6 @@ fi
 if ! command -v ghostty > /dev/null 2>&1; then
   printHeading 'GHOSTTY'
   sudo snap install ghostty --classic
-fi
-
-if ! command -v bun > /dev/null 2>&1; then
-  printHeading 'INSTALLING-BUN'
-  npm i -g bun --loglevel error
 fi
 
 if command -v apt > /dev/null 2>&1; then
