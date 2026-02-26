@@ -19,7 +19,7 @@ copy-on-select = clipboard
 background-opacity = 0.9
 background-blur = 20
 # theme = light:Bluloco Light,dark:Ciapre
-theme = light:TokyoNight Day,dark:TokyoNight_Storm.txt
+theme = light:TokyoNight Day,dark:tokyonight_storm.txt
 window-save-state = always
 keybind = cmd+f=write_scrollback_file:open
 keybind = global:cmd+backquote=toggle_quick_terminal
