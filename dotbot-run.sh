@@ -44,6 +44,9 @@ else
   fi
 
   if [[ "$OSTYPE" == "linux"* ]]; then
+    # clear $PATH of any windows entries
+    export PATH=$(echo $PATH | tr ':' '\n' | grep -v /mnt/ | tr '\n' ':')
+
     if [[ "$OS" == "NixOS" ]]; then
       printHeading 'NIXOS-CONFIG'
       ${BASEDIR}/run-linux-nixos.sh

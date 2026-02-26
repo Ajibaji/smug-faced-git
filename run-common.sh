@@ -14,5 +14,4 @@ else
   else
     git -C ~/seeshellontheseasaw pull --quiet
   fi
-  source ~/.bashrc
 fi

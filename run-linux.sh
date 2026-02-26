@@ -90,6 +90,7 @@ if ! command -v go > /dev/null 2>&1; then
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
   sudo mv ./go /usr/local/ || rm -rf ./go
   mkdir -p $HOME/go/bin
+  export PATH=$PATH:/usr/local/go/bin
 fi
 
 if ! command -v az > /dev/null 2>&1; then
