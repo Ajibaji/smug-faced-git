@@ -5,7 +5,7 @@
 
 # BREW
 # this file is sourced BEFORE .bashrc or .zshrc so brew is not in
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ "$OS" == "MacOS" ]]; then
     export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi

@@ -18,7 +18,7 @@ source "$HOME/.config/shell/lib/colours.sh"
   }
 
   function get-current-theme () {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$OS" == "MacOS" ]]; then
       defaults read -g AppleInterfaceStyle > /dev/null 2>&1
       if [[ "$?" = "0" ]]
       then
@@ -41,7 +41,7 @@ source "$HOME/.config/shell/lib/colours.sh"
   }
 
   function set-os-theme () {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$OS" == "MacOS" ]]; then
       osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
     else
       echo "Not yet implemented for this linux DE"

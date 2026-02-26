@@ -2,7 +2,7 @@
 # This file contains shell agnostic aliases for sourcing into a shell's .*rc file
 # =======================================================================================
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OS" == "MacOS" ]]; then
   # gnu-* utils
     alias sed='gsed'
     alias tar='gtar'
@@ -148,7 +148,7 @@ fi
 
 # NEOVIM
   alias v='nvim'
-  alias vim='v'
+  alias vim='nvim'
 
 # NEOVIDE (simlink serves unmanagable OS window...this is the workaround)
   # alias neovide='/Applications/Neovide.app/Contents/MacOS/neovide'
