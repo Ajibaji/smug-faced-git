@@ -110,11 +110,11 @@ fi
 
 if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
   printHeading 'JETBRAINS-FONT'
-  sudo mkdir -p ~/.local/share/fonts
-  sudo curl -fsSLO --output-dir ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
+  mkdir -p ~/.local/share/fonts
+  curl -fsSLO --output-dir ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/jetbrainsmono.zip && \
     cd ~/.local/share/fonts && \
-    sudo unzip -o jetbrainsmono.zip
-  sudo rm jetbrainsmono.zip && \
+    unzip -o jetbrainsmono.zip
+  rm jetbrainsmono.zip && \
     fc-cache -fv
   cd -
 fi
