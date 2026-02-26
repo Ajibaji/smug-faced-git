@@ -107,7 +107,6 @@ return {
         },
         markdown_oxide = {},
         neocmake = {},
-        nil_ls = {},
         pylsp = {},
         ruff = {},
         shellcheck = {},
