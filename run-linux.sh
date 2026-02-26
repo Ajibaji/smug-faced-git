@@ -100,15 +100,6 @@ if ! command -v az > /dev/null 2>&1; then
   curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 
-if ! command -v R > /dev/null 2>&1; then
-  printHeading 'CRAN-APT-REPO'
-  printf "\n\nAdding CRAN (R lang) apt repo...\n"
-  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" -y
-  sudo apt update -qq
-  sudo apt install r-base -y -qq
-fi
-
 if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
   printHeading 'JETBRAINS-FONT'
   mkdir -p ~/.local/share/fonts
