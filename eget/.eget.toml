@@ -64,6 +64,12 @@
 ["charmbracelet/mods"]
   asset_filters = [ "^json", ]
 
+["charmbracelet/crush"]
+  asset_filters = [ "^json", ]
+
+["anomalyco/opencode"]
+  asset_filters = [ "{{.Arch}}" ]
+
 ["pulumi/pulumi"]
   asset_filters = [ "^sig", ]
   all = true
