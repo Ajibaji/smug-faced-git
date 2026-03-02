@@ -18,8 +18,8 @@ macos-option-as-alt = true
 copy-on-select = clipboard
 background-opacity = 0.9
 background-blur = 20
-# theme = light:Bluloco Light,dark:Ciapre
-theme = light:TokyoNight Day,dark:tokyonight_storm.txt
+# theme = light:Blue Dolphin,dark:Ciapre
+theme = light:Violet Light,dark:TokyoNight Storm
 window-save-state = always
 keybind = cmd+f=write_scrollback_file:open
 keybind = global:cmd+backquote=toggle_quick_terminal
@@ -35,3 +35,5 @@ keybind = shift+cmd+right=move_tab:1
 keybind = shift+cmd+left=move_tab:-1
 keybind = shift+cmd+minus=resize_split:left,10
 keybind = shift+cmd+plus=resize_split:right,10
+auto-update = check
+auto-update-channel = tip
