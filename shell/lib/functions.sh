@@ -90,10 +90,10 @@ fi
       export ARM_CLIENT_ID="$(echo $json | jq -r '.user.name')"
       export ARM_CLIENT_SECRET=$(echo "{ \"content\": $(\cat ~/.azure/service_principal_entries.json)}" | jq -r --arg client_id "$client_id" '.content[] | select(.client_id == $client_id).client_secret')
     fi
-    export TF_VARS_hub_subscription_id=$AZURE_HUB_SUBSCRIPTION_ID
-    export TF_VARS_subscription_id=$ARM_SUBSCRIPTION_ID
-    export TF_VARS_tenant_id=$ARM_TENANT_ID
-    export TF_VARS_storage_access_keys="abc123" # pleaceholder for local development
+    export TF_VAR_hub_subscription_id=$AZURE_HUB_SUBSCRIPTION_ID
+    export TF_VAR_subscription_id=$ARM_SUBSCRIPTION_ID
+    export TF_VAR_tenant_id=$ARM_TENANT_ID
+    export TF_VAR_storage_access_keys="abc123" # pleaceholder for local development
   }
 
 # fix tabs (mixed tabs and spaces error in eslint)
