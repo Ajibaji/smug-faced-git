@@ -79,6 +79,23 @@ fi
     [[ $SILENT != "true" ]] && echo "AWS_PROFILE=${PROFILE}"
   }
 
+# AZ SET ENV VARS
+  function az-env () {
+    local json="$(az account show --output json)"
+    local client_id="$(echo $json | jq -r '.user.name')"
+
+    export ARM_TENANT_ID="$(echo $json | jq -r '.tenantId')"
+    export ARM_SUBSCRIPTION_ID="$(echo $json | jq -r '.id')"
+    if [[ $client_id != *"@"* ]]; then
+      export ARM_CLIENT_ID="$(echo $json | jq -r '.user.name')"
+      export ARM_CLIENT_SECRET=$(echo "{ \"content\": $(\cat ~/.azure/service_principal_entries.json)}" | jq -r --arg client_id "$client_id" '.content[] | select(.client_id == $client_id).client_secret')
+    fi
+    export TF_VARS_hub_subscription_id=$AZURE_HUB_SUBSCRIPTION_ID
+    export TF_VARS_subscription_id=$ARM_SUBSCRIPTION_ID
+    export TF_VARS_tenant_id=$ARM_TENANT_ID
+    export TF_VARS_storage_access_keys="abc123" # pleaceholder for local development
+  }
+
 # fix tabs (mixed tabs and spaces error in eslint)
   function fixtabs () {
     find . -name '*.ts' -type f -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
