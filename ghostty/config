@@ -36,4 +36,4 @@ keybind = shift+cmd+left=move_tab:-1
 keybind = shift+cmd+minus=resize_split:left,10
 keybind = shift+cmd+plus=resize_split:right,10
 auto-update = check
-auto-update-channel = tip
+auto-update-channel = stable
