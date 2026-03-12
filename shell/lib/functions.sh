@@ -235,6 +235,7 @@ fi
       cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
       rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
     fi
+    get-current-theme
   }
 
 # FIND IN FILES
@@ -266,6 +267,7 @@ fi
         --preview 'bat {1} --highlight-line {2}' \
         --bind 'alt-enter:accept' \
         --bind "enter:become:$OPENER"
+    get-current-theme
   }
 
 # FIND FILES
@@ -281,6 +283,7 @@ fi
           echo "change-prompt(Files> )+reload(fd ${*:-})" ||
           echo "change-prompt(Directories> )+reload(fd --type directory)"' \
       --preview '[[ $FZF_PROMPT =~ Files ]] && bat {} || tree -C {}'
+    get-current-theme
   }
 
 # Automatic node version switching (FNM)
@@ -300,10 +303,17 @@ fi
     IFS= read -r -d '' cwd < "$tmp"
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
+    get-current-theme
   }
 
 # GIT-RELATED FUNCTIONS
   function gcoall() {
     fd '\.git$' -t d -u --strip-cwd-prefix --prune -x echo {//} | parallel --plus --color --tagstring '{:0:20}' git -C '{}' pull
     #TODO: make gco conditional on .git being below a certain size to avoid pulling large repos
+  }
+
+# NVIM
+  function v() {
+    nvim $@
+    get-current-theme
   }

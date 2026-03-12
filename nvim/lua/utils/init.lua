@@ -18,12 +18,20 @@ function M.tt(arg)
   utils.SetTheme(mode)
 end
 
-function M.SetTheme(arg)
-  local mode = string.lower(arg)
+function M.SetTheme(mode)
   local theme = mode == 'dark' and DarkTheme or LightTheme
   vim.api.nvim_set_option_value('background', mode, { scope = 'global' })
   vim.cmd.colorscheme(theme)
-  CURRENT_THEME = mode
+
+  CURRENT_THEME = string.upper(mode)
+  vim.env.CURRENT_THEME = CURRENT_THEME
+
+  LG_CONFIG_FILE = HOME .. '/.config/lazygit/' .. string.upper(mode) .. '-config.yml'
+  vim.env.LG_CONFIG_FILE = LG_CONFIG_FILE
+
+  local batThemeRef = 'BAT_THEME_' .. CURRENT_THEME
+  BAT_THEME = os.getenv(batThemeRef)
+  vim.env.BAT_THEME = BAT_THEME
 end
 
 -- function M.compare_to_clipboard()

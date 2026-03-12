@@ -147,8 +147,7 @@ fi
   # alias lg="gitui -t ${CURRENT_THEME}-theme.ron"
 
 # NEOVIM
-  alias v='nvim'
-  alias vim='nvim'
+  alias vim='v'
 
 # NEOVIDE (simlink serves unmanagable OS window...this is the workaround)
   # alias neovide='/Applications/Neovide.app/Contents/MacOS/neovide'

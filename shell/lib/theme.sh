@@ -61,6 +61,7 @@ source "$HOME/.config/shell/lib/colours.sh"
     (set-os-theme $darkMode)
     set-session-theme
     set-nvim-theme
+    osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every terminal
     # wait
   }
 
