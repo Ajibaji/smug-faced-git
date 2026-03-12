@@ -70,7 +70,17 @@
   fi
 
 # FZF
-  export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
+  export FZF_COMMON_OPTS="--reverse \
+    --no-separator \
+    --info=inline-right \
+    --ansi \
+    --height=~85% \
+    --multi \
+    --pointer=\">\" \
+    --marker=\"+\" \
+    --preview-window 'right,60%,border,+{2}+3/3,~3' \
+    --input-border --list-border \
+  "
 
 # GCC
   export CXXFLAGS="-Wno-format-security"

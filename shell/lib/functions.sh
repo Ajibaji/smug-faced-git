@@ -250,20 +250,15 @@ fi
     TRANSFORMER='printf "reload:sleep 0.1; %b %b || true" "$RG_PREFIX" {q}'
 
     INITIAL_QUERY="${*:-}"
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
-        --info inline-right \
-        --no-separator \
+    fzf --disabled --query "$INITIAL_QUERY" \
         --bind "start:reload:$RG_PREFIX {q}" \
-        --preview-window 'right,60%,border-none,+{2}+3/3,~3' \
-        --border thinblock --border-label ' F I N D   I N   F I L E S ' --border-label-pos top --padding 1,2 \
         --bind "change:transform:$TRANSFORMER" \
         --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
           echo "rebind(change)+change-prompt(ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
           echo "unbind(change)+change-prompt(fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
         --prompt 'ripgrep> ' \
         --delimiter : \
-        --header 'CTRL-T: Switch between ripgrep/fzf' \
-        --header-border none \
+        --input-label ' rg/fzf [CTRL-T]    accept [ALT+CR]    edit [CR] ' \
         --preview 'bat {1} --highlight-line {2}' \
         --bind 'alt-enter:accept' \
         --bind "enter:become:$OPENER"
@@ -273,12 +268,8 @@ fi
 # FIND FILES
   function ff () {
     fd ${*:-} --no-ignore --hidden | fzf \
-      --info inline-right \
-      --no-separator \
       --prompt 'Files> ' \
-      --header 'CTRL-T: Switch between Files/Directories' \
-      --list-border thinblock --preview-window border-thinblock \
-      --border line --border-label ' F I L E S   &   D I R E C T O R I E S ' --border-label-pos top --padding 1,2 \
+      --input-label ' Files/Directories [CTRL-T] ' \
       --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
           echo "change-prompt(Files> )+reload(fd ${*:-})" ||
           echo "change-prompt(Directories> )+reload(fd --type directory)"' \
