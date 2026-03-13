@@ -9,12 +9,20 @@
 # -------
   export EDITOR=nvim
 
+  if [[ -f "/etc/os-release" ]]; then
+    export OS="$(source /etc/os-release; echo $NAME)"
+  else
+    export OS="MacOS"
+  fi
+
 # CA-certs
-  [[ -f $CUSTOM_CA_CERTS ]] && export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
+  if [[ -z "$CUSTOM_CA_CERTS" && -f "${HOME}/CustomCA.pem" ]]; then
+    export CUSTOM_CA_CERTS="${HOME}/CustomCA.pem"
+  fi
 
 # MACOS VALUES
 # =======================================================================================
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ "$OS" == "MacOS" ]]; then
     source $HOME/.config/shell/lib/env_mac.sh
   fi
 
@@ -23,10 +31,10 @@
 
 # WSL VALUES
 # =======================================================================================
-if [[ -n "${WSL_DISTRO_NAME}" ]]; then
-  export KITTY_DISABLE_WAYLAND=1
-  export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
-fi
+# Disabling this while WSLg is in use over VcXsrv
+# if [[ -n "${WSL_DISTRO_NAME}" ]]; then
+#   export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+# fi
 
 # CONCATENATED VALUES
 # =======================================================================================
@@ -37,26 +45,55 @@ fi
 # AZURE
   export VSO_AGENT_IGNORE=PIPELINE_AGENT_TOKEN,USER,AWS_SHARED_CREDENTIALS_FILE,API_TOKEN
 
+# BUN
+  export PATH="$HOME/.bun/bin:$PATH"
+
 # DOTNET
-  export DOTNET_ROOT=$HOME/.dotnet
-  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+  if [[ "$OS" != "NixOS" ]]; then
+    export DOTNET_ROOT=$HOME/.dotnet
+    export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+  fi
 
 # EGET
-  export EGET_BIN=$HOME/.local/eget/bin
-  [[ ! -d $EGET_BIN ]] && mkdir -p $EGET_BIN
-  export PATH=$EGET_BIN:$PATH
+  if [[ "$OS" != "NixOS" ]]; then
+    export EGET_BIN=$HOME/.local/eget/bin
+    [[ ! -d $EGET_BIN ]] && mkdir -p $EGET_BIN
+    export PATH=$EGET_BIN:$PATH
+    if [[ "$OS" != "MacOS" ]]; then
+      export PATH=$EGET_BIN/nvim/bin:$PATH
+    fi
+  fi
+
+# FNM
+  if [[ "$OSTYPE" == "linux"* && "$OS" != "NixOS" ]]; then
+    export PATH="$HOME/.local/share/fnm:$PATH"
+  fi
 
 # FZF
-  export FZF_COMMON_OPTS='--info=hidden --reverse --exact --height=50% -m --prompt="  " --pointer=">" --marker="+"'
+  export FZF_COMMON_OPTS="--reverse \
+    --no-separator \
+    --info=inline-right \
+    --ansi \
+    --height=~85% \
+    --multi \
+    --pointer=\">\" \
+    --marker=\"+\" \
+    --preview-window 'right,60%,border,+{2}+3/3,~3' \
+    --input-border --list-border \
+  "
 
 # GCC
   export CXXFLAGS="-Wno-format-security"
   export CFLAGS="-Wno-format-security"
 
 # GO
-  export GOPATH=${HOME}/go
-  export GOBIN=${GOPATH}/bin
-  export PATH=$PATH:${GOBIN}
+  if [[ "$OS" != "NixOS" ]]; then
+    export GOBIN=${HOME}/go/bin
+    export PATH=$PATH:${GOBIN}
+    if [[ "$OS" != "MacOS" ]]; then
+      export PATH=$PATH:/usr/local/go/bin
+    fi
+  fi
 
 # KUBERNETES
   export PATH=$PATH:${HOME}/.kube/plugins/jordanwilson230
@@ -69,10 +106,11 @@ fi
   export PATH="${HOME}/work/other/tools-and-snippets/bin:${PATH}"
 
 # PYTHON
-  [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
-  export PYENV_ROOT="$HOME/.pyenv"
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init - bash)"
+  if [[ "$OS" != "NixOS" ]]; then
+    [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+  fi
 
 # Ruby
   [[ -f $CUSTOM_CA_CERTS ]] && export SSL_CERT_FILE=${CUSTOM_CA_CERTS}
@@ -80,8 +118,4 @@ fi
 # GRADLE
   # export GRADLE_HOME=$HOME/Downloads/gradle
   # export PATH=$GRADLE_HOME/bin:$PATH
-
-
-#_________________________________________________________________________________ALIASES:
-    source "$HOME/.config/shell/lib/aliases.sh"
 

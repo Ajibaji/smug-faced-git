@@ -18,12 +18,16 @@ source "$HOME/.config/shell/lib/colours.sh"
   }
 
   function get-current-theme () {
-    defaults read -g AppleInterfaceStyle > /dev/null 2>&1
-    if [[ "$?" = "0" ]]
-    then
-      export CURRENT_THEME=DARK
+    if [[ "$OS" == "MacOS" ]]; then
+      defaults read -g AppleInterfaceStyle > /dev/null 2>&1
+      if [[ "$?" = "0" ]]
+      then
+        export CURRENT_THEME=DARK
+      else
+        export CURRENT_THEME=LIGHT
+      fi
     else
-      export CURRENT_THEME=LIGHT
+      export CURRENT_THEME=DARK
     fi
     set-session-theme
   }
@@ -37,7 +41,7 @@ source "$HOME/.config/shell/lib/colours.sh"
   }
 
   function set-os-theme () {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$OS" == "MacOS" ]]; then
       osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
     else
       echo "Not yet implemented for this linux DE"
@@ -57,6 +61,7 @@ source "$HOME/.config/shell/lib/colours.sh"
     (set-os-theme $darkMode)
     set-session-theme
     set-nvim-theme
+    osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every terminal
     # wait
   }
 

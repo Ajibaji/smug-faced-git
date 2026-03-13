@@ -3,7 +3,7 @@
 # =======================================================================================
 
 # MAC ONLY FUNCTIONS
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OS" == "MacOS" ]]; then
     # cd to the path of the front Finder window
       cdf() {
         target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
@@ -77,6 +77,23 @@ fi
     export AWS_SESSION_TOKEN=$(aws configure get aws_session_token --profile "$PROFILE");
     [[ $SILENT != "true" ]] && echo "$PROFILE environment variables exported";
     [[ $SILENT != "true" ]] && echo "AWS_PROFILE=${PROFILE}"
+  }
+
+# AZ SET ENV VARS
+  function az-env () {
+    local json="$(az account show --output json)"
+    local client_id="$(echo $json | jq -r '.user.name')"
+
+    export ARM_TENANT_ID="$(echo $json | jq -r '.tenantId')"
+    export ARM_SUBSCRIPTION_ID="$(echo $json | jq -r '.id')"
+    if [[ $client_id != *"@"* ]]; then
+      export ARM_CLIENT_ID="$(echo $json | jq -r '.user.name')"
+      export ARM_CLIENT_SECRET=$(echo "{ \"content\": $(\cat ~/.azure/service_principal_entries.json)}" | jq -r --arg client_id "$client_id" '.content[] | select(.client_id == $client_id).client_secret')
+    fi
+    export TF_VAR_hub_subscription_id=$AZURE_HUB_SUBSCRIPTION_ID
+    export TF_VAR_subscription_id=$ARM_SUBSCRIPTION_ID
+    export TF_VAR_tenant_id=$ARM_TENANT_ID
+    export TF_VAR_storage_access_keys="abc123" # pleaceholder for local development
   }
 
 # fix tabs (mixed tabs and spaces error in eslint)
@@ -218,6 +235,7 @@ fi
       cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
       rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
     fi
+    get-current-theme
   }
 
 # FIND IN FILES
@@ -232,38 +250,31 @@ fi
     TRANSFORMER='printf "reload:sleep 0.1; %b %b || true" "$RG_PREFIX" {q}'
 
     INITIAL_QUERY="${*:-}"
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
-        --info inline-right \
-        --no-separator \
+    fzf --disabled --query "$INITIAL_QUERY" \
         --bind "start:reload:$RG_PREFIX {q}" \
-        --preview-window 'right,60%,border-none,+{2}+3/3,~3' \
-        --border thinblock --border-label ' F I N D   I N   F I L E S ' --border-label-pos top --padding 1,2 \
         --bind "change:transform:$TRANSFORMER" \
         --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
           echo "rebind(change)+change-prompt(ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
           echo "unbind(change)+change-prompt(fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
         --prompt 'ripgrep> ' \
         --delimiter : \
-        --header 'CTRL-T: Switch between ripgrep/fzf' \
-        --header-border none \
+        --input-label ' rg/fzf [CTRL-T]    accept [ALT+CR]    edit [CR] ' \
         --preview 'bat {1} --highlight-line {2}' \
         --bind 'alt-enter:accept' \
         --bind "enter:become:$OPENER"
+    get-current-theme
   }
 
 # FIND FILES
   function ff () {
     fd ${*:-} --no-ignore --hidden | fzf \
-      --info inline-right \
-      --no-separator \
       --prompt 'Files> ' \
-      --header 'CTRL-T: Switch between Files/Directories' \
-      --list-border thinblock --preview-window border-thinblock \
-      --border line --border-label ' F I L E S   &   D I R E C T O R I E S ' --border-label-pos top --padding 1,2 \
+      --input-label ' Files/Directories [CTRL-T] ' \
       --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
           echo "change-prompt(Files> )+reload(fd ${*:-})" ||
           echo "change-prompt(Directories> )+reload(fd --type directory)"' \
       --preview '[[ $FZF_PROMPT =~ Files ]] && bat {} || tree -C {}'
+    get-current-theme
   }
 
 # Automatic node version switching (FNM)
@@ -283,10 +294,17 @@ fi
     IFS= read -r -d '' cwd < "$tmp"
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
+    get-current-theme
   }
 
 # GIT-RELATED FUNCTIONS
   function gcoall() {
     fd '\.git$' -t d -u --strip-cwd-prefix --prune -x echo {//} | parallel --plus --color --tagstring '{:0:20}' git -C '{}' pull
     #TODO: make gco conditional on .git being below a certain size to avoid pulling large repos
+  }
+
+# NVIM
+  function v() {
+    nvim $@
+    get-current-theme
   }

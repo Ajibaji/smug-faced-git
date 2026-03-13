@@ -9,7 +9,7 @@ function authGithub() {
 
   if [ -n "${IS_LINUX}" ]; then
     sudo apt update
-    if ! command -v xsel; then
+    if ! command -v xsel > /dev/null 2>&1; then
       sudo apt install xsel -y
     fi
     cat "${KEY_PATH}".pub | xsel --clipboard --input
@@ -27,7 +27,7 @@ function authGithub() {
   githubKeyUrl="https://github.com/settings/ssh/new"
 
   if [ -n "${WSLENV}" ]; then
-    if ! command -v wslview; then
+    if ! command -v wslview > /dev/null 2>&1; then
       sudo apt install wslu -y
     fi
 
@@ -40,30 +40,19 @@ function authGithub() {
 
   sleep 5
   read -p 'When done, press any key to continue...' continue
+
+  # populate known_hosts file
+  ssh -T git@github.com -o StrictHostKeyChecking=accept-new > /dev/null 2>&1
 }
 
 function clone() {
-  export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-
-  if ! command git ls-remote git@github.com:Ajibaji/smug-faced-git.git; then
+  if command git ls-remote git@github.com:Ajibaji/smug-faced-git.git > /dev/null 2>&1; then
     git clone git@github.com:Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   else
     git clone https://github.com/Ajibaji/smug-faced-git.git "${HOME}"/smug-faced-git
   fi
 
-  unset GIT_SSH_COMMAND
   cd smug-faced-git || exit
-}
-
-function installBrew() {
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    if ! command -v brew; then
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-  else
-    echo "This option is Mac only"
-    sleep 2
-  fi
 }
 
 function runDotbot() {
@@ -73,14 +62,14 @@ function runDotbot() {
 }
 
 function printHeading() {
-  printf "%119s\n" ${@}— | sed -e 's/ /—/g';
+  printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
 function menu() {
   echo -e "\n\n\n\n\n\n\n"
   printHeading Menu
   PS3="Select choice: "
-  select choice in "Authenticate GitHub" "Clone dotfiles repo" "Link only" "Link and run DotBot" "Install Brew" Quit
+  select choice in "Authenticate GitHub" "Clone dotfiles repo" "Link only" "Link and run DotBot" Quit
   do
     case $choice in
       "Authenticate GitHub")
@@ -95,9 +84,6 @@ function menu() {
       "Link and run DotBot")
         runDotbot
         exit 0;;
-      "Install Brew")
-        installBrew
-        break;;
       "Quit")
         exit 0;;
       *)

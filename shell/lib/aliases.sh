@@ -2,7 +2,7 @@
 # This file contains shell agnostic aliases for sourcing into a shell's .*rc file
 # =======================================================================================
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OS" == "MacOS" ]]; then
   # gnu-* utils
     alias sed='gsed'
     alias tar='gtar'
@@ -122,12 +122,7 @@ fi
   alias azi='az interactive'
 
 # BAT ALIASES
-  alias cat='batcat -pp'
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias batcat='bat'
-  else
-    alias bat='batcat'
-  fi
+  alias cat='bat -pp'
 
 # DOCKER ALIASES
   # alias docker='lima nerctl'
@@ -140,7 +135,7 @@ fi
   # alias clear='clear -x'
 
 # GIT ALIASES
-  alias git='git --config-env=delta.features=CURRENT_THEME'
+  alias git='git --config-env=delta.features=BAT_THEME'
   alias gst='git status'
   alias gco='git checkout'
 
@@ -152,7 +147,6 @@ fi
   # alias lg="gitui -t ${CURRENT_THEME}-theme.ron"
 
 # NEOVIM
-  alias v='nvim'
   alias vim='v'
 
 # NEOVIDE (simlink serves unmanagable OS window...this is the workaround)

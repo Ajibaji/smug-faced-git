@@ -1,4 +1,4 @@
-local section_separators = { left = '', right = '' }
+local section_separators = { left = '', right = '' }
 
 local lsp_clients = function()
   local bufnr = vim.api.nvim_get_current_buf()

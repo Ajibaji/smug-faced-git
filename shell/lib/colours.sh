@@ -1,8 +1,4 @@
 export DARK_FZF_COLOURS="--highlight-line \
-  --info=inline-right \
-  --ansi \
-  --layout=reverse \
-  --border=none \
   --color=bg+:#2e3c64 \
   --color=bg:#1f2335 \
   --color=border:#29a4bd \
@@ -21,10 +17,6 @@ export DARK_FZF_COLOURS="--highlight-line \
   --color=spinner:#ff007c \
 "
 export LIGHT_FZF_COLOURS="--highlight-line \
-  --info=inline-right \
-  --ansi \
-  --layout=reverse \
-  --border=none \
   --color=bg+:#b7c1e3 \
   --color=bg:#d0d5e3 \
   --color=border:#4094a3 \

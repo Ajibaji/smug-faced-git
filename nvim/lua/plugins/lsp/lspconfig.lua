@@ -1,6 +1,9 @@
 return {
   {
     'Decodetalkers/csharpls-extended-lsp.nvim',
+    cond = function()
+      return not os.getenv('OS') == 'NixOS'
+    end
   },
   {
     'neovim/nvim-lspconfig',
@@ -80,7 +83,6 @@ return {
       local servers = {
         -- angularls = {},
         bashls = {},
-        csharp_ls = {},
         docker_compose_language_service = {},
         dockerls = {},
         gopls = {},
@@ -105,9 +107,7 @@ return {
         },
         markdown_oxide = {},
         neocmake = {},
-        powershell_es = {},
         pylsp = {},
-        rnix = {},
         ruff = {},
         shellcheck = {},
         -- copilot = {}, -- i think this is included in copilot-cmp
@@ -182,6 +182,13 @@ return {
           },
         },
       }
+
+      if not os.getenv('OS') == 'NixOS' then
+        vim.fn.extend(servers, {
+          csharp_ls = {},
+          powershell_es = {}
+        })
+      end
 
       require('mason').setup()
 
