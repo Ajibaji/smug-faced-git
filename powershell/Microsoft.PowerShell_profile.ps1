@@ -18,14 +18,7 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-$env:FNM_DIR = "$HOME\AppData\Local\fnm"
-$env:FNM_NODE_DIST_MIRROR = "https://nodejs.org/dist"
-$env:FNM_VERSION_FILE_STRATEGY = "local"
-$env:FNM_COREPACK_ENABLED = "false"
-$env:FNM_LOGLEVEL = "info"
-$env:FNM_MULTISHELL_PATH = "$HOME\AppData\Local\fnm_multishells\39336_1706870237743"
-$env:FNM_RESOLVE_ENGINES = "false"
-$env:FNM_ARCH = "x64"
+fnm env --use-on-cd --shell powershell | out-string | invoke-expression
 
 $env:EGET_BIN = "$HOME\AppData\Local\eget\bin"
 
