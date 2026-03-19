@@ -70,13 +70,10 @@ if ! command -v pyenv > /dev/null 2>&1; then
 fi
 
 if ! command -v cargo > /dev/null 2>&1; then
-  printHeading 'INSTALLING-CARGO'
-  printf "\n\ninstalling cargo-binstall...\n"
-  curl https://sh.rustup.rs -ssf | sh -s -- -y
-  curl -l --proto '=https' --tlsv1.2 -ssf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+  printHeading 'INSTALLING-RUSTUP'
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --profile minimal --no-modify-path -y
   export PATH="${HOME}/.cargo/bin:${PATH}"
-  cargo binstall -y cargo-update
-  cargo install-update -a
+  rustup completions bash > ~/.local/share/bash-completion/completions/rustup
   git checkout -- .
 fi
 

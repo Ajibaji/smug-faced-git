@@ -92,9 +92,20 @@ defaults write com.apple.dock wvous-br-corner -int 14
 if ! command -v brew > /dev/null 2>&1; then
   printHeading 'FOT-BREW'
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  export HOMEBREW_BUNDLE_FILE=${HOME}/.config/brew/Brewfile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
 
 if command -v brew > /dev/null 2>&1; then
   printHeading 'MASHING-A-BREW'
   brew bundle
+fi
+
+if ! command -v cargo > /dev/null 2>&1; then
+  printHeading 'INSTALLING-RUSTUP'
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --profile minimal --no-modify-path -y
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+  rustup completions bash > ~/.local/share/bash-completion/completions/rustup
+  git checkout -- .
 fi
