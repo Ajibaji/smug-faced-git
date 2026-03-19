@@ -1,4 +1,4 @@
 HOME = os.getenv('HOMEPATH') or os.getenv('HOME')
 
-LightTheme = 'tokyonight-day'
-DarkTheme = 'tokyonight-storm'
+LightTheme = 'catppuccin-latte'
+DarkTheme = 'catppuccin-frappe'

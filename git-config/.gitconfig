@@ -58,14 +58,6 @@
 [delta "interactive"]
     keep-plus-minus-markers = false
 
-; [delta "LIGHT"]
-;     ; features = mirthful-willow
-;     features = chameleon zebra-light
-;
-; [delta "DARK"]
-;     features = mellow-barbet
-;     ; features = gruvmax-fang zebra-dark
-
 [alias]
     change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
 
@@ -76,30 +68,64 @@
     blame = delta
     reflog = delta
 
-[delta "tokyonight_day"]
-    light                         = true
-    minus-style                   = syntax "#dababe"
-    minus-non-emph-style          = syntax "#dababe"
-    minus-emph-style              = syntax "#d59a9d"
-    minus-empty-line-marker-style = syntax "#dababe"
-    line-numbers-minus-style      = "#c47981"
-    plus-style                    = syntax "#b7ced5"
-    plus-non-emph-style           = syntax "#b7ced5"
-    plus-emph-style               = syntax "#95bec7"
-    plus-empty-line-marker-style  = syntax "#b7ced5"
-    line-numbers-plus-style       = "#4197a4"
-    line-numbers-zero-style       = "#a8aecb"
+[delta "LIGHT"]
+    blame-palette = "#eff1f5 #e6e9ef #dce0e8 #ccd0da #bcc0cc"
+    commit-decoration-style = "#9ca0b0" bold box ul
+    light = true
+    file-decoration-style = "#9ca0b0"
+    file-style = "#4c4f69"
+    hunk-header-decoration-style = "#9ca0b0" box ul
+    hunk-header-file-style = bold
+    hunk-header-line-number-style = bold "#6c6f85"
+    hunk-header-style = file line-number syntax
+    line-numbers-left-style = "#9ca0b0"
+    line-numbers-minus-style = bold "#d20f39"
+    line-numbers-plus-style = bold "#40a02b"
+    line-numbers-right-style = "#9ca0b0"
+    line-numbers-zero-style = "#9ca0b0"
+    # 35% red 65% base
+    minus-emph-style = bold syntax "#e5a2b3"
+    # 20% red 80% base
+    minus-style = syntax "#e9c4cf"
+    # 35% green 65% base
+    plus-emph-style = bold syntax "#b2d5ae"
+    # 20% green 80% base
+    plus-style = syntax "#cce1cd"
+    map-styles = \
+    	bold purple => syntax "#cbb1f2", \
+    	bold blue => syntax "#a6c1f5", \
+    	bold cyan => syntax "#9dd7ef", \
+    	bold yellow => syntax "#eacfa9"
+    # Should match the name of the bat theme
+    syntax-theme = Catppuccin Latte
 
-[delta "tokyonight_storm"]
-    dark                          = true
-    minus-style                   = syntax "#52313f"
-    minus-non-emph-style          = syntax "#52313f"
-    minus-emph-style              = syntax "#763842"
-    minus-empty-line-marker-style = syntax "#52313f"
-    line-numbers-minus-style      = "#914c54"
-    plus-style                    = syntax "#2b485a"
-    plus-non-emph-style           = syntax "#2b485a"
-    plus-emph-style               = syntax "#316172"
-    plus-empty-line-marker-style  = syntax "#2b485a"
-    line-numbers-plus-style       = "#449dab"
-    line-numbers-zero-style       = "#3b4261"
+[delta "DARK"]
+    blame-palette = "#303446 #292c3c #232634 #414559 #51576d"
+    commit-decoration-style = "#737994" bold box ul
+    dark = true
+    file-decoration-style = "#737994"
+    file-style = "#c6d0f5"
+    hunk-header-decoration-style = "#737994" box ul
+    hunk-header-file-style = bold
+    hunk-header-line-number-style = bold "#a5adce"
+    hunk-header-style = file line-number syntax
+    line-numbers-left-style = "#737994"
+    line-numbers-minus-style = bold "#e78284"
+    line-numbers-plus-style = bold "#a6d189"
+    line-numbers-right-style = "#737994"
+    line-numbers-zero-style = "#737994"
+    # 35% red 65% base
+    minus-emph-style = bold syntax "#704f5c"
+    # 20% red 80% base
+    minus-style = syntax "#544452"
+    # 35% green 65% base
+    plus-emph-style = bold syntax "#596b5e"
+    # 20% green 80% base
+    plus-style = syntax "#475453"
+    map-styles = \
+    	bold purple => syntax "#66597e", \
+    	bold blue => syntax "#505d81", \
+    	bold cyan => syntax "#546b7a", \
+    	bold yellow => syntax "#6f6860"
+    # Should match the name of the bat theme
+    syntax-theme = Catppuccin Frappe

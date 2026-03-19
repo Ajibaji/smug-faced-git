@@ -82,8 +82,8 @@
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Frappe",
   },
   "autosave": { "after_delay": { "milliseconds": 500 } },
   "project_panel": {

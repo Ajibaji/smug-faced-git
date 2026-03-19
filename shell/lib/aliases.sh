@@ -135,7 +135,7 @@ fi
   # alias clear='clear -x'
 
 # GIT ALIASES
-  alias git='git --config-env=delta.features=BAT_THEME'
+  alias git='git --config-env=delta.features=CURRENT_THEME'
   alias gst='git status'
   alias gco='git checkout'
 
@@ -144,7 +144,6 @@ fi
 
 # LAZY-GIT/GITUI
   alias lg="lazygit"
-  # alias lg="gitui -t ${CURRENT_THEME}-theme.ron"
 
 # NEOVIM
   alias vim='v'

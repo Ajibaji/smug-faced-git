@@ -35,5 +35,5 @@ export LIGHT_FZF_COLOURS="--highlight-line \
   --color=spinner:#d20065 \
 "
 
-export BAT_THEME_DARK=tokyonight_storm
-export BAT_THEME_LIGHT=tokyonight_day
+export BAT_THEME_DARK="Catppuccin Frappe"
+export BAT_THEME_LIGHT="Catppuccin Latte"

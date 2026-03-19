@@ -6,7 +6,7 @@ source "$HOME/.config/shell/lib/colours.sh"
 # THEME SWITCHER
   function set-session-theme () {
     export BAT_THEME_VAR_NAME=BAT_THEME_${CURRENT_THEME}
-    export BAT_THEME=${!BAT_THEME_VAR_NAME}
+    export BAT_THEME="${!BAT_THEME_VAR_NAME}"
 
     export FZF_COLOURS=${CURRENT_THEME}_FZF_COLOURS
     export FZF_DEFAULT_OPTS="$FZF_COMMON_OPTS ${!FZF_COLOURS}"
