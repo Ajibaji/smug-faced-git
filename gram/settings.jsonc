@@ -24,6 +24,7 @@
     },
     "lua-language-server": {
       "binary": {
+        "ignore_system_version": false,
         "allow_binary_download": true,
       },
       "enable_lsp_tasks": true,
@@ -66,7 +67,7 @@
     },
     "powershell-es": {
       "binary": {
-        "allow_binary_download": false,
+        "allow_binary_download": true,
       },
       "enable_lsp_tasks": true,
     },

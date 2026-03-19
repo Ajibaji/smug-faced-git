@@ -116,6 +116,9 @@ if [[ "$OS" == "MacOS" ]]; then
     alias whoami='gwhoami'
     alias yes='gyes'
 
+  # GRAM
+    alias gram='/Applications/Gram.app/Contents/MacOS/cli'
+    alias g='gram'
 fi
 
 # AZURE CLI ALIASES
