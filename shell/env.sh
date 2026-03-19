@@ -110,6 +110,7 @@
     [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
+    export PATH="$HOME/.pyenv/shims:$PATH"
   fi
 
 # Ruby
@@ -118,4 +119,3 @@
 # GRADLE
   # export GRADLE_HOME=$HOME/Downloads/gradle
   # export PATH=$GRADLE_HOME/bin:$PATH
-
