@@ -201,7 +201,7 @@ return {
     words = { enabled = true },
     picker = {
       actions = {
-        sidekick_sned = function(...)
+        sidekick_send = function(...)
           return require('sidekick.cli.picker.snacks').send(...)
         end,
       },
@@ -220,6 +220,25 @@ return {
         preset = function()
           return vim.o.columns >= 120 and 'default' or 'vertical'
         end,
+      },
+      layouts = {
+        default = {
+          layout = {
+            box = 'horizontal',
+            width = 0.8,
+            min_width = 120,
+            height = 0.8,
+            border = true,
+            {
+              box = 'vertical',
+              border = false,
+              -- title = '{title} {live} {flags}',
+              { win = 'input', height = 1, border = 'bottom' },
+              { win = 'list', border = 'none' },
+            },
+            { win = 'preview', title = '{preview}', border = 'left', width = 0.5 },
+          },
+        },
       },
       previewers = {
         diff = {
@@ -256,7 +275,22 @@ return {
           focus = 'list',
           auto_close = true,
           jump = { close = false },
-          layout = { preset = 'vscode' },
+          layout = {
+            hidden = { 'preview', 'input' },
+            layout = {
+              backdrop = true,
+              row = 5,
+              width = 0.3,
+              min_width = 30,
+              height = 0.5,
+              min_height = 10,
+              border = 'vpad',
+              box = 'vertical',
+              { win = 'input', height = 1, border = true },
+              { win = 'list', border = 'hpad' },
+              { win = 'preview', title = '{preview}', border = true },
+            },
+          },
           formatters = {
             file = { filename_only = true },
             severity = { pos = 'right' },

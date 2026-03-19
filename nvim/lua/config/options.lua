@@ -49,9 +49,9 @@ o.cmdheight = 1
 o.updatetime = 250
 
 if g.neovide then
-  opt.guifont = 'JetBrainsMono Nerd Font:h17'
+  opt.guifont = 'JetBrainsMono NF:h13'
 else
-  opt.guifont = 'JetBrainsMono Nerd Font:h13'
+  opt.guifont = 'JetBrainsMono NF:h13'
 end
 
 o.termguicolors = true

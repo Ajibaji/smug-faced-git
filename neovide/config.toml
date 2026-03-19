@@ -1,7 +1,11 @@
 title-hidden = true
-wsl = false
+wsl = true
 no-multigrid = false
 maximized = false
 frame = "buttonless"
 fork = true
 tabs = false
+[font]
+normal = ["JetBrainsMono NF"]
+size = 13
+

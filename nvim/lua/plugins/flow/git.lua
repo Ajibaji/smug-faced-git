@@ -11,6 +11,9 @@ return {
     keys = {
       { '<leader>lg', '<cmd>LazyGit<cr>', desc = '[L]azy[G]it' },
     },
+    config = function()
+      vim.g.lazygit_floating_window_border_chars = ''
+    end,
   },
   {
     'lewis6991/gitsigns.nvim',
