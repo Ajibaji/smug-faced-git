@@ -18,6 +18,21 @@ if ! command -v dotnet > /dev/null 2>&1; then
   export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 fi
 
+if command -v pyenv > /dev/null 2>&1; then
+  printHeading 'PYENV-INSTALLS'
+  eval "$(pyenv init - --bash)"
+  pyenv install $(pyenv latest -k 3)
+  pyenv global $(pyenv latest -k 3)
+  pip install --trusted-host files.pythonhosted.org pip_system_certs
+fi
+
+if command -v fnm > /dev/null 2>&1; then
+  printHeading 'FNM-INSTALLS'
+  fnm install v22
+  fnm default v22
+  eval "`fnm env`"
+fi
+
 if ! command -v eget > /dev/null 2>&1; then
   printHeading 'INSTALLING-EGET'
   # TODO: fork the repo and add changes when you get the chance

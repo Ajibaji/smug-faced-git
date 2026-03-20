@@ -56,13 +56,13 @@ else
     fi
   fi
 
+  printHeading 'COMMON-CONFIG'
+  ${BASEDIR}/run-common.sh
+
   if [[ "$OS" != "NixOS" ]]; then
     printHeading 'NOT-NOT-YOU-NIXOS'
     ${BASEDIR}/run-not-nixos.sh
   fi
-
-  printHeading 'COMMON-CONFIG'
-  ${BASEDIR}/run-common.sh
 
   printHeading 'POST-RUN-SCRIPTS'
   echo "command: ${BASEDIR}/post-run.sh"

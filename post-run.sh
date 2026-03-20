@@ -1,36 +1,14 @@
 #!/usr/bin/env bash
 
-# post-install configuration scripts go here
+#
+# OS-agnostic scripts go here
+#
 
 function printHeading() {
   printf "\n\n\n\n%119s\n\n" ${@}— | sed -e 's/ /—/g';
 }
 
-#
-# OS-agnostic scripts go here
-#
-
 OS="$(source /etc/os-release; echo $NAME)"
-
-
-if [[ "$OS" != "NixOS" ]]; then
-  # pyenv
-  if command -v pyenv > /dev/null 2>&1; then
-    printHeading 'PYENV-INSTALLS'
-    eval "$(pyenv init - --bash)"
-    pyenv install $(pyenv latest -k 3)
-    pyenv global $(pyenv latest -k 3)
-    pip install --trusted-host files.pythonhosted.org pip_system_certs
-  fi
-  
-  # fnm
-  if command -v fnm > /dev/null 2>&1; then
-    printHeading 'FNM-INSTALLS'
-    fnm install v22
-    fnm default v22
-    eval "`fnm env`"
-  fi
-fi
 
 # bat
 if [[ ! -f $HOME/.cache/bat/themes.bin ]] && command -v bat > /dev/null 2>&1; then

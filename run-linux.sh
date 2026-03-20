@@ -87,6 +87,8 @@ if ! command -v go > /dev/null 2>&1; then
   rm ${LATEST_VERSION}.linux-amd64.tar.gz 
   sudo mv ./go /usr/local/ || rm -rf ./go
   mkdir -p $HOME/go/bin
+  export GOBIN=${HOME}/go/bin
+  export PATH=$PATH:${GOBIN}
   export PATH=$PATH:/usr/local/go/bin
 fi
 

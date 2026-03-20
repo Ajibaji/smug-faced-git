@@ -48,4 +48,4 @@ function prompt_command() {
   echo -ne "\033]0;$title"; echo -ne "\007"
 }
 
-command -v git >/dev/null 2>&1 && PROMPT_COMMAND=prompt_command
+PROMPT_COMMAND=prompt_command
