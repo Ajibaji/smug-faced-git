@@ -8,6 +8,19 @@ prompt_clean_symbol="☀ "
 prompt_dirty_symbol="☂ "
 prompt_venv_symbol="☁ "
 
+function cmd_running_time() {
+  REPLY=''
+  if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]]; then
+    local start_time=$(HISTTIMEFORMAT='%s ' builtin history 1 | cut -f5 -d' ')
+    local now=$(date +%s)
+    local running_time=$[now-start_time]
+    if [[ $running_time -gt 0 ]]; then
+      running_time_formatted="$((($running_time/60)/60)):$((($running_time/60)%60)):$(($running_time%60))"
+      REPLY="[$running_time_formatted]\n\n"
+    fi
+  fi
+}
+
 function prompt_command() {
   local remote=
   [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && remote=1
@@ -38,7 +51,8 @@ function prompt_command() {
   local host_prompt=
   [ -n "$remote" ] && host_prompt="@$YELLOW$HOSTNAME$NOCOLOR:"
 
-  first_line="$GREEN\w$NOCOLOR$git_prompt$venv_prompt"
+  local run_time=
+  first_line="${|cmd_running_time;}$GREEN\w$NOCOLOR$git_prompt$venv_prompt"
   second_line="\`if [ \$? = 0 ]; then echo \[\$CYAN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
   PS1="\n$first_line\n    $second_line"
   PS2="\[$CYAN\]$prompt_symbol\[$NOCOLOR\] "
@@ -48,4 +62,27 @@ function prompt_command() {
   echo -ne "\033]0;$title"; echo -ne "\007"
 }
 
-PROMPT_COMMAND=prompt_command
+set_last_command() {
+  local last_command
+  last_command=$(LC_ALL=C HISTTIMEFORMAT='' builtin history 1)
+  last_command="${last_command#*[[:digit:]][* ] }"
+  export LAST_COMMAND="$last_command"
+}
+
+PROMPT_COMMAND+=(set_last_command)
+
+declare -a precmd_functions
+
+ls_on_cd() {
+  if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]] && [[ "$LAST_COMMAND" == *"cd "* ]]; then
+    l
+  fi
+}
+
+precmd_functions+=(ls_on_cd)
+
+for precmd_function in "${precmd_functions[@]:-}"; do
+  PROMPT_COMMAND+=("$precmd_function")
+done
+
+PROMPT_COMMAND+=(prompt_command)
