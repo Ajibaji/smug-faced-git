@@ -64,7 +64,3 @@ source "$HOME/.config/shell/lib/colours.sh"
     osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every terminal
     # wait
   }
-
-# RUN
-  # SILENT=true aws-env & --------------- takes way too long using aws config and cant be thrown to background as env vars dont get set
-  get-current-theme
