@@ -8,10 +8,6 @@ prompt_clean_symbol="☀ "
 prompt_dirty_symbol="☂ "
 prompt_venv_symbol="☁ "
 
-function printHeading() {
-  printf "%${COLUMNS}s\\b\b\b\b\b\b\b\b\b\b\e[3m${1}\e[0m\n"
-}
-
 function cmd_running_time() {
   REPLY=''
   if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]]; then
@@ -20,10 +16,13 @@ function cmd_running_time() {
     local running_time=$[now-start_time]
     if [[ $running_time -gt 0 ]]; then
       running_time_formatted="$((($running_time/60)/60)):$((($running_time/60)%60)):$(($running_time%60))"
-      # REPLY="printHeading \"[$running_time_formatted]\""
       REPLY="[$running_time_formatted]"
     fi
   fi
+}
+
+function print_running_time() {
+  printf "%$[$COLUMNS-11]s\e[3m${|cmd_running_time;}\e[0m\n"
 }
 
 function prompt_command() {
@@ -56,8 +55,7 @@ function prompt_command() {
   local host_prompt=
   [ -n "$remote" ] && host_prompt="@$YELLOW$HOSTNAME$NOCOLOR:"
 
-  local run_time=
-  first_line="${|printHeading ${|cmd_running_time;};}$GREEN\w$NOCOLOR$git_prompt$venv_prompt"
+  first_line="${|print_running_time;}$GREEN\w$NOCOLOR$git_prompt$venv_prompt"
   second_line="\`if [ \$? = 0 ]; then echo \[\$CYAN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
   PS1="\n$first_line\n    $second_line"
   PS2="\[$CYAN\]$prompt_symbol\[$NOCOLOR\] "
