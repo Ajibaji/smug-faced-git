@@ -109,3 +109,10 @@ if ! command -v cargo > /dev/null 2>&1; then
   rustup completions bash > ~/.local/share/bash-completion/completions/rustup
   git checkout -- .
 fi
+
+if ! command -v /usr/local/bin/date > /dev/null 2>&1; then
+  printHeading 'SYMLINK-COREUTILS'
+  gfind /opt/homebrew/Cellar/coreutils/*/bin -type f -iname 'g*' -not -wholename '*.1' -not -wholename '*[' -exec bash -c 'basename {} | cut -c2-' \; | sort | sudo gxargs --replace=% echo 'ln -s /opt/homebrew/bin/g% /usr/local/bin/%'
+  ln -s /opt/homebrew/bin/gsed /usr/local/bin/sed
+  ln -s /opt/homebrew/bin/gtar /usr/local/bin/tar
+fi
