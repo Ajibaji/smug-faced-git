@@ -300,3 +300,8 @@ fi
     nvim $@
     get-current-theme
   }
+
+# BIGGEST - top 20 largest dirs and files
+  function biggest() {
+    du -haS . | sort -hr | head -n 20 | sort -k2
+  }
