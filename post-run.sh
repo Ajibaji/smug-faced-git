@@ -26,6 +26,7 @@ if command -v bun > /dev/null 2>&1; then
   printHeading 'BUN-DEPS'
   bun i -g \
     @biomejs/biome \
+    @mariozechner/pi-coding-agent \
     azure-pipelines-language-server \
     corepack \
     dockerfile-language-server-nodejs \
