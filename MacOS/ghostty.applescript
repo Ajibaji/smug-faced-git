@@ -1,3 +1,5 @@
+# run script in each terminal to update the theme-related env-vars in that session
+
 tell application "Ghostty"
     set allTerms to terminals
 
