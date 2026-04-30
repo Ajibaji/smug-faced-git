@@ -44,7 +44,15 @@ source "$HOME/.config/shell/lib/colours.sh"
     if [[ "$OS" == "MacOS" ]]; then
       osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
     else
-      echo "Not yet implemented for this linux DE"
+      echo "Not yet implemented for this linux DE - $OS"
+    fi
+  }
+
+  function set-terminal-theme () {
+    if [[ "$OS" == "MacOS" ]]; then
+      osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every active ghostty terminal session
+    else
+      echo "Not yet implemented for this linux DE - $OS"
     fi
   }
 
@@ -61,6 +69,6 @@ source "$HOME/.config/shell/lib/colours.sh"
     (set-os-theme $darkMode)
     set-session-theme
     set-nvim-theme
-    osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every terminal
+    set-terminal-theme
     # wait
   }
