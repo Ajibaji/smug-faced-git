@@ -2,7 +2,6 @@
 # source this file into your ~/.*rc file to import:
 #  - custom prompt definition
 # =======================================================================================
-
 prompt_symbol="❯"
 prompt_clean_symbol="☀ "
 prompt_dirty_symbol="☂ "
@@ -11,9 +10,9 @@ prompt_venv_symbol="☁ "
 function cmd_running_time() {
   REPLY=''
   if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]]; then
-    local start_time=$(HISTTIMEFORMAT='%s ' builtin history 1 | cut -f5 -d' ')
-    local now=$(date +%s)
-    local running_time=$[now-start_time]
+    export START_TIME=$(HISTTIMEFORMAT='%s ' builtin history 1 | cut -f5 -d' ')
+    export END_TIME=$(date +%s)
+    local running_time=$[END_TIME-START_TIME]
     if [[ $running_time -gt 0 ]]; then
       running_time_formatted="$((($running_time/60)/60)):$((($running_time/60)%60)):$(($running_time%60))"
       REPLY="[$running_time_formatted]"
@@ -22,7 +21,7 @@ function cmd_running_time() {
 }
 
 function print_running_time() {
-  printf "%$[$COLUMNS-11]s\e[3m${|cmd_running_time;}\e[0m\n"
+  printf "$GRAY%$[$COLUMNS-11]s\e[3m${|cmd_running_time;}\e[0m\n"
 }
 
 function prompt_command() {
@@ -41,9 +40,9 @@ function prompt_command() {
     [ -z "$dirty" ] && test -n "$(git status --porcelain)" && dirty=1
 
     if [ -n "$dirty" ]; then
-      git_prompt=" $RED$prompt_dirty_symbol$branch$NOCOLOR"
+      git_prompt=" $RED$prompt_dirty_symbol$NOCOLOR$branch"
     else
-      git_prompt=" $NOCOLOR$prompt_clean_symbol$branch$NOCOLOR"
+      git_prompt=" $YELLOW$prompt_clean_symbol$NOCOLOR$branch"
     fi
   fi
 
@@ -55,7 +54,7 @@ function prompt_command() {
   local host_prompt=
   [ -n "$remote" ] && host_prompt="@$YELLOW$HOSTNAME$NOCOLOR:"
 
-  first_line="${|print_running_time;}$GREEN\w$NOCOLOR$git_prompt$venv_prompt"
+  first_line="${|print_running_time;}$CYAN\w$NOCOLOR$git_prompt$venv_prompt"
   second_line="\`if [ \$? = 0 ]; then echo \[\$CYAN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
   PS1="\n$first_line\n    $second_line"
   PS2="\[$CYAN\]$prompt_symbol\[$NOCOLOR\] "
@@ -66,6 +65,7 @@ function prompt_command() {
 }
 
 set_last_command() {
+  export LAST_COMMAND_EXIT_CODE=$?
   local last_command
   last_command=$(LC_ALL=C HISTTIMEFORMAT='' builtin history 1)
   last_command="${last_command#*[[:digit:]][* ] }"
