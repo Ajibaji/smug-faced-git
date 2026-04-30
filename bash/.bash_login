@@ -1,2 +1,0 @@
-echo "$(date -u '+%S.%N') .bash_login started" >> /Users/aarjomandkhah/jeff.log
-echo "$(date -u '+%S.%N') .bash_login finished" >> /Users/aarjomandkhah/jeff.log
