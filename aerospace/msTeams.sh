@@ -8,39 +8,40 @@ function moveWindowToWorkspace() {
     local windowId=$1
     local workspaceName=$2
 
-    aerospace move-node-to-workspace --window-id $windowId $workspaceName
-    aerospace layout --window-id $windowId tiling
-    aerospace workspace $workspaceName
+    aerospace move-node-to-workspace --window-id "$windowId" "$workspaceName" --focus-follows-window
 }
 
 function resizeWindow() {
     local windowId=$1
     local targetSize=$2
+    local workspace=$3
 
-    targetMonitor=$(aerospace list-windows --format '%{monitor-name}' --window-id $windowId)
+    targetMonitor=$(aerospace list-windows --format '%{monitor-name}' --workspace $workspace | head -1)
     screenWidth=$(system_profiler -json SPDisplaysDataType | jq -r --arg monitor "$targetMonitor" '.SPDisplaysDataType[].spdisplays_ndrvs[] | select(._name == $monitor)._spdisplays_resolution' | awk '{print $1}')
     targetPixelWidth=$(awk "BEGIN {printf \"%.0f \", $screenWidth*0.$targetSize}")
+
     aerospace resize --window-id $windowId width $targetPixelWidth
 }
 
 teamsWindows=$(aerospace list-windows --app-bundle-id "com.microsoft.teams2" --monitor all --format '%{window-id}')
-windowCount=$(echo $teamsWindows | wc -w | tr -d '[:space:]')
-newWindow=$(echo $teamsWindows | awk '{print $NF}')
+windowCount=$(echo "$teamsWindows" | wc -w  | tr -d '[:space:]')
+newWindow=$(echo "$teamsWindows" | sort -nr | head -1)
 
 case $windowCount in
     1)
-        moveWindowToWorkspace $newWindow Teams
+        moveWindowToWorkspace "$newWindow" Teams
         ;;
     2)
-        moveWindowToWorkspace $newWindow Meeting
+        moveWindowToWorkspace "$newWindow" Meeting
         ;;
     3)
-        moveWindowToWorkspace $newWindow Meeting
-        resizeWindow $newWindow 75
+        moveWindowToWorkspace "$newWindow" Meeting
+        resizeWindow "$newWindow" 75 Meeting
         ;;
     4)
-        moveWindowToWorkspace $newWindow Meeting
-        resizeWindow $newWindow 50
+        moveWindowToWorkspace "$newWindow" Meeting
+        aerospace balance-sizes --workspace Meeting
+        resizeWindow "$newWindow" 50 Meeting
         ;;
     *)
         exit 0
