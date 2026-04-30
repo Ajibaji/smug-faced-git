@@ -32,7 +32,7 @@ return {
         nix = { "nixfmt" },
         python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
         scss = { "biome" },
-        sh = { "shellcheck" },
+        sh = { "shellharden" },
         typescript = { "biome" },
         typescriptreact = { "biome" },
       },

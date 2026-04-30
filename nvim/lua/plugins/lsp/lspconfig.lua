@@ -109,7 +109,7 @@ return {
         neocmake = {},
         pylsp = {},
         ruff = {},
-        shellcheck = {},
+        shellharden = {},
         -- copilot = {}, -- i think this is included in copilot-cmp
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
