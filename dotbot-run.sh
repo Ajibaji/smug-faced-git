@@ -30,7 +30,6 @@ STASH=$(git status -u -s | wc -l)
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive
 
-# export BOATING_JEFF=true
 source $HOME/.config/shell/env.sh
 
 if [[ "$1" == "symlink" ]]; then
