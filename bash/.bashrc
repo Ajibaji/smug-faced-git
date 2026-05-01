@@ -18,7 +18,6 @@ unset BASH_PROFILE_LOADED
 
 #__________________________________________________________________________________PROMPT:
   source "$HOME/.config/bash/lib/prompt.sh"
-  source "$HOME/.config/bash/lib/history.sh"
 
 
 #_____________________________________________________________________________________RUN:
@@ -27,14 +26,15 @@ unset BASH_PROFILE_LOADED
   fi
 
 
-#___________________________________________________________________________________ATUIN:
-#   test $(uname -s) = "Linux" && export PATH="$HOME/.atuin/bin:$PATH"
-#   eval "$(atuin init bash)"
-
-
 #_____________________________________________________________________________________FZF:
   source <(fzf --bash)
+
+
+#_________________________________________________________________________________HISTORY:
+  # load this AFTER fzf
+  source "$HOME/.config/bash/lib/history.sh"
   bind -x '"\C-r": shell_history_search'
+
 
 #__________________________________________________________________________________ZOXIDE:
   eval "$(zoxide init bash)"

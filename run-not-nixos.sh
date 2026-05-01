@@ -41,10 +41,3 @@ if ! command -v eget > /dev/null 2>&1; then
   mv ./dist/bin/eget $EGET_BIN
   cd -
 fi
-
-# if ! command -v atuin > /dev/null 2>&1; then
-#   printHeading 'ATUIN'
-#   export NO_MODIFY_PATH=1
-#   curl --proto '=https' --tlsv1.2 -lssf https://setup.atuin.sh | sh
-#   git checkout -- .
-# fi

@@ -870,4 +870,3 @@ source ($nu.default-config-dir | path join "completions/git-completions.nu")
 source ($nu.default-config-dir | path join "completions/make-completions.nu")
 source ($nu.default-config-dir | path join "completions/npm-completions.nu")
 source ($nu.default-config-dir | path join "completions/winget-completions.nu")
-source ~/.local/share/atuin/init.nu
