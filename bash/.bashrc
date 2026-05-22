@@ -36,5 +36,11 @@ unset BASH_PROFILE_LOADED
   bind -x '"\C-r": shell_history_search'
 
 
+#_________________________________________________________________________BASH-COMPLETION:
+  if [[ -s $HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh ]]; then
+    . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+  fi
+
+
 #__________________________________________________________________________________ZOXIDE:
   eval "$(zoxide init bash)"
