@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This is a **dotfiles configuration repository** that manages terminal and development environment configurations across macOS and Linux using [Dotbot](https://github.com/anishathalye/dotbot).
+This is a **dotfiles configuration repository** that manages terminal and development environment configurations across macOS, Linux, and Windows using [Dotbot](https://github.com/anishathalye/dotbot).
 
 ## Quick Start
 
@@ -19,11 +19,13 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 .
 ├── go.sh / go.ps1           # Interactive setup menu (macOS/Linux / Windows)
 ├── dotbot-run.sh            # Main entry point - runs Dotbot with configs
+├── dotbot-run.ps1           # Windows entry point
 ├── base.conf.yaml           # Symlink definitions (cross-platform)
-├── mac.conf.yaml            # macOS-specific: Homebrew + system defaults
-├── linux-base.conf.yaml     # Linux-specific: shell commands
-├── apt.conf.yaml            # Debian/Ubuntu apt packages
-├── pre-run.sh               # Linux pre-install (apt repos, cargo, fnm, dotnet)
+├── win.conf.yaml            # Windows-specific config
+├── run-macos.sh             # macOS-specific setup (Homebrew, defaults)
+├── run-linux.sh             # Linux-specific setup (apt repos, packages)
+├── run-common.sh            # Cross-platform post-link setup
+├── run-not-nixos.sh         # Setup for non-NixOS Linux systems
 ├── post-run.sh              # Post-install tasks
 │
 ├── dotbot/                  # Git submodule - Dotbot core
@@ -38,9 +40,9 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 | Directory | Purpose |
 |-----------|---------|
 | `nvim/` | Neovim config (Lua, Lazy.nvim plugin manager) |
-| `zsh/` | Zsh shell config (`.zshrc`, `.zprofile`, `.zshenv`) |
+| `zsh/` | Zsh shell config (`.zshrc`, `.zprofile`, `.zshenv`, `.zshroot`) |
 | `bash/` | Bash shell config |
-| `shell/` | Shared shell config (env vars, aliases, functions) |
+| `shell/` | Shared shell config (env vars, aliases, functions, theme) |
 | `aerospace/` | AeroSpace tiling window manager (macOS) |
 | `kitty/` | Kitty terminal config |
 | `ghostty/` | Ghostty terminal config |
@@ -50,13 +52,28 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 | `starship/` | Starship prompt config |
 | `yazi/` | Yazi file manager config |
 | `crush/` | Crush AI assistant config |
+| `tmux/` | Tmux terminal multiplexer config |
+| `delta/` | Delta diff viewer config |
+| `atuin/` | Atuin shell history config |
+| `helix/` | Helix editor config |
+| `zed/` | Zed editor config |
+| `nushell/` | Nushell config |
+| `karabiner/` | Karabiner-Elements keyboard remapping (macOS) |
+| `sketchybar/` | Sketchybar status bar (macOS) |
+| `lsd/` | LSD (LSDeluxe) file listing config |
+| `bat/` | Bat (cat replacement) config |
+| `raycast/` | Raycast launcher config (macOS) |
+| `gram/` | Gram config |
+| `neovide/` | Neovide GUI config |
+| `powershell/` | PowerShell config |
 
 ## How Dotbot Works
 
 1. **`base.conf.yaml`** defines symlinks from `~/.config/<app>` → repository directories
-2. **`mac.conf.yaml`** runs Homebrew via `Brewfile` and configures macOS defaults
-3. **`linux-base.conf.yaml`** runs Linux-specific setup commands
-4. **`apt.conf.yaml`** installs Debian/Ubuntu packages
+2. **`run-macos.sh`** runs Homebrew via `Brewfile` and configures macOS defaults
+3. **`run-linux.sh`** runs Linux-specific setup (apt repos, packages, tools)
+4. **`run-common.sh`** runs cross-platform setup tasks
+5. **`run-not-nixos.sh`** runs setup for non-NixOS systems
 
 Symlinks are created with `force: true` and `relink: true`, meaning they will overwrite existing files.
 
@@ -70,7 +87,12 @@ zsh/.zprofile  → Login shell setup
 zsh/.zshrc     → Interactive shell (sources .zshroot)
 zsh/.zshroot   → Common interactive config
 shell/env.sh   → Environment variables (PATH, tool configs)
-shell/lib/aliases.sh → Shell aliases (bat, docker, git, k8s, vim)
+shell/lib/aliases.sh   → Shell aliases (bat, docker, git, k8s, vim)
+shell/lib/functions.sh → Shell functions
+shell/lib/theme.sh     → Theme switching logic
+shell/lib/colours.sh   → Colour definitions
+shell/lib/env_mac.sh   → macOS-specific env vars
+shell/lib/env_colours.sh → Colour-related env vars
 ```
 
 ### Key Environment Variables
@@ -101,12 +123,14 @@ nvim/
 ├── init.lua                  # Entry point
 └── lua/
     ├── config/               # Core settings
+    │   ├── init.lua          # Config module init
     │   ├── options.lua       # Vim options
     │   ├── keymaps.lua       # Key bindings
     │   ├── autocommands.lua  # Auto commands
-    │   └── constants.lua     # Shared constants
+    │   ├── constants.lua     # Shared constants
+    │   ├── neovide.lua       # Neovide GUI settings
+    │   └── fvim.lua          # FVim GUI settings
     ├── lazy/                 # Lazy.nvim setup
-    │   └── lazy-plugins.lua  # Plugin specifications
     ├── plugins/              # Plugin configs by category
     │   ├── flow/             # Workflow (autopairs, copilot, git, etc.)
     │   ├── lsp/              # LSP, completion, treesitter, formatting
@@ -141,15 +165,25 @@ git submodule update --init --recursive
 - Uses **Homebrew** for package management (`brew/Brewfile`)
 - **AeroSpace** tiling window manager with vim-like keybindings
 - **Sketchybar** status bar
-- Extensive `defaults write` commands in `mac.conf.yaml` for system preferences
+- **Karabiner-Elements** for keyboard remapping
+- **Raycast** launcher
+- Extensive `defaults write` commands for system preferences
 - GNU coreutils installed and aliased to replace BSD versions
 
 ### Linux
 
 - Uses **apt** for package management
-- Installs from pre-run.sh: cargo/rust, fnm/node, dotnet
+- Installs from run-linux.sh: cargo/rust, fnm/node, dotnet
 - Sets up Docker, Kubernetes, Azure CLI apt repositories
 - Kitty terminal installed manually (not via apt)
+- NixOS has separate handling via `run-linux-nixos.sh`
+
+### Windows
+
+- Uses `go.ps1` / `dotbot-run.ps1` for setup
+- `win.conf.yaml` for Windows-specific configuration
+- `winget/` directory for Windows Package Manager config
+- PowerShell configuration in `powershell/`
 
 ### WSL
 
@@ -178,14 +212,6 @@ brew "package-name"
 cask "app-name"
 ```
 
-### Add a new apt package (Linux)
-
-Edit `apt.conf.yaml`:
-```yaml
-- apt:
-    - package-name
-```
-
 ### Modify shell aliases
 
 Edit `shell/lib/aliases.sh`
@@ -194,11 +220,16 @@ Edit `shell/lib/aliases.sh`
 
 Edit `shell/env.sh`
 
+### Add shell functions
+
+Edit `shell/lib/functions.sh`
+
 ## Gotchas
 
 1. **Submodules must be initialized** before running Dotbot - `dotbot-run.sh` handles this automatically
 2. **Symlinks are forcefully overwritten** - existing files at target paths will be replaced
-3. **macOS coreutils aliases** may break scripts expecting BSD behavior - check `aliases.sh`
+3. **macOS coreutils aliases** may break scripts expecting BSD behavior - check `shell/lib/aliases.sh`
 4. **Theme switching** requires `CURRENT_THEME` env var to be set before launching apps
 5. **Neovim plugins** are managed by Lazy.nvim, not system packages
 6. **git stash** is automatically used during `dotbot-run.sh` if there are uncommitted changes
+7. **NixOS** has separate handling - detected via `$OS` variable and uses `run-linux-nixos.sh`
