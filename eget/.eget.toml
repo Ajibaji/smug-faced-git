@@ -65,3 +65,11 @@
   asset_filters = [ "^sig", ]
   all = true
   binary = "~/.local/eget/bin/pulumi"
+
+["Skardyy/mcat"]
+
+["ms-jpq/sad"]
+
+["trufflesecurity/trufflehog"]
+
+["Schniz/fnm"]
