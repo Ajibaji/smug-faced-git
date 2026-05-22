@@ -26,19 +26,20 @@ show_symlink   = true
 # 
 [opener]
 edit = [
-	{ run = 'nvim "$@"', desc = "neovim", block = true, for = "unix" },
-	{ run = 'zed "%*"',    orphan = true, desc = "zed",       for = "windows" },
+	{ run = 'nvim "$@"', desc = "neovim", block = true, for = "linux" },
+	{ run = 'nvim "$@"', desc = "neovim", block = true, for = "macos" },
+	{ run = 'zed "%*"', orphan = true, desc = "zed", for = "windows" },
 ]
-# open = [
-# 	{ run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
-# 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
-# 	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
-# ]
-# reveal = [
-# 	{ run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
-# 	{ run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
-# 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
-# ]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+	{ run = 'open "$@"', desc = "Open", for = "macos" },
+	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+]
+reveal = [
+	{ run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
+	{ run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
+	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+]
 # extract = [
 # 	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
 # 	{ run = 'unar "%1"', desc = "Extract here", for = "windows" },
