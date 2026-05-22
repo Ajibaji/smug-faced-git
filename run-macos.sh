@@ -18,7 +18,7 @@ launchctl setenv XDG_CONFIG_HOME "$HOME/.config"
 
 # set default editor
 defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers \
-  -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=dev.zed.Zed;}'
+  -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=app.liten.Gram;}'
 
 # ctrl + cmd to drag windows
 defaults write -g NSWindowShouldDragOnGesture -bool true
