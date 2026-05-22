@@ -171,7 +171,12 @@ fi
   }
 
 # REMOVE LIST OF DIRS RECURSIVELY
-  function  rmm() {
+  function rmm() {
+    local cwd="$PWD"
+    if [[ "$cwd" == "/" || "$cwd" == "$HOME" ]]; then
+      echo "rmm: refusing to run in '$cwd'" >&2
+      return 1
+    fi
     local items=$@
     fd -g "{$items}" -t d -u --prune -x echo deleting \; -x rm -rf {}
   }
