@@ -6,5 +6,7 @@
 # https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
 if [ "$SENDER" = "front_app_switched" ]; then
-  sketchybar --set "$NAME" label="$INFO"
+  monitor=$(aerospace list-windows --focused --format "%{monitor-appkit-nsscreen-screens-id}")
+  sketchybar --set "$NAME" label="$INFO" associated_display=$monitor
+  sketchybar --set chevron icon="" associated_display=$monitor
 fi

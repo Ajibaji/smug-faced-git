@@ -1,9 +1,12 @@
+#!/usr/bin/env bash
+
 # This is a demo config to showcase some of the most important commands.
 # It is meant to be changed and configured, as it is intentionally kept sparse.
 # For a (much) more advanced configuration example see my dotfiles:
 # https://github.com/FelixKratz/dotfiles
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$CONFIG_DIR/colours.sh"
 
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
@@ -22,8 +25,8 @@ sketchybar --bar position=top height=35 blur_radius=30 color=0x40000000
 default=(
   padding_left=5
   padding_right=5
-  icon.font="Hack Nerd Font:Bold:17.0"
-  label.font="Hack Nerd Font:Bold:14.0"
+  icon.font="JetBrainsMono Nerd Font Mono:Bold:17.0"
+  label.font="JetBrainsMono Nerd Font Mono:Bold:14.0"
   icon.color=0xffffffff
   label.color=0xffffffff
   icon.padding_left=4
@@ -91,24 +94,11 @@ sketchybar --add item clock right \
 sketchybar --update
 
 sketchybar --add event aerospace_workspace_change
-
-# for sid in $(aerospace list-workspaces --all); do
-workspaces="Teams Web Shell Remote Misc Meeting"
-for sid in $workspaces; do
-    sketchybar --add item space.$sid left \
-        --subscribe space.$sid aerospace_workspace_change \
-        --set space.$sid \
-        background.color=0x44ffffff \
-        background.corner_radius=5 \
-        background.height=27 \
-        background.drawing=off \
-        label="$sid" \
-        click_script="aerospace workspace $sid" \
-        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-done
+source "$CONFIG_DIR/items/aerospace.sh"
+add_aerospace_item left
 
 sketchybar --add item chevron left \
-           --set chevron icon="" label.drawing=off \
+           --set chevron label.drawing=off \
            --add item front_app left \
            --set front_app icon.drawing=off \
              script="$PLUGIN_DIR/front_app.sh" \
