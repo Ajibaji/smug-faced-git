@@ -29,19 +29,19 @@ newWindow=$(echo "$teamsWindows" | sort -nr | head -1)
 
 case $windowCount in
     1)
-        moveWindowToWorkspace "$newWindow" Teams
+        moveWindowToWorkspace "$newWindow" 1
         ;;
     2)
-        moveWindowToWorkspace "$newWindow" Meeting
+        moveWindowToWorkspace "$newWindow" 6
         ;;
     3)
-        moveWindowToWorkspace "$newWindow" Meeting
-        resizeWindow "$newWindow" 75 Meeting
+        moveWindowToWorkspace "$newWindow" 6
+        resizeWindow "$newWindow" 75 6
         ;;
     4)
-        moveWindowToWorkspace "$newWindow" Meeting
-        aerospace balance-sizes --workspace Meeting
-        resizeWindow "$newWindow" 50 Meeting
+        moveWindowToWorkspace "$newWindow" 6
+        aerospace balance-sizes --workspace 6
+        resizeWindow "$newWindow" 50 6
         ;;
     *)
         exit 0

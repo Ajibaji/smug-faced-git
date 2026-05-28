@@ -1,6 +1,8 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
+config-version = 2
+
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
@@ -50,6 +52,15 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = true
 
+persistent-workspaces = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+]
+
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
@@ -70,7 +81,7 @@ automatically-unhide-macos-hidden-apps = true
     outer.bottom =     5
     outer.top =        [
         { monitor."Built-in Retina Display" = 5 },
-        37
+        45
     ]
     outer.right =      5
 
@@ -129,20 +140,20 @@ automatically-unhide-macos-hidden-apps = true
     cmd-shift-enter = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace Teams'
-    alt-2 = 'workspace Web'
-    alt-3 = 'workspace Shell'
-    alt-4 = 'workspace Remote'
-    alt-5 = 'workspace Misc'
-    alt-6 = 'workspace Meeting'
+    alt-1 = 'workspace "1"'
+    alt-2 = 'workspace "2"'
+    alt-3 = 'workspace "3"'
+    alt-4 = 'workspace "4"'
+    alt-5 = 'workspace "5"'
+    alt-6 = 'workspace "6"'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace --focus-follows-window Teams'
-    alt-shift-2 = 'move-node-to-workspace --focus-follows-window Web'
-    alt-shift-3 = 'move-node-to-workspace --focus-follows-window Shell'
-    alt-shift-4 = 'move-node-to-workspace --focus-follows-window Remote'
-    alt-shift-5 = 'move-node-to-workspace --focus-follows-window Misc'
-    alt-shift-6 = 'move-node-to-workspace --focus-follows-window Meeting'
+    alt-shift-1 = 'move-node-to-workspace --focus-follows-window "1"'
+    alt-shift-2 = 'move-node-to-workspace --focus-follows-window "2"'
+    alt-shift-3 = 'move-node-to-workspace --focus-follows-window "3"'
+    alt-shift-4 = 'move-node-to-workspace --focus-follows-window "4"'
+    alt-shift-5 = 'move-node-to-workspace --focus-follows-window "5"'
+    alt-shift-6 = 'move-node-to-workspace --focus-follows-window "6"'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # alt-tab = 'workspace-back-and-forth'
@@ -153,18 +164,18 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-semicolon = 'mode service'
 
 [workspace-to-monitor-force-assignment]
-    Teams = '^built-in retina display$'
-    # Web = 'main'
-    # Shell = ['VG3456', 'main']
-    # Remote = ['VG3456', 'main']
-    # Misc = ['VG3456', 'main', '^built-in retina display$']
+    "1" = '^built-in retina display$'
+    # "2|Web" = 'main'
+    # "3|Shell" = ['VG3456', 'main']
+    # "4|Remote" = ['VG3456', 'main']
+    # "5|Misc" = ['VG3456', 'main', '^built-in retina display$']
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
 # check-further-callbacks = true
 run = [
     "layout floating",
-    "move-node-to-workspace Shell",
+    'move-node-to-workspace "3"',
     "exec-and-forget $HOME/.config/MacOS/max_window_resize.sh",
 ]
 
@@ -173,7 +184,7 @@ if.app-id = "net.kovidgoyal.kitty"
 check-further-callbacks = true
 run = [
     "layout tiling",
-    "move-node-to-workspace Shell",
+    'move-node-to-workspace "3"',
 ]
 
 [[on-window-detected]]
@@ -187,28 +198,28 @@ run = [
 if.app-id = "com.microsoft.edgemac"
 run = [
     "layout tiling",
-    "move-node-to-workspace Web",
+    'move-node-to-workspace "2"',
 ]
 
 [[on-window-detected]]
 if.app-id = "com.google.Chrome"
 run = [
     "layout tiling",
-    "move-node-to-workspace Web",
+    'move-node-to-workspace "2"',
 ]
 
 [[on-window-detected]]
 if.app-id = "com.citrix.receiver.icaviewer.mac"
 run = [
     "layout tiling",
-    "move-node-to-workspace Remote",
+    'move-node-to-workspace "4"',
 ]
 
 [[on-window-detected]]
 if.app-id = "com.spotify.client"
 run = [
     "layout tiling",
-    "move-node-to-workspace Misc",
+    'move-node-to-workspace "5"',
 ]
 
 # 'service' binding mode declaration.
