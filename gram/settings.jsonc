@@ -84,7 +84,7 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Frappe",
+    "dark": "Catppuccin Frappé",
   },
   "autosave": { "after_delay": { "milliseconds": 500 } },
   "project_panel": {
