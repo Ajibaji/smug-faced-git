@@ -59,3 +59,8 @@ elif [[ "$OSTYPE" == "linux"* ]]; then
   printHeading 'LINUX-ONLY'
   echo "There are no Linux-only post-install scripts yet"
 fi
+
+# completions
+COMPLETIONS_DIR="$HOME/.local/share/bash-completion/completions"
+pip completion --bash > $COMPLETIONS_DIR/pip
+fnm completions --shell bash > $COMPLETIONS_DIR/fnm
