@@ -1,11 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
 gui:
-  # stuff relating to the UI
   scrollHeight: 2 # how many lines you scroll by
   scrollPastBottom: true # enable scrolling past the bottom
+  scrollOffMargin: 2
+  scrollOffBehavior: margin # margin or jump
   sidePanelWidth: 0.25 # number from 0 to 1
   expandFocusedSidePanel: true
+  expandedSidePanelWeight: 2
   mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
+  enlargedSideViewLocation: left # left or top
+  wrapLinesInStagingView: true
+  useHunkModeInStagingView: true
   language: 'en' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl'
+  timeFormat: 02 Jan 06 # go time format
+  shortTimeFormat: 3:04PM
   nerdFontsVersion: "3"
   theme:
     activeBorderColor:
@@ -39,13 +47,44 @@ gui:
   skipDiscardChangeWarning: false
   skipStashWarning: false
   showFileTree: true # for rendering changes files in a tree format
+  showRootItemInFileTree: true
+  fileTreeSortOrder: mixed # One of: 'mixed' (default) | 'filesFirst' | 'foldersFirst'
+  fileTreeSortCaseSensitive: true
+  showNumstatInFilesView: false # show number of lines changed in file videw
   showListFooter: true # for seeing the '5 of 20' message in list panels
   showRandomTip: true
   showBottomLine: false
   showCommandLog: false
+  showPanelJumps: true
+  showFileIcons: true
   showIcons: false
+  commitAuthorShortLength: 2
+  commitAuthorLongLength: 17
+  showDivergenceFromBaseBranch: none # One of: 'none' | 'onlyArrow'  | 'arrowAndNumber'
   commandLogSize: 8
   splitDiff: 'auto'
+  screenMode: normal # One of: 'normal' (default) | 'half' | 'full'
+  border: rounded # One of 'rounded' (default) | 'single' | 'double' | 'hidden' | 'bold'
+  animateExplosion: true
+  portraitMode: auto
+  portraitModeAutoMaxWidth: 84
+  portraitModeAutoMinHeight: 46
+  filterMode: substring # One of 'substring' (default) | 'fuzzy'
+  spinner:
+    # The frames of the spinner animation.
+    frames:
+      - '|'
+      - /
+      - '-'
+      - \
+
+    # The "speed" of the spinner in milliseconds.
+    rate: 50
+  statusPanelView: dashboard # One of 'dashboard' (default) | 'allBranchesLog'
+  switchToFilesAfterStashPop: true
+  switchToFilesAfterStashApply: true
+  switchTabsWithPanelJumpKeys: false
+
 git:
   pagers:
     - colorArg: always
@@ -79,24 +118,35 @@ git:
   diffContextSize: 3 # how many lines of context are shown around a change in diffs
   allBranchesLogCmds:
     - git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
+  mainBranches:
+    - master
+    - main
+  autoStageResolvedConflicts: true
+  ignoreWhitespaceInDiffView: false
+  # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix
+  commitPrefix: []
+  localBranchSortOrder: date # One of: 'date' (default) | 'recency' | 'alphabetical'
+  remoteBranchSortOrder: date # One of: 'date' (default) | 'alphabetical'
 os:
-  editPreset: 'nvim'
+  editPreset: 'nvim-remote'
   open: 'open {{filename}}'
   openLink: "open {{link}}"
+  # editInTerminal: false
+  # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#using-aliases-or-functions-in-shell-commands
+  shellFunctionsFile: ""
 refresher:
   refreshInterval: 10 # File/submodule refresh interval in seconds. Auto-refresh can be disabled via option 'git.autoRefresh'.
   fetchInterval: 60 # Re-fetch interval in seconds. Auto-fetch can be disabled via option 'git.autoFetch'.
 update:
   method: prompt # can be: prompt | background | never
   days: 14 # how often an update is checked for
-reporting: 'undetermined' # one of: 'on' | 'off' | 'undetermined'
 confirmOnQuit: false
 # determines whether hitting 'esc' will quit the application when there is nothing to cancel/close
 
 quitOnTopLevelReturn: false
 disableStartupPopups: false
 notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip'
-promptToReturnFromSubprocess: true # display confirmation when subprocess terminates
+promptToReturnFromSubprocess: false # display confirmation when subprocess terminates
 keybinding:
   universal:
     quit: 'q'
@@ -121,13 +171,13 @@ keybinding:
     jumpToBlock: ['1', '2', '3', '4', '5'] # goto the Nth block / panel
     nextMatch: 'n'
     prevMatch: 'N'
-    optionMenu: 'x' # show help menu
-    optionMenu-alt1: '?' # show help menu
+    optionMenu: '?' # show help menu
     select: '<space>'
     goInto: '<enter>'
     openRecentRepos: '<c-r>'
     confirm: '<enter>'
-    confirm-alt1: 'y'
+    confirmMenu: '<enter>'
+    confirmSuggestion: '<enter>'
     remove: 'd'
     new: 'n'
     edit: 'e'
@@ -155,11 +205,11 @@ keybinding:
     diffingMenu-alt: '<c-e>' # deprecated
     copyToClipboard: '<c-o>'
     submitEditorText: '<enter>'
-    appendNewline: '<a-enter>'
     extrasMenu: '@'
     toggleWhitespaceInDiffView: '<c-w>'
     increaseContextInDiffView: '}'
     decreaseContextInDiffView: '{'
+    toggleRangeSelect: 'v'
   status:
     checkForUpdate: 'u'
     recentRepos: '<enter>'
@@ -201,13 +251,11 @@ keybinding:
     amendToCommit: 'A'
     pickCommit: 'p' # pick commit (when mid-rebase)
     revertCommit: 't'
-    cherryPickCopy: 'c'
-    cherryPickCopyRange: 'C'
+    cherryPickCopy: 'C'
     pasteCommits: 'v'
     tagCommit: 'T'
     checkoutCommit: '<space>'
-    resetCherryPick: '<c-R>'
-    copyCommitMessageToClipboard: '<c-y>'
+    resetCherryPick: '<c-r>'
     openLogMenu: '<c-l>'
     viewBisectOptions: 'b'
   stash:
@@ -215,8 +263,6 @@ keybinding:
   commitFiles:
     checkoutCommitFile: 'c'
   main:
-    toggleDragSelect: 'v'
-    toggleDragSelect-alt: 'V'
     toggleSelectHunk: 'a'
     pickBothHunks: 'b'
   submodules:
