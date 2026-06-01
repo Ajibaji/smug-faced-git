@@ -107,10 +107,11 @@
 
 # PYTHON
   if [[ "$OS" != "NixOS" ]]; then
-    [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
+    # [[ -f $CUSTOM_CA_CERTS ]] && export REQUESTS_CA_BUNDLE=${CUSTOM_CA_CERTS}
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     export PATH="$HOME/.pyenv/shims:$PATH"
+    export REQUESTS_CA_BUNDLE="$(python -m certifi)"
   fi
 
 # Ruby

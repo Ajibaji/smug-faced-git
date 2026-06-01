@@ -31,7 +31,7 @@ fi
 
 if command -v pyenv > /dev/null 2>&1; then
   printHeading 'PIP-INSTALLS'
-  pip install --trusted-host files.pythonhosted.org pip_system_certs
+  pip install --trusted-host files.pythonhosted.org certifi pip_system_certs
 fi
 
 if ! command -v az > /dev/null 2>&1; then
