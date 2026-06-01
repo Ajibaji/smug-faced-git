@@ -25,13 +25,18 @@ function M.SetTheme(mode)
 
   CURRENT_THEME = string.upper(mode)
   vim.env.CURRENT_THEME = CURRENT_THEME
+  vim.g.LG_CONFIG_FILE = LG_CONFIG_FILE
 
   LG_CONFIG_FILE = HOME .. '/.config/lazygit/' .. string.upper(mode) .. '-config.yml'
   vim.env.LG_CONFIG_FILE = LG_CONFIG_FILE
+  vim.g.LG_CONFIG_FILE = LG_CONFIG_FILE
+  vim.g.lazygit_use_custom_config_file_path = 1
+  vim.g.lazygit_config_file_path = LG_CONFIG_FILE
 
   local batThemeRef = 'BAT_THEME_' .. CURRENT_THEME
   BAT_THEME = os.getenv(batThemeRef)
   vim.env.BAT_THEME = BAT_THEME
+  vim.g.BAT_THEME = BAT_THEME
 end
 
 -- function M.compare_to_clipboard()
