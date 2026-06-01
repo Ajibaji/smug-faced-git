@@ -10,16 +10,9 @@ function printHeading() {
 
 OS="$(source /etc/os-release; echo $NAME)"
 
-# bat
 if [[ ! -f $HOME/.cache/bat/themes.bin ]] && command -v bat > /dev/null 2>&1; then
   printHeading 'BAT-CACHE-BUILD'
   bat cache --build
-fi
-
-# bun
-if ! command -v bun > /dev/null 2>&1; then
-  printHeading 'INSTALLING-BUN'
-  npm i -g bun --loglevel error
 fi
 
 if command -v bun > /dev/null 2>&1; then
@@ -36,20 +29,29 @@ if command -v bun > /dev/null 2>&1; then
     typescript-language-server
 fi
 
-# dotnet
+if command -v pyenv > /dev/null 2>&1; then
+  printHeading 'PIP-INSTALLS'
+  pip install --trusted-host files.pythonhosted.org pip_system_certs
+fi
+
+if ! command -v az > /dev/null 2>&1; then
+  printHeading 'AZURE-CLI-INSTALL'
+  pip install azure-cli
+fi
+
+if command -v az > /dev/null 2>&1; then
+  printHeading 'AZURE-CLI-CONFIG-AND-UPGRADE'
+  az config set extension.dynamic_install_allow_preview=true
+  az extension add --name azure-devops --upgrade -y
+  az upgrade --all -y
+fi
+
 if command -v dotnet > /dev/null 2>&1; then
   printHeading 'DOTNET-TOOLS'
   dotnet tool install --global csharp-ls --version 0.20.0
   dotnet tool install --global csharpier
 fi
 
-# eget
-if command -v eget > /dev/null 2>&1; then
-  printHeading 'EGET-DEPS'
-  eget -D
-fi
-
-# OS-specific scripts go here
 if [[ "$OSTYPE" == "darwin"* ]]; then
   printHeading 'MAC-ONLY'
   echo "There are no MacOS-only post-install scripts yet"

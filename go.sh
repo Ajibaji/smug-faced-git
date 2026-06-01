@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ -f "/etc/os-release" ]]; then
+  export OS="$(source /etc/os-release; echo $NAME)"
+else
+  export OS="MacOS"
+fi
+
 function authGithub() {
   KEY_PATH="${HOME}/.ssh/github_id_ed25519"
   IS_LINUX=${IS_LINUX:-$(test $(uname -s) = "Linux" && echo 'true')}

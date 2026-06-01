@@ -54,14 +54,6 @@ if command -v apt > /dev/null 2>&1; then
     -y -qq
 fi
 
-if ! command -v fnm > /dev/null 2>&1; then
-  printHeading 'FNM/NODEJS'
-  curl -fssl https://fnm.vercel.app/install | bash -s -- --skip-shell
-  FNM_PATH="$HOME/.local/share/fnm"
-  export PATH="$FNM_PATH:$PATH"
-  git checkout -- .
-fi
-
 if ! command -v pyenv > /dev/null 2>&1; then
   printHeading 'INSTALLING-PYENV'
   curl -fsSL https://pyenv.run | bash
@@ -90,12 +82,6 @@ if ! command -v go > /dev/null 2>&1; then
   export GOBIN=${HOME}/go/bin
   export PATH=$PATH:${GOBIN}
   export PATH=$PATH:/usr/local/go/bin
-fi
-
-if ! command -v az > /dev/null 2>&1; then
-  printHeading 'AZURE-CLI'
-  printf "\n\installing azure-cli...\n"
-  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 
 if [[ ! -f ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf ]]; then
