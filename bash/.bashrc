@@ -33,7 +33,7 @@ unset BASH_PROFILE_LOADED
 #_________________________________________________________________________________HISTORY:
   # load this AFTER fzf
   source "$HOME/.config/bash/lib/history.sh"
-  bind -x '"\C-r": shell_history_search'
+  bind -x '"\C-r": "shell_history_search; [[ -v NOREADLINE ]] && unset NOREADLINE && kill -INT $$"'
 
 
 #_________________________________________________________________________BASH-COMPLETION:
