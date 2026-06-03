@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sketchybar --add event aerospace_workspace_change
+
 mapfile -t WORKSPACE_MONITOR_MAPPINGS < <( aerospace list-workspaces --all --format "%{workspace}:%{monitor-appkit-nsscreen-screens-id}" )
 
 label_for_ws() {
@@ -21,6 +23,8 @@ for MAPPING in "${WORKSPACE_MONITOR_MAPPINGS[@]}"; do
     sketchybar --add item space.$monitor.$workspace left \
         --set space.$monitor.$workspace \
             label="$(label_for_ws $workspace)" \
+            label.padding_left=10 \
+            label.padding_right=10 \
             background.color="$(get_colour ORANGE 90)" \
             background.drawing=off \
             click_script="aerospace workspace $workspace" \
