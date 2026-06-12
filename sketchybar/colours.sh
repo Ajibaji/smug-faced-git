@@ -2,10 +2,6 @@
 
 # Borrowed from https://github.com/Sinjhin/SketchyMenu
 
-# Font definitions
-FONT="SF Pro"
-NERD_FONT="JetBrainsMono Nerd Font Mono"
-
 colours=(
     # colour Palette
     BLACK=0xff1a1a1a

@@ -13,4 +13,5 @@ if [[  $windowsInWorkspaceCount -eq 1 ]] && [[ $( echo $windowsInWorkspace | awk
   aerospace fullscreen
 fi
 
-sketchybar --reload
+sketchybar --trigger aerospace_move_workspace_$(aerospace list-workspaces --focused) \
+  INFO=$(aerospace list-monitors --focused --format "%{monitor-appkit-nsscreen-screens-id}")

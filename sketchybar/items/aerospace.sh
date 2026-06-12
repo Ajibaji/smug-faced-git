@@ -1,41 +1,32 @@
 #!/usr/bin/env bash
 
-sketchybar --add event aerospace_workspace_change
+function add_aerospace_item() {
+  sketchybar --add event aerospace_workspace_change
 
-mapfile -t WORKSPACE_MONITOR_MAPPINGS < <( aerospace list-workspaces --all --format "%{workspace}:%{monitor-appkit-nsscreen-screens-id}" )
+  aerospace list-monitors --format "%{monitor-id} %{monitor-appkit-nsscreen-screens-id}" | while read -r aero_monitor sb_monitor; do
+    for sid in $(aerospace list-workspaces --monitor $aero_monitor); do
+      sketchybar --add event aerospace_move_workspace_$sid \
+                 --add item space."$sid" left \
+                 --subscribe space."$sid" aerospace_workspace_change aerospace_move_workspace_$sid  \
+                 --set space."$sid" \
+                       display=$sb_monitor \
+                       label="$sid" \
+                       background.color="$(get_colour ORANGE 90)" \
+                       background.corner_radius=10 \
+                       background.height=24 \
+                       background.drawing=off \
+                       padding_left=0 \
+                       padding_right=0 \
+                       script="$PLUGIN_DIR/aerospace.sh 'space.$sid' '$sb_monitor' '$AEROSPACE_STARTING_WORKSPACE'" \
+                       click_script="aerospace workspace $sid"
+    done
+  done
 
-label_for_ws() {
-    case "$1" in
-        1) echo "Teams";;
-        2) echo "Web";;
-        3) echo "Shell";;
-        4) echo "Remote";;
-        5) echo "Misc";;
-        6) echo "Meeting";;
-        *) echo "$1";;
-    esac
-}
-
-for MAPPING in "${WORKSPACE_MONITOR_MAPPINGS[@]}"; do
-    workspace=$(echo ${MAPPING} | cut -d: -f1)
-    monitor=$(echo ${MAPPING} | cut -d: -f2)
-
-    sketchybar --add item space.$monitor.$workspace left \
-        --set space.$monitor.$workspace \
-            label="$(label_for_ws $workspace)" \
-            label.padding_left=10 \
-            label.padding_right=10 \
-            background.color="$(get_colour ORANGE 90)" \
-            background.drawing=off \
-            click_script="aerospace workspace $workspace" \
-            script="$PLUGIN_DIR/aerospace.sh $monitor $workspace"\
-        --subscribe space.$monitor.$workspace aerospace_workspace_change display_change
-done
-
-sketchybar --add bracket space_items '/space\.*/' \
-    --set space_items \
-        # background.color="$(get_colour BLACK 40)" \
-        # background.corner_radius=12 \
-        # background.height=28 \
-        background.drawing=on
+  sketchybar --add bracket space_items '/space\.*/' \
+      --set space_items \
+          background.color="$(get_colour BLACK 40)" \
+          background.corner_radius=10 \
+          background.height=26 \
+          background.drawing=on
+  }
 }

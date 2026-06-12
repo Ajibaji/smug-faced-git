@@ -17,7 +17,7 @@ after-startup-command = [
 ]
 
 exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+    'sketchybar --trigger aerospace_workspace_change  FOCUSED=space.$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
 # Start AeroSpace at login
@@ -80,7 +80,7 @@ persistent-workspaces = [
     outer.left =       5
     outer.bottom =     5
     outer.top =        [
-        { monitor."Built-in Retina Display" = 5 },
+        { monitor."Built-in Retina Display" = 10 },
         45
     ]
     outer.right =      5
@@ -164,11 +164,11 @@ persistent-workspaces = [
     alt-shift-semicolon = 'mode service'
 
 [workspace-to-monitor-force-assignment]
-    "1" = '^built-in retina display$'
+    "1" = '^built-in.*'
     # "2|Web" = 'main'
     # "3|Shell" = ['VG3456', 'main']
     # "4|Remote" = ['VG3456', 'main']
-    # "5|Misc" = ['VG3456', 'main', '^built-in retina display$']
+    "5" = [3, 'main', '^built-in.*']
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"

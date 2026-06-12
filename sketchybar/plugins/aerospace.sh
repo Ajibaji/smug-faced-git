@@ -1,23 +1,23 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 
-MONITOR="$1" # This is from the item name, might be outdated
-WORKSPACE="$2"
-NUM_MONITORS=$(aerospace list-monitors --count)
-VISIBLE_WORKSPACES=""
+sid="$1"
+monitor="$2"
+starting_workspace="$3"
 
-for i in $(seq 1 $NUM_MONITORS); do
-  VISIBLE_WS=$(aerospace list-workspaces --visible --monitor $i)
-  VISIBLE_WORKSPACES="$VISIBLE_WORKSPACES $VISIBLE_WS"
-done
-
-if [[ " $VISIBLE_WORKSPACES " == *" $WORKSPACE "* ]]; then
-  sketchybar --set "$NAME" background.drawing=on
-else
-  sketchybar --set "$NAME" background.drawing=off
+if [[ "$SENDER" == "forced" ]]; then
+  [[ "$NAME" == "space.$starting_workspace" ]] && highlight_item=on
+  sketchybar --set "$NAME" \
+                   background.drawing=$highlight_item
 fi
 
-if [ "$(echo $NAME | cut -d. -f2)" != "$MONITOR" ]; then
-  sketchybar --rename "$NAME" "space.${MONITOR}.${WORKSPACE}"
+if [[ "$SENDER" == "aerospace_move_workspace"* ]]; then
+  sketchybar --set "$NAME" \
+                   display="$INFO"
 fi
 
-sketchybar --set "$NAME" associated_display=$MONITOR
+if [[ "$SENDER" == "aerospace_workspace_change" ]]; then
+  highlight_item=off
+  [[ "$sid" == "$FOCUSED" ]] && highlight_item=on
+  sketchybar --set "$NAME" \
+                   background.drawing=$highlight_item
+fi

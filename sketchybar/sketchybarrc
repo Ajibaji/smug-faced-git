@@ -7,6 +7,7 @@
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
+AEROSPACE_STARTING_WORKSPACE="$(aerospace list-workspaces --focused)"
 
 source "$CONFIG_DIR/colours.sh"
 
@@ -21,7 +22,12 @@ done
 # If you are looking for other colors, see the color picker:
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-sketchybar --bar position=top height=35 blur_radius=30 color=0x40000000
+sketchybar --bar position=top \
+                 height=40 \
+                 blur_radius=20 \
+                 color=$(get_color TRANSPARENT) \
+	               shadow=off \
+	               font_smoothing=off
 
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
@@ -40,6 +46,7 @@ default=(
   label.padding_left=4
   label.padding_right=12
 )
+
 sketchybar --default "${default[@]}"
 
 ##### Adding Left Items #####
@@ -51,6 +58,23 @@ sketchybar --default "${default[@]}"
 #            --add item front_app left \
 #            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
 #            --subscribe front_app front_app_switched
+
+add_aerospace_item
+
+sketchybar --add item chevron left \
+           --set chevron label.drawing=off \
+           --add item front_app left \
+           --set front_app icon.drawing=off \
+             script="$PLUGIN_DIR/front_app.sh" \
+           --subscribe front_app front_app_switched
+
+sketchybar --add event lock   "com.apple.screenIsLocked"   \
+           --add event unlock "com.apple.screenIsUnlocked" \
+           --add item         animator left                \
+           --set animator     drawing=off                  \
+                              updates=on                   \
+                              script="$PLUGIN_DIR/wake.sh" \
+           --subscribe        animator lock unlock
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
@@ -64,38 +88,39 @@ sketchybar --default "${default[@]}"
 # https://felixkratz.github.io/SketchyBar/config/events
 
 sketchybar --add item clock right \
-           --set clock update_freq=20 script="$PLUGIN_DIR/clock.sh" \
+           --set clock \
+                 update_freq=20 \
+                 script="$PLUGIN_DIR/clock.sh" \
+           --add item weather right \
+           --set weather \
+                 icon.drawing=off \
+	               background.color="$(get_color GREY 20)" \
+	               background.corner_radius=12 \
+	               background.height=28 \
+	               background.drawing=on \
+	               background.padding_left=0 \
+	               background.padding_right=0 \
+			           label.drawing=on \
+                 update_freq=300 \
+                 click_script="open -a Weather" \
+                 script="$PLUGIN_DIR/weather.sh" \
            --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --set volume \
+                 script="$PLUGIN_DIR/volume.sh" \
            --subscribe volume volume_change \
            --add item battery right \
-           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+           --set battery \
+                 update_freq=120 \
+                 script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
-
-add_aerospace_item left
-
-sketchybar --add item chevron left \
-           --set chevron label.drawing=off \
-           --add item front_app left \
-           --set front_app icon.drawing=off \
-             script="$PLUGIN_DIR/front_app.sh" \
-           --subscribe front_app front_app_switched
 
 sketchybar  --add item teams right \
             --set teams \
-            update_freq=10 \
-            script="$PLUGIN_DIR/irc.sh" \
-            background.padding_left=15  \
-            icon.font.size=20 \
+                  update_freq=10 \
+                  script="$PLUGIN_DIR/irc.sh" \
+                  background.padding_left=15 \
+                  icon.font.size=20 \
             --subscribe teams system_woke
-
-sketchybar --add event lock   "com.apple.screenIsLocked"   \
-           --add event unlock "com.apple.screenIsUnlocked" \
-           --add item         animator left                \
-           --set animator     drawing=off                  \
-                              updates=on                   \
-                              script="$PLUGIN_DIR/wake.sh" \
-           --subscribe        animator lock unlock
 
 sketchybar -m --add       event              bluetooth_change "com.apple.bluetooth.status" \
               --add       item headphones    right                                         \
@@ -103,12 +128,6 @@ sketchybar -m --add       event              bluetooth_change "com.apple.bluetoo
                                              script="$PLUGIN_DIR/bt.sh"                \
                                              icon.font.size=20                         \
               --subscribe headphones         bluetooth_change
-
-sketchybar --add event display_count_change "com.apple.screenParametersChanged" \
-           --add item display_count right \
-           --set display_count \
-                 script="sketchybar --reload" \
-           --subscribe display_count display_count_change
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
