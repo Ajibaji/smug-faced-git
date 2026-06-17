@@ -48,12 +48,6 @@
 # BUN
   export PATH="$HOME/.bun/bin:$PATH"
 
-# DOTNET
-  if [[ "$OS" != "NixOS" ]]; then
-    export DOTNET_ROOT=$HOME/.dotnet
-    export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-  fi
-
 # EGET
   if [[ "$OS" != "NixOS" ]]; then
     export EGET_BIN=$HOME/.local/eget/bin

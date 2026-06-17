@@ -48,8 +48,12 @@ fi
 
 if command -v dotnet > /dev/null 2>&1; then
   printHeading 'DOTNET-TOOLS'
-  dotnet tool install --global csharp-ls --version 0.20.0
-  dotnet tool install --global csharpier
+  sudo dotnet workload update
+  dotnet tool install --global Microsoft.Artifacts.CredentialProvider.NuGet.Tool
+  dotnet tool install --global roslyn-language-server --prerelease
+  dotnet tool install --global dotnet-depends
+  dotnet tool install --global try-convert
+  dotnet tool install --global upgrade-assistant
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

@@ -16,20 +16,6 @@ else
   fi
 fi
 
-if ! command -v dotnet > /dev/null 2>&1; then
-  printHeading 'INSTALLING-DOTNET'
-  printf "\n\ninstalling dotnet...\n"
-  curl -fsSLO https://dot.net/v1/dotnet-install.sh
-  chmod +x ./dotnet-install.sh 
-  ./dotnet-install.sh --channel 3.1
-  ./dotnet-install.sh --channel 8.0
-  ./dotnet-install.sh --channel 9.0
-  ./dotnet-install.sh --channel 10.0
-  rm dotnet-install.sh
-  export DOTNET_ROOT=$HOME/.dotnet
-  export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-fi
-
 if command -v pyenv > /dev/null 2>&1; then
   printHeading 'PYENV-INSTALLS'
   eval "$(pyenv init - --bash)"
@@ -62,4 +48,3 @@ if ! command -v bun > /dev/null 2>&1; then
   printHeading 'INSTALLING-BUN'
   npm i -g bun --loglevel error
 fi
-

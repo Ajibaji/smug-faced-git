@@ -54,6 +54,16 @@ if command -v apt > /dev/null 2>&1; then
     -y -qq
 fi
 
+if ! command -v dotnet > /dev/null 2>&1; then
+  printHeading 'INSTALLING-DOTNET'
+  printf "\n\ninstalling dotnet...\n"
+  curl -fsSLO https://dot.net/v1/dotnet-install.sh
+  chmod +x ./dotnet-install.sh
+  ./dotnet-install.sh --channel 8.0
+  ./dotnet-install.sh --channel 10.0
+  rm dotnet-install.sh
+fi
+
 if ! command -v pyenv > /dev/null 2>&1; then
   printHeading 'INSTALLING-PYENV'
   curl -fsSL https://pyenv.run | bash
