@@ -172,11 +172,10 @@ persistent-workspaces = [
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
-# check-further-callbacks = true
+check-further-callbacks = true
 run = [
-    "layout floating",
+    "layout tiling",
     'move-node-to-workspace "3"',
-    "exec-and-forget $HOME/.config/MacOS/max_window_resize.sh",
 ]
 
 [[on-window-detected]]
