@@ -1,0 +1,83 @@
+[update]
+channel = "stable"
+version_check = true
+manifest_check = true
+
+[theme]
+name = "catppuccin"
+auto_switch = true
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"
+
+[keys]
+#                                              general
+prefix = "ctrl+b"
+detach = "prefix+q"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+copy_mode = "prefix+["
+zoom = "prefix+z"
+resize_mode = "prefix+r"
+toggle_sidebar = "prefix+b"
+#                                           workspaces
+new_workspace = "prefix+shift+n"
+new_worktree = "prefix+shift+g"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+navigate_workspace_up = "up"
+navigate_workspace_down = "down"
+#                                                panes
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+swap_pane_left = "prefix+shift+h"
+swap_pane_down = "prefix+shift+j"
+swap_pane_up = "prefix+shift+k"
+swap_pane_right = "prefix+shift+l"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+last_pane = ""
+split_vertical = "prefix+v"
+split_horizontal = "prefix+s"
+close_pane = "prefix+x"
+remote_image_paste = "ctrl+v"
+#                                                 tabs
+new_tab = "prefix+c"
+rename_tab = "prefix+shift+t"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+switch_tab = "prefix+1..9"
+close_tab = "prefix+shift+x"
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "pane"
+command = "lazygit"
+description = "run lazygit"
+
+[ui]
+# sidebar_width = 32
+# sidebar_min_width = 18
+# sidebar_max_width = 36
+sidebar_collapsed_mode = "compact"
+mouse_capture = true
+host_cursor = "auto"
+right_click_passthrough_modifier = ""
+redraw_on_focus_gained = true
+mouse_scroll_lines = 3
+confirm_close = true
+prompt_new_tab_name = true
+pane_borders = true
+pane_gaps = true
+show_agent_labels_on_pane_borders = false
+hide_tab_bar_when_single_tab = false
+agent_panel_sort = "spaces"
+
+[ui.sound]
+enabled = true
+
