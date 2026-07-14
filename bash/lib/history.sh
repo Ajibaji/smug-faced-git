@@ -25,7 +25,7 @@ __create_histdb() {
 }
 
 precmd_bash_history_sqlite() {
-  if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]]; then
+  if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" && $LAST_COMMAND != "get-current-theme" ]]; then
 	  sqlite3 "$HISTDB" <<-EOD
 	  	INSERT INTO command (shell, command, cwd, started, ended, return)
 	  	VALUES (

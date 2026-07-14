@@ -40,6 +40,18 @@ source "$HOME/.config/shell/lib/colours.sh"
       --exec nvim --remote-send ":lua utils.tt($nvimTheme)<CR>" --server {}
   }
 
+  function set-herdr-pane-theme () {
+    for paneId in $(herdr pane list | jq -r '.result.panes[].pane_id'); do
+      if [[ "$(herdr pane process-info --pane $paneId | jq -r '.result.process_info.foreground_processes[0].name')" == "nvim" ]]; then
+        herdr pane send-keys $paneId esc
+        herdr pane send-text $paneId ":lua utils.tt($nvimTheme)"
+      else
+        herdr pane send-text $paneId "get-current-theme"
+      fi
+      herdr pane send-keys $paneId enter
+    done
+  }
+
   function set-os-theme () {
     if [[ "$OS" == "MacOS" ]]; then
       osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
@@ -70,5 +82,6 @@ source "$HOME/.config/shell/lib/colours.sh"
     set-session-theme
     set-nvim-theme
     set-terminal-theme
+    set-herdr-pane-theme
     # wait
   }
