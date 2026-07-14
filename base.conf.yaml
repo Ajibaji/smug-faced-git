@@ -21,6 +21,7 @@
     ~/.config/git-config: git-config
     ~/.config/gram: gram
     ~/.config/helix: helix
+    ~/.config/herdr: herdr
     ~/.config/karabiner: karabiner
     ~/.config/kitty: kitty
     ~/.config/lazygit: lazygit
@@ -50,6 +51,7 @@
     ~/.gitconfig: git-config/.gitconfig
     ~/.gitignore_global: git-config/.gitignore_global
     ~/.hushlogin: ./.hushlogin
+    ~/.pi/agent/settings.json: pi/settings.json
     ~/.tflint.hcl: tflint/.tflint.hcl
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zprofile: zsh/.zprofile
