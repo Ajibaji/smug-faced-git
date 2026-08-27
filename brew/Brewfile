@@ -7,10 +7,10 @@ brew "ca-certificates"
 brew "chafa"
 brew "cmake"
 brew "coreutils"
-brew "derailed/k9s/k9s"
+brew "derailed/k9s/k9s", trusted: true
 brew "displayplacer"
-brew "FelixKratz/formulae/borders"
-brew "FelixKratz/formulae/sketchybar"
+brew "FelixKratz/formulae/borders", trusted: true
+brew "FelixKratz/formulae/sketchybar", trusted: true
 brew "findutils"
 brew "gawk"
 brew "gcc"
@@ -26,7 +26,7 @@ brew "go"
 brew "gping"
 brew "gradle"
 brew "grep"
-brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform", trusted: true
 brew "hdf5"
 brew "helm"
 brew "herdr"
@@ -36,14 +36,14 @@ brew "luajit-openresty"
 brew "luajit"
 brew "luarocks"
 brew "make"
-brew "mveritym/mel/kubedecode"
+brew "mveritym/mel/kubedecode", trusted: true
 brew "neovim"
 brew "nmap"
 brew "openssl"
 brew "parallel"
 brew "podman"
 brew "poppler"
-brew "powershell/tap/powershell"
+brew "powershell/tap/powershell", trusted: true
 brew "proxychains-ng"
 brew "pyenv"
 brew "resvg"
@@ -51,7 +51,7 @@ brew "ruby"
 brew "sevenzip"
 brew "showkey"
 brew "siege"
-brew "snyk/tap/snyk"
+brew "snyk/tap/snyk", trusted: true
 brew "socat"
 brew "sqlite3"
 brew "stern"
@@ -92,6 +92,7 @@ cask "visual-studio-code"
 cask "windows-app"
 cask "xquartz"
 tap "azure/functions", trusted: true
+tap "barutsrb/tap", trusted: true
 tap "derailed/k9s", trusted: true
 tap "FelixKratz/formulae", trusted: true
 tap "hashicorp/tap", trusted: true
