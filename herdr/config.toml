@@ -1,13 +1,23 @@
+onboarding = false
 [update]
 channel = "stable"
 version_check = true
 manifest_check = true
 
 [theme]
-name = "catppuccin"
+# Use "terminal" so Herdr inherits the host terminal's ANSI palette.
+# When kitty/ghostty runs nightfox (dark) or dawnfox (light),
+# Herdr automatically picks up those colors.
+name = "terminal"
 auto_switch = true
-light_name = "catppuccin-latte"
-dark_name = "catppuccin"
+
+[theme.custom]
+# Transparent panel background — blends with terminal bg
+# (nightfox #192330 / dawnfox #faf4ed)
+panel_bg = "reset"
+
+[terminal]
+shell_mode = "auto"
 
 [keys]
 #                                              general
@@ -19,6 +29,7 @@ copy_mode = "prefix+["
 zoom = "prefix+z"
 resize_mode = "prefix+r"
 toggle_sidebar = "prefix+b"
+settings = "prefix+,"
 #                                           workspaces
 new_workspace = "prefix+shift+n"
 new_worktree = "prefix+shift+g"
