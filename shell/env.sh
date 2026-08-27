@@ -71,7 +71,7 @@
     --height=~85% \
     --multi \
     --pointer=\">\" \
-    --marker=\"+\" \
+    --marker=\"->\" \
     --preview-window 'right,60%,border,+{2}+3/3,~3' \
     --input-border --list-border \
   "
