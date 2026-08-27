@@ -23,13 +23,17 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 ├── base.conf.yaml           # Symlink definitions (cross-platform)
 ├── win.conf.yaml            # Windows-specific config
 ├── run-macos.sh             # macOS-specific setup (Homebrew, defaults)
-├── run-linux.sh             # Linux-specific setup (apt repos, packages)
-├── run-common.sh            # Cross-platform post-link setup
-├── run-not-nixos.sh         # Setup for non-NixOS Linux systems
-├── post-run.sh              # Post-install tasks
+├── run-linux.sh             # Linux-specific setup (apt packages, toolchains)
+├── run-common.sh            # Cross-platform setup (pyenv, eget, fnm, bun)
+├── post-run.sh              # Post-install tasks (bun globals, dotnet tools, az cli)
+├── .hushlogin               # Suppress macOS login banner
+├── k8s-plugins.txt          # kubectl plugins list (krew)
+├── README.md                # Repository readme
+├── schema-ado-pipelines-custom.json  # Azure DevOps pipelines schema
+├── user-dirs.dirs           # XDG user directories (Linux)
+├── user-dirs.locale         # XDG locale setting (Linux)
 │
 ├── dotbot/                  # Git submodule - Dotbot core
-├── dotbot-brew/             # Git submodule - Homebrew plugin
 │
 └── <app>/                   # Per-application config directories
     └── config files...
@@ -40,18 +44,18 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 | Directory | Purpose |
 |-----------|---------|
 | `nvim/` | Neovim config (Lua, Lazy.nvim plugin manager) |
-| `zsh/` | Zsh shell config (`.zshrc`, `.zprofile`, `.zshenv`, `.zshroot`) |
-| `bash/` | Bash shell config |
+| `zsh/` | Zsh shell config (`.zshrc`, `.zprofile`, `.zshenv`) |
+| `bash/` | Bash shell config (`.bashrc`, `.bash_profile`) |
 | `shell/` | Shared shell config (env vars, aliases, functions, theme) |
 | `aerospace/` | AeroSpace tiling window manager (macOS) |
+| `amethyst/` | Amethyst tiling window manager (macOS) |
 | `kitty/` | Kitty terminal config |
 | `ghostty/` | Ghostty terminal config |
 | `lazygit/` | LazyGit config (with light/dark themes) |
-| `git-config/` | Git global config and ignore patterns |
+| `git-config/` | Git global config (`.gitconfig`, `.gitignore_global`) |
 | `brew/` | Homebrew Brewfile (macOS packages) |
 | `starship/` | Starship prompt config |
 | `yazi/` | Yazi file manager config |
-| `crush/` | Crush AI assistant config |
 | `tmux/` | Tmux terminal multiplexer config |
 | `delta/` | Delta diff viewer config |
 | `atuin/` | Atuin shell history config |
@@ -59,39 +63,70 @@ This is a **dotfiles configuration repository** that manages terminal and develo
 | `zed/` | Zed editor config |
 | `nushell/` | Nushell config |
 | `karabiner/` | Karabiner-Elements keyboard remapping (macOS) |
+| `keyboard/` | Custom keyboard layout (`.bundle` file) |
 | `sketchybar/` | Sketchybar status bar (macOS) |
 | `lsd/` | LSD (LSDeluxe) file listing config |
 | `bat/` | Bat (cat replacement) config |
 | `raycast/` | Raycast launcher config (macOS) |
-| `gram/` | Gram config |
+| `gram/` | Gram editor config |
 | `neovide/` | Neovide GUI config |
 | `powershell/` | PowerShell config |
+| `pi/` | Pi coding agent settings (`settings.json`) |
+| `herdr/` | Herdr terminal multiplexer config |
+| `eget/` | Eget binary manager (custom fork, built from source) |
+| `ble/` | Bash Line Editor config (`.blerc`) |
+| `tflint/` | TFLint Terraform linter config |
+| `neofetch/` | Neofetch system info config |
+| `spotifyd/` | Spotifyd daemon config |
+| `MacOS/` | macOS scripts (theme toggle, window resize, AppleScripts) |
+| `kitty_pi_markdown/` | Kitty terminal pi markdown renderer |
+| `winget/` | Windows Package Manager config |
 
 ## How Dotbot Works
 
-1. **`base.conf.yaml`** defines symlinks from `~/.config/<app>` → repository directories
-2. **`run-macos.sh`** runs Homebrew via `Brewfile` and configures macOS defaults
-3. **`run-linux.sh`** runs Linux-specific setup (apt repos, packages, tools)
-4. **`run-common.sh`** runs cross-platform setup tasks
-5. **`run-not-nixos.sh`** runs setup for non-NixOS systems
+1. **`base.conf.yaml`** defines symlinks from `~/.config/<app>` → repository directories and individual file mappings
+2. **`run-macos.sh`** installs Homebrew, runs `Brewfile`, sets macOS defaults, symlinks GNU coreutils
+3. **`run-linux.sh`** installs apt packages, pyenv, rustup, go, dotnet, and JetBrains Mono font
+4. **`run-common.sh`** clones private repo, installs pyenv versions, builds eget, sets up fnm/node, installs bun
+5. **`post-run.sh`** installs bun globals, pip packages, az cli, dotnet tools, shell completions
 
 Symlinks are created with `force: true` and `relink: true`, meaning they will overwrite existing files.
+
+### Notable Symlink Mappings
+
+Beyond `~/.config/<app>` directories, these individual files are linked:
+
+- `~/.aerospace.toml` → `aerospace/.aerospace.toml`
+- `~/.bashrc` → `bash/.bashrc`
+- `~/.bash_profile` → `bash/.bash_profile`
+- `~/.blerc` → `ble/.blerc`
+- `~/.eget.toml` → `eget/.eget.toml`
+- `~/.gitconfig` → `git-config/.gitconfig`
+- `~/.gitignore_global` → `git-config/.gitignore_global`
+- `~/.hushlogin` → `./.hushlogin`
+- `~/.pi/agent/settings.json` → `pi/settings.json`
+- `~/.tflint.hcl` → `tflint/.tflint.hcl`
+- `~/.tmux.conf` → `tmux/.tmux.conf`
+- `~/.zprofile` → `zsh/.zprofile`
+- `~/.zshenv` → `zsh/.zshenv`
+- `~/.zshrc` → `zsh/.zshrc`
 
 ## Shell Configuration
 
 The shell setup uses a layered approach:
 
 ```
-zsh/.zshenv    → Loaded first (minimal, sets XDG paths)
-zsh/.zprofile  → Login shell setup
-zsh/.zshrc     → Interactive shell (sources .zshroot)
-zsh/.zshroot   → Common interactive config
-shell/env.sh   → Environment variables (PATH, tool configs)
-shell/lib/aliases.sh   → Shell aliases (bat, docker, git, k8s, vim)
-shell/lib/functions.sh → Shell functions
-shell/lib/theme.sh     → Theme switching logic
-shell/lib/colours.sh   → Colour definitions
-shell/lib/env_mac.sh   → macOS-specific env vars
+zsh/.zshenv       → Loaded first (every shell, sets colour vars)
+zsh/.zprofile     → Login shell setup
+zsh/.zshrc        → Interactive shell (sources .zshroot)
+zsh/.zshroot      → Common interactive config
+shell/env.sh      → Environment variables (PATH, tool configs, OS detection)
+shell/salad-source.sh → Sourced by rc files (imports aliases, theme, functions, secrets)
+shell/lib/aliases.sh    → Shell aliases
+shell/lib/functions.sh  → Shell functions
+shell/lib/theme.sh      → Theme switching logic
+shell/lib/colours.sh    → Colour definitions
+shell/lib/env_mac.sh    → macOS-specific env vars
 shell/lib/env_colours.sh → Colour-related env vars
 ```
 
@@ -100,19 +135,29 @@ shell/lib/env_colours.sh → Colour-related env vars
 - `EDITOR=nvim`
 - `CURRENT_THEME` - Controls light/dark theme switching (used by lazygit, delta, nvim)
 - `XDG_CONFIG_HOME=$HOME/.config`
+- `OS` - Detected from `/etc/os-release` or set to `MacOS`
+- `MANPAGER` - Uses `bat` for man page rendering
 
 ### Notable Aliases
 
 ```bash
-v='nvim'           # Neovim
-lg='lazygit'       # LazyGit
-kk='kubectl'       # Kubernetes
+v()            # function wrapping nvim (re-reads theme on exit)
+vim='v'        # Neovim via function
+lg='lazygit'   # LazyGit
+kk='kubectl'   # Kubernetes
 tt='toggle-theme'  # Theme switcher
 gst='git status'
 gco='git checkout'
+cat='bat -pp'  # Bat as cat replacement
+cls='clear -x' # Clear screen
+git='git --config-env=delta.features=CURRENT_THEME'  # Theme-aware git diffs
 ```
 
-On macOS, GNU coreutils are aliased to replace BSD versions (e.g., `ls='gls'`, `sed='gsed'`).
+On macOS, GNU coreutils are symlinked to `/usr/local/bin/` to replace BSD versions.
+
+### Private Configuration
+
+The repo references a private companion repo (`seeshellontheseasaw`) that is cloned to `~/seeshellontheseasaw` and sourced via `shell/salad-source.sh` for secrets/private config.
 
 ## Neovim Configuration
 
@@ -143,15 +188,14 @@ Theme is controlled by `CURRENT_THEME` env var (values: `DARK` or `LIGHT`).
 ## Git Configuration
 
 - Uses **delta** for diffs with side-by-side view
-- Theme-aware diff colors via `delta.features` env var
+- Theme-aware diff colors via `git --config-env=delta.features=CURRENT_THEME` alias
 - Global gitignore at `git-config/.gitignore_global`
 
 ## Submodules
 
-The repo includes these Git submodules:
+The repo includes this Git submodule:
 
-- `dotbot/` - Core Dotbot framework
-- `dotbot-brew/` - Homebrew plugin for Dotbot
+- `dotbot/` - Core Dotbot framework (v1.19.2+)
 
 To update submodules:
 ```bash
@@ -162,21 +206,21 @@ git submodule update --init --recursive
 
 ### macOS
 
-- Uses **Homebrew** for package management (`brew/Brewfile`)
+- Uses **Homebrew** for package management (`brew/Brewfile` - 104 entries)
 - **AeroSpace** tiling window manager with vim-like keybindings
-- **Sketchybar** status bar
+- **Sketchybar** status bar with borders (FelixKratz/borders)
 - **Karabiner-Elements** for keyboard remapping
 - **Raycast** launcher
+- **Gram** as default text editor for Finder
 - Extensive `defaults write` commands for system preferences
-- GNU coreutils installed and aliased to replace BSD versions
+- GNU coreutils symlinked to `/usr/local/bin/` to replace BSD versions
+- Notable casks: Ghostty, Neovide, Aerospace, Raycast, Visual Studio Code, Spotify
 
 ### Linux
 
-- Uses **apt** for package management
-- Installs from run-linux.sh: cargo/rust, fnm/node, dotnet
-- Sets up Docker, Kubernetes, Azure CLI apt repositories
-- Kitty terminal installed manually (not via apt)
-- NixOS has separate handling via `run-linux-nixos.sh`
+- Uses **apt** for package management (build-essential, dev libraries, tools)
+- Installs from `run-linux.sh`: pyenv, cargo/rust, go, dotnet (.NET 8.0 + 10.0), JetBrains Mono Nerd Font
+- No separate NixOS script exists; `dotbot-run.sh` exits early for NixOS with a message
 
 ### Windows
 
@@ -187,8 +231,7 @@ git submodule update --init --recursive
 
 ### WSL
 
-- Sets `KITTY_DISABLE_WAYLAND=1`
-- Configures `DISPLAY` for X11 forwarding
+- PATH is cleaned of `/mnt/` entries during Linux setup
 
 ## Adding New Configurations
 
@@ -224,12 +267,19 @@ Edit `shell/env.sh`
 
 Edit `shell/lib/functions.sh`
 
+### Add a new tool via eget
+
+Edit `eget/.eget.toml` (binary manager config at `~/.eget.toml`)
+
 ## Gotchas
 
 1. **Submodules must be initialized** before running Dotbot - `dotbot-run.sh` handles this automatically
 2. **Symlinks are forcefully overwritten** - existing files at target paths will be replaced
-3. **macOS coreutils aliases** may break scripts expecting BSD behavior - check `shell/lib/aliases.sh`
+3. **macOS coreutils** are symlinked to `/usr/local/bin/` which may affect scripts expecting BSD behavior
 4. **Theme switching** requires `CURRENT_THEME` env var to be set before launching apps
 5. **Neovim plugins** are managed by Lazy.nvim, not system packages
 6. **git stash** is automatically used during `dotbot-run.sh` if there are uncommitted changes
-7. **NixOS** has separate handling - detected via `$OS` variable and uses `run-linux-nixos.sh`
+7. **NixOS** is detected via `$OS` and `dotbot-run.sh` exits early with a message (no NixOS-specific scripts)
+8. **Eget** is built from a bundled source fork (not installed via package manager)
+9. **Private repo** (`seeshellontheseasaw`) is sourced at shell startup if present - not included here
+10. **Pi agent** settings are symlinked to `~/.pi/agent/settings.json`
