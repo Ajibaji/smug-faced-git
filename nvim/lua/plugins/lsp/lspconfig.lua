@@ -1,11 +1,5 @@
 return {
   {
-    'Decodetalkers/csharpls-extended-lsp.nvim',
-    cond = function()
-      return not os.getenv('OS') == 'NixOS'
-    end
-  },
-  {
     'neovim/nvim-lspconfig',
     cmd = 'Mason',
     event = 'BufReadPre',
@@ -82,7 +76,8 @@ return {
 
       local servers = {
         -- angularls = {},
-        bashls = {},
+        -- bashls = {},
+        csharp_ls = {},
         docker_compose_language_service = {},
         dockerls = {},
         gopls = {},
@@ -109,8 +104,7 @@ return {
         neocmake = {},
         pylsp = {},
         ruff = {},
-        shellharden = {},
-        -- copilot = {}, -- i think this is included in copilot-cmp
+        shfmt = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
@@ -185,8 +179,7 @@ return {
 
       if not os.getenv('OS') == 'NixOS' then
         vim.fn.extend(servers, {
-          csharp_ls = {},
-          powershell_es = {}
+          powershell_es = {},
         })
       end
 
@@ -201,24 +194,11 @@ return {
         ensure_installed = ensure_installed,
       })
 
-      -- vim.fn.extend(servers, {
-      --   msbuild_project_tools_server = {
-      --     cmd = {
-      --       'dotnet',
-      --       os.getenv 'HOMEPATH' .. '/.vscode/extensions/tintoy.msbuild-project-tools-0.6.3/language-server/MSBuildProjectTools.LanguageServer.Host.dll',
-      --     },
-      --   },
-      -- })
-
       require('mason-lspconfig').setup({
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            if server_name == 'csharp_ls' then
-              server.capabilities.textDocument.definition = require('csharpls_extended').hander
-              server.capabilities.textDocument.typeDefinition = require('csharpls_extended').hander
-            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -268,7 +248,7 @@ return {
             return '[' .. severity .. '] - ', hlgroup
           end,
           suffix = function(diagnostic)
-            return " [" .. diagnostic.source .. "]", "DiagnosticUnnecessary"
+            return ' [' .. diagnostic.source .. ']', 'DiagnosticUnnecessary'
           end,
           scope = 'line',
           offset_x = 10,
