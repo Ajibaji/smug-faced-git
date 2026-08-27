@@ -7,5 +7,5 @@ fork = true
 tabs = false
 
 [font]
-normal = ["JetBrainsMono NF"]
-size = 13
+normal = ["JetBrains Mono"]
+size = 14
