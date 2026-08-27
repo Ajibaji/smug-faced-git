@@ -1,31 +1,38 @@
-macos-titlebar-style = tabs
+# macos-titlebar-style = tabs
+# macos-titlebar-style = hidden
 macos-window-buttons = hidden
 window-theme = system
 macos-icon = retro
 macos-titlebar-proxy-icon = hidden
-window-subtitle = "working-directory"
+# window-subtitle = "working-directory"
+window-subtitle = false
 window-height = 80
 window-width = 210
 quit-after-last-window-closed = true
-title = ""
+# title = ""
 quit-after-last-window-closed = true
 window-inherit-font-size = false
-font-family = "JetBrainsMono Nerd Font Mono"
+font-family = "JetBrains Mono Regular"
+font-family-bold = "JetBrains Mono Bold"
+# font-family-italic = "JetBrains Mono Italic"
+# font-family-bold-italic = "JetBrains Mono Bold Italic"
 font-size = 15
-# font-thicken = true
-# font-thicken-strength = 100
-# adjust-cell-height = 20%
+font-thicken = false
+window-title-font-family = "JetBrains Mono Regular"
+# font-thicken-strength = 10
+# adjust-cell-height = 10%
+macos-window-shadow = false
 macos-option-as-alt = true
 copy-on-select = clipboard
-background-opacity = 0.9
-background-blur = 20
+# background-opacity = 0.9
+# background-blur = 20
 # theme = light:Blue Dolphin,dark:Ciapre
 # theme = light:Violet Light,dark:TokyoNight Storm
 # theme = light:catppuccin_latte,dark:catppuccin_frappe
 theme = light:Dawnfox,dark:Nightfox
 window-save-state = always
 keybind = cmd+f=write_scrollback_file:open
-keybind = global:cmd+backquote=toggle_quick_terminal
+# keybind = global:cmd+backquote=toggle_quick_terminal
 keybind = cmd+up=jump_to_prompt:-1
 keybind = cmd+down=jump_to_prompt:1
 keybind = cmd+enter=new_split:auto
@@ -40,3 +47,9 @@ keybind = shift+cmd+minus=resize_split:left,10
 keybind = shift+cmd+plus=resize_split:right,10
 auto-update = check
 auto-update-channel = stable
+window-show-tab-bar = auto
+# window-decoration = none
+# window-colorspace = srgb
+bold-is-bright = true
+# alpha-blending = native
+window-padding-color = extend
