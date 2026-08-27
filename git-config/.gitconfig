@@ -97,7 +97,7 @@
     	bold cyan => syntax "#9dd7ef", \
     	bold yellow => syntax "#eacfa9"
     # Should match the name of the bat theme
-    syntax-theme = Catppuccin Latte
+    syntax-theme = Dawnfox
 
 [delta "DARK"]
     blame-palette = "#303446 #292c3c #232634 #414559 #51576d"
@@ -128,4 +128,4 @@
     	bold cyan => syntax "#546b7a", \
     	bold yellow => syntax "#6f6860"
     # Should match the name of the bat theme
-    syntax-theme = Catppuccin Frappe
+    syntax-theme = Nightfox

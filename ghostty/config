@@ -1,5 +1,6 @@
 macos-titlebar-style = tabs
 macos-window-buttons = hidden
+window-theme = system
 macos-icon = retro
 macos-titlebar-proxy-icon = hidden
 window-subtitle = "working-directory"
@@ -20,7 +21,8 @@ background-opacity = 0.9
 background-blur = 20
 # theme = light:Blue Dolphin,dark:Ciapre
 # theme = light:Violet Light,dark:TokyoNight Storm
-theme = light:Catppuccin Latte,dark:Catppuccin Frappe
+# theme = light:catppuccin_latte,dark:catppuccin_frappe
+theme = light:Dawnfox,dark:Nightfox
 window-save-state = always
 keybind = cmd+f=write_scrollback_file:open
 keybind = global:cmd+backquote=toggle_quick_terminal

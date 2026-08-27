@@ -4,9 +4,9 @@
   "defaultModel": "claude-opus-4.6",
   "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,
-  "theme": "catppuccin-tui-latte/catppuccin-tui-frappe",
+  "theme": "dawnfox/nightfox",
   "packages": [
     "npm:@ogulcancelik/pi-herdr",
-    "npm:pi-catppuccin-tui"
+    "npm:@juancrg90/nightfox-themes"
   ]
 }

@@ -1,98 +1,48 @@
 return {
-  -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is.
-  --   --
-  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000, -- Make sure to load this before all the other start plugins.
-  --   opts = {
-  --     style = 'storm',
-  --     light_style = 'day',
-  --     transparent = true,
-  --     styles = {
-  --       comments = { italic = true },
-  --       -- Background styles. Can be "dark", "transparent" or "normal"
-  --       sidebars = 'normal', -- style for sidebars, see below
-  --       floats = 'normal', -- style for floating windows
-  --     },
-  --   },
-  --   init = function()
-  --     -- Load the colorscheme here.
-  --     -- Like many other themes, this one has different styles, and you could load
-  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  --     vim.cmd.colorscheme('tokyonight')
-  --
-  --     -- You can configure highlights by doing something like:
-  --     -- vim.cmd.hi('Comment gui=none')
-  --
-  --     -- custom colours
-  --   end,
-  -- },
-  'catppuccin/nvim',
-  name = 'catppuccin',
-  priority = 1000, -- Make sure to load this before all the other start plugins.
+  'EdenEast/nightfox.nvim',
+  priority = 1000, -- Make sure to load this before all the other start plugins
   opts = {
-    flavour = 'auto', -- latte, frappe, macchiato, mocha
-    background = { -- :h background
-      light = 'latte',
-      dark = 'frappe',
-    },
-    transparent_background = false, -- disables setting the background color.
-    float = {
-      transparent = false, -- enable transparent floating windows
-      solid = vim.g.neovide, -- use solid styling for floating windows, see |winborder|
-    },
-    show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-    term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-    dim_inactive = {
-      enabled = false, -- dims the background color of inactive window
-      shade = 'dark',
-      percentage = 0.15, -- percentage of the shade to apply to the inactive window
-    },
-    no_italic = false, -- Force no italic
-    no_bold = false, -- Force no bold
-    no_underline = false, -- Force no underline
-    styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-      comments = { 'italic' }, -- Change the style of comments
-      conditionals = { 'italic' },
-      loops = {},
-      functions = {},
-      keywords = {},
-      strings = {},
-      variables = {},
-      numbers = {},
-      booleans = {},
-      properties = {},
-      types = {},
-      operators = {},
-      -- miscs = {}, -- Uncomment to turn off hard-coded styles
-    },
-    lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
-      virtual_text = {
-        errors = { 'italic' },
-        hints = { 'italic' },
-        warnings = { 'italic' },
-        information = { 'italic' },
-        ok = { 'italic' },
+    options = {
+      -- Compiled file's destination location
+      transparent = false, -- Disable setting background
+      terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+      dim_inactive = false, -- Non focused panes set to alternative background
+      module_default = true, -- Default enable value for modules
+      colorblind = {
+        enable = false, -- Enable colorblind support
+        simulate_only = false, -- Only show simulated colorblind colors and not diff shifted
+        severity = {
+          protan = 0, -- Severity [0,1] for protan (red)
+          deutan = 0, -- Severity [0,1] for deutan (green)
+          tritan = 0, -- Severity [0,1] for tritan (blue)
+        },
       },
-      underlines = {
-        errors = { 'underline' },
-        hints = { 'underline' },
-        warnings = { 'underline' },
-        information = { 'underline' },
-        ok = { 'underline' },
+      styles = { -- Style to be applied to different syntax groups
+        comments = 'italic', -- Value is any valid attr-list value `:help attr-list`
+        conditionals = 'italic',
+        constants = 'NONE',
+        functions = 'NONE',
+        keywords = 'NONE',
+        numbers = 'NONE',
+        operators = 'NONE',
+        strings = 'NONE',
+        types = 'NONE',
+        variables = 'NONE',
       },
-      inlay_hints = {
-        background = true,
+      inverse = { -- Inverse highlight for different types
+        match_paren = false,
+        visual = false,
+        search = false,
+      },
+      modules = { -- List of various plugins and additional options
+        -- ...
       },
     },
-    color_overrides = {},
-    custom_highlights = {},
-    default_integrations = true,
-    auto_integrations = true,
+    palettes = {},
+    specs = {},
+    groups = {},
   },
   init = function()
-    vim.cmd.colorscheme('catppuccin-nvim')
+    utils.SetTheme(string.lower(CURRENT_THEME))
   end,
 }
