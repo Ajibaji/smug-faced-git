@@ -54,7 +54,7 @@ source "$HOME/.config/shell/lib/colours.sh"
 
   function set-os-theme () {
     if [[ "$OS" == "MacOS" ]]; then
-      osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"
+      osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $@"  > /dev/null 2>&1
     else
       echo "Not yet implemented for this linux DE - $OS"
     fi

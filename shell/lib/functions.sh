@@ -132,6 +132,13 @@ fi
     ls -lah "${@}" | grep -v '^d' | grep -v '^t' | sort -f -k 9
   }
 
+# BTM
+  function run_btm () {
+    local theme='default'
+    [[ $CURRENT_THEME == 'LIGHT' ]] && theme='default-light'
+    \btm --theme $theme
+  }
+
 # KUBERNETES
   # list all resources
   function kkgetall () {

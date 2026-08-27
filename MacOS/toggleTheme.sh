@@ -17,6 +17,8 @@
 #            - toggle theme in all current nvim sessions
 #            - update all theme-related env-vars in all current ghostty terminals
 
+export PATH=$PATH:$HOME/.local/eget/bin
+
 if [[ -z "$OS" ]]; then
   if [[ -f "/etc/os-release" ]]; then
     export OS="$(source /etc/os-release; echo $NAME)"
@@ -27,4 +29,3 @@ fi
 
 source "$HOME/.config/shell/lib/theme.sh"
 toggle-theme
-echo $CURRENT_THEME mode

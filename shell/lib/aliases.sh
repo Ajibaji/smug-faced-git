@@ -14,6 +14,9 @@ fi
 # BAT ALIASES
   alias cat='bat -pp'
 
+# BTM ALIASES
+  alias btm='run_btm'
+
 # DOCKER ALIASES
   # alias docker='lima nerctl'
   alias dokcer='docker'

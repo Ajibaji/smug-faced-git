@@ -19,6 +19,7 @@ function M.tt(arg)
 end
 
 function M.SetTheme(mode)
+  mode = mode or 'light'
   local theme = mode == 'dark' and DarkTheme or LightTheme
   -- vim.api.nvim_set_option_value('background', mode, { scope = 'global' })
   vim.cmd.colorscheme(theme)
