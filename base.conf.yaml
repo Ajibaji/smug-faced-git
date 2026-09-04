@@ -27,6 +27,7 @@
     ~/.config/lazygit: lazygit
     ~/.config/lsd: lsd
     ~/.config/MacOS: MacOS
+    ~/.config/mdfried: mdfried
     ~/.config/neofetch: neofetch
     ~/.config/neovide: neovide
     ~/.config/nushell: nushell
