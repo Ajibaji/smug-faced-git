@@ -74,3 +74,5 @@
 
 ["Schniz/fnm"]
 #  fnm completions --shell bash > ~/.local/share/bash-completion/completions/fnm
+
+["benjajaja/mdfried"]
