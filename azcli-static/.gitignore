@@ -1,0 +1,5 @@
+build/
+dist/
+launcher/payload.tar.xz
+launcher/payload.id
+*.exe
