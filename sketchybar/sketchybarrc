@@ -89,7 +89,7 @@ sketchybar --add event lock   "com.apple.screenIsLocked"   \
 
 sketchybar --add item clock right \
            --set clock \
-                 update_freq=20 \
+                 update_freq=5 \
                  script="$PLUGIN_DIR/clock.sh" \
            --add item weather right \
            --set weather \
@@ -101,7 +101,7 @@ sketchybar --add item clock right \
 	               background.padding_left=0 \
 	               background.padding_right=0 \
 			           label.drawing=on \
-                 update_freq=300 \
+                 update_freq=5 \
                  click_script="open -a Weather" \
                  script="$PLUGIN_DIR/weather.sh" \
            --add item volume right \
