@@ -1,4 +1,4 @@
-font_family = "JetBrains Mono Thin"
+font_family = "JetBrains Mono"
 stdio_query_timeout_ms = 2000
 ignore_text_sizing_protocol = false
 max_image_height = 30
