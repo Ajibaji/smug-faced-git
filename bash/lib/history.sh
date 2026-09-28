@@ -50,7 +50,7 @@ shell_history_search() {
   local order_by="ORDER BY command_id desc"
   local ascii_format="tr '\036' '\000'"
   local initial_query="${READLINE_LINE:-}"
-  local CD_CMD="sqlite3 $HISTDB SELECT cwd FROM command WHERE command_id={1}"
+  initial_query="$(echo $initial_query | sed -e "s/ /\\\ /g")"
   local selected=$(sqlite3 $HISTDB \
     -ascii -separator "$separator" \
     "$sql_query $order_by;" | \

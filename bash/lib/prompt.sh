@@ -2,26 +2,29 @@
 # source this file into your ~/.*rc file to import:
 #  - custom prompt definition
 # =======================================================================================
-prompt_symbol="❯"
-prompt_clean_symbol="☀ "
-prompt_dirty_symbol="☂ "
+
+prompt_symbol='    $_'
 prompt_venv_symbol="☁ "
+large_font_prefix=""
+large_font_suffix=""
+medium_font_prefix=""
+medium_font_suffix=""
 
 function cmd_running_time() {
   REPLY=''
   if [[ "$(builtin history -a /dev/stdout | wc -l)" != "0" ]]; then
     export START_TIME=$(HISTTIMEFORMAT='%s ' builtin history 1 | cut -f5 -d' ')
     export END_TIME=$(date +%s)
-    local running_time=$[END_TIME-START_TIME]
+    local running_time=$((END_TIME - START_TIME))
     if [[ $running_time -gt 0 ]]; then
-      running_time_formatted="$((($running_time/60)/60)):$((($running_time/60)%60)):$(($running_time%60))"
+      running_time_formatted="$((($running_time / 60) / 60)):$((($running_time / 60) % 60)):$(($running_time % 60))"
       REPLY="[$running_time_formatted]"
     fi
   fi
 }
 
 function print_running_time() {
-  printf "$GRAY%$[$COLUMNS-11]s\e[3m${|cmd_running_time;}\e[0m\n"
+  printf "$GRAY%$(($COLUMNS - 11))s\e[3m${| cmd_running_time;}\e[0m\n"
 }
 
 function prompt_command() {
@@ -34,34 +37,36 @@ function prompt_command() {
     branch="${branch##refs/heads/}"
 
     local dirty=
-    # Modified files
     git diff --no-ext-diff --quiet --exit-code --ignore-submodules 2>/dev/null || dirty=1
-    # Untracked files
     [ -z "$dirty" ] && test -n "$(git status --porcelain)" && dirty=1
 
     if [ -n "$dirty" ]; then
-      git_prompt=" $RED$prompt_dirty_symbol$NOCOLOR$branch"
+      git_prompt="  $RED$medium_font_prefix[$branch]$medium_font_suffix$NOCOLOR"
     else
-      git_prompt=" $YELLOW$prompt_clean_symbol$NOCOLOR$branch"
+      git_prompt="  $NOCOLOR$medium_font_prefix[$branch]$medium_font_suffix"
     fi
   fi
 
   local venv_prompt=
   if [ -n "$VIRTUAL_ENV" ]; then
-    venv_prompt=" $BLUE$prompt_venv_symbol$(basename $VIRTUAL_ENV)$NOCOLOR"
+    venv_prompt=" \[$BLUE\]$medium_font_prefix$prompt_venv_symbol$(basename $VIRTUAL_ENV)$medium_font_suffix\[$NOCOLOR\]"
   fi
 
   local host_prompt=
   [ -n "$remote" ] && host_prompt="@$YELLOW$HOSTNAME$NOCOLOR:"
 
-  first_line="${|print_running_time;}$CYAN\w$NOCOLOR$git_prompt$venv_prompt"
-  second_line="\`if [ \$? = 0 ]; then echo \[\$CYAN\]; else echo \[\$RED\]; fi\`\$prompt_symbol\[\$NOCOLOR\] "
-  PS1="\n$first_line\n    $second_line"
-  PS2="\[$CYAN\]$prompt_symbol\[$NOCOLOR\] "
+  second_line="\[\`if [ \$? = 0 ]; then echo \$CYAN\$BOLD; else echo \$RED\$BOLD; fi\`\]\$prompt_symbol\[\$NOCOLOR\] "
+
+  w='\w'
+  current_dir=${w@P}
+  current_dir="$large_font_prefix${w@P}$large_font_suffix"
+  first_line="${|print_running_time;}$CYAN$current_dir$NOCOLOR$git_prompt$venv_prompt\n"
+  echo -e "$first_line"
+  PS1="$second_line"
 
   local title="$(basename "$PWD")"
   [ -n "$remote" ] && title="$title \xE2\x80\x94 $HOSTNAME"
-  echo -ne "\033]0;$title"; echo -ne "\007"
+  printf "\033]0;$title\007"
 }
 
 set_last_command() {
