@@ -64,15 +64,17 @@ source "$HOME/.config/shell/lib/colours.sh"
 
   function set-kitty-theme () {
     local kitty_cmd=''
+    local socket=''
     if [[ -n "$KITTY_PID" ]]; then
       kitty_cmd='kitty'
     else
       kitty_cmd='/Applications/kitty.app/Contents/MacOS/kitty'
+      socket="--to unix:$(find /tmp/ -name 'mykitty-*')"
     fi
-    $kitty_cmd @ ls $@ | jq -r '.[].tabs.[].windows.[] | select(.at_prompt == true).id' | while read -r window_id; do
-      $kitty_cmd @ send-key $@ --match id:$window_id ctrl+c
-      $kitty_cmd @ send-text $@ --match id:$window_id "get-current-theme"
-      $kitty_cmd @ send-key $@ --match id:$window_id enter
+    $kitty_cmd @ ls $socket | jq -r '.[].tabs.[].windows.[] | select(.at_prompt == true).id' | while read -r window_id; do
+      $kitty_cmd @ send-key $socket --match id:$window_id ctrl+c
+      $kitty_cmd @ send-text $socket --match id:$window_id "get-current-theme"
+      $kitty_cmd @ send-key $socket --match id:$window_id enter
     done
   }
 
@@ -80,12 +82,11 @@ source "$HOME/.config/shell/lib/colours.sh"
 
   function set-terminal-theme () {
     if [[ "$OS" == "MacOS" ]]; then
-      osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every active ghostty terminal session
-      if [[ -n "$KITTY_PID" ]]; then
+      if [[ "$(pgrep -i ghostty >/dev/null; echo $?)" == "0" ]]; then
+        osascript $HOME/.config/MacOS/ghostty.applescript   # update env vars for every active ghostty terminal session
+      fi
+      if [[ "$(pgrep -i kitten >/dev/null; echo $?)" == "0" ]]; then
         set-kitty-theme
-      else
-        local socket="$(find /tmp/ -name 'mykitty-*')"
-        set-kitty-theme "--to unix:$socket"
       fi
     else
       echo "Not yet implemented for this linux DE - $OS"
