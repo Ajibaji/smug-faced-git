@@ -1,0 +1,8 @@
+startgroup
+    var float4 TRAIL_COLOR = float4(0.0, 0.384, 0.0, 1.0);
+    var float4 TRAIL_COLOR_ACCENT = float4(0.0, 0.5, 0.0, 1.0);
+
+    animation_start cursor-trail-move
+    animation_stop cursor-trail-stop
+    shaders cursor-trail-blaze
+endgroup
