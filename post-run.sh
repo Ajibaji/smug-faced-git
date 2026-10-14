@@ -25,8 +25,7 @@ if command -v bun > /dev/null 2>&1; then
     dockerfile-language-server-nodejs \
     neovim \
     sql-language-server \
-    typescript \
-    typescript-language-server
+    typescript
 fi
 
 if command -v pyenv > /dev/null 2>&1; then
