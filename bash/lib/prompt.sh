@@ -49,7 +49,7 @@ function prompt_command() {
 
   local venv_prompt=
   if [ -n "$VIRTUAL_ENV" ]; then
-    venv_prompt=" \[$BLUE\]$medium_font_prefix$prompt_venv_symbol$(basename $VIRTUAL_ENV)$medium_font_suffix\[$NOCOLOR\]"
+    venv_prompt=" $BLUE$medium_font_prefix$prompt_venv_symbol$(basename $VIRTUAL_ENV)$medium_font_suffix$NOCOLOR"
   fi
 
   local host_prompt=

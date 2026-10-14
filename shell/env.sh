@@ -3,17 +3,15 @@
 #  - frequently updated ENV VARS e.g. PATH
 # =======================================================================================
 
-# BASE VALUES TO BE OVERWRITTEN BY OS-SPECIFIC VALUES (IF PRESENT)
-# =======================================================================================
+export PATH="$(echo $PATH | sed -e "s|~|$HOME|g")"
 
-# -------
-  export EDITOR=nvim
+export EDITOR=nvim
 
-  if [[ -f "/etc/os-release" ]]; then
-    export OS="$(source /etc/os-release; echo $NAME)"
-  else
-    export OS="MacOS"
-  fi
+if [[ -f "/etc/os-release" ]]; then
+  export OS="$(source /etc/os-release; echo $NAME)"
+else
+  export OS="MacOS"
+fi
 
 # CA-certs
   if [[ -z "$CUSTOM_CA_CERTS" && -f "${HOME}/CustomCA.pem" ]]; then
