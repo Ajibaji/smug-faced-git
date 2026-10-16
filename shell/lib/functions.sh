@@ -83,12 +83,17 @@ fi
   function az-env () {
     local json="$(az account show --output json)"
     local client_id="$(echo $json | jq -r '.user.name')"
+    local tenant_id="$(echo $json | jq -r '.tenantId')"
 
-    export ARM_TENANT_ID="$(echo $json | jq -r '.tenantId')"
+    export ARM_TENANT_ID=$tenant_id
+    export AZURE_TENANT_ID=$tenant_id
     export ARM_SUBSCRIPTION_ID="$(echo $json | jq -r '.id')"
     if [[ $client_id != *"@"* ]]; then
-      export ARM_CLIENT_ID="$(echo $json | jq -r '.user.name')"
-      export ARM_CLIENT_SECRET=$(echo "{ \"content\": $(\cat ~/.azure/service_principal_entries.json)}" | jq -r --arg client_id "$client_id" '.content[] | select(.client_id == $client_id).client_secret')
+      export ARM_CLIENT_ID=$client_id
+      export AZURE_CLIENT_ID=$client_id
+      local client_secret=$(echo "{ \"content\": $(\cat ~/.azure/service_principal_entries.json)}" | jq -r --arg client_id "$client_id" '.content[] | select(.client_id == $client_id).client_secret')
+      export ARM_CLIENT_SECRET=$client_secret
+      export AZURE_CLIENT_SECRET=$client_secret
     fi
     export TF_VAR_hub_subscription_id=$AZURE_HUB_SUBSCRIPTION_ID
     export TF_VAR_subscription_id=$ARM_SUBSCRIPTION_ID
