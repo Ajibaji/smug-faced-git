@@ -76,3 +76,6 @@
 #  fnm completions --shell bash > ~/.local/share/bash-completion/completions/fnm
 
 ["benjajaja/mdfried"]
+
+["tree-sitter/tree-sitter"]
+asset_filters = [ "tree-sitter-cli" ]
