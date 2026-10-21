@@ -9,8 +9,8 @@ gui:
   expandedSidePanelWeight: 2
   mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
   enlargedSideViewLocation: left # left or top
-  wrapLinesInStagingView: true
-  useHunkModeInStagingView: true
+  wrapLinesInDiffView: true
+  useHunkModeInDiffView: true
   language: 'en' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl'
   timeFormat: 02 Jan 06 # go time format
   shortTimeFormat: 3:04PM
@@ -39,8 +39,8 @@ gui:
       - '#e78284'
     defaultFgColor:
       - '#c6d0f5'
-  authorColors:
-    '*': '#babbf1'
+    authorColors:
+      '*': '#babbf1'
   commitLength:
     show: true
   mouseEvents: true
