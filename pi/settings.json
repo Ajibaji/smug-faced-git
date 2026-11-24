@@ -1,12 +1,14 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "1.6.0",
   "defaultProvider": "github-copilot",
-  "defaultModel": "claude-opus-5",
+  "defaultModel": "claude-opus-5.5",
   "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,
   "theme": "dawnfox/nightfox",
   "packages": [
-    "npm:@ogulcancelik/pi-herdr",
-    "npm:@juancrg90/nightfox-themes"
-  ]
+    "npm:@juancrg90/nightfox-themes",
+    "npm:pi-token-speed",
+    "npm:@patimweb/pi-azure-devops"
+  ],
+  "quietStartup": "header"
 }
