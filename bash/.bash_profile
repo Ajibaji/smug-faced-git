@@ -22,7 +22,12 @@ unset BASH_RC_LOADED
             export PYENV_LOADING="true"
 
             export PYENV_SHELL=bash
-            source "$(\ls -1dt /opt/homebrew/Cellar/pyenv/*/ | head -n 1)/completions/pyenv.bash"
+            completion_path="$PYENV_ROOT"
+            if [[ -d /opt/homebrew/Cellar/pyenv ]]; then
+              completion_path="$(\ls -1dt /opt/homebrew/Cellar/pyenv/*/ | head -n 1)"
+            fi
+            source "$completion_path/completions/pyenv.bash"
+            unset completion_path
             if [[ "$PYENV_ROOT" && "$(type -P python)"  != "$PYENV_ROOT/shims/python" ]]; then
               echo "rehash"
               # command pyenv rehash 2>/dev/null

@@ -109,3 +109,18 @@ if command -v apt > /dev/null 2>&1; then
   printHeading 'APT-CLEAN-UP'
   sudo apt autoremove -y
 fi
+
+bash_53="$(echo "$(whichpath bash | xargs -I {} sh -c '{} --version | grep "5.3" > /dev/null 2>&1 && echo {}')" | head -n 1)"
+if [[ -z "$bash_53" ]]; then
+  printHeading 'INSTALLING-BASH-5.3'
+  wget https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz
+  tar -xzf bash-5.3.tar.gz
+  cd bash-5.3
+  ./configure --prefix=/usr/local
+  make
+  sudo make install
+  echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+  sudo chsh -s /usr/local/bin/bash
+  cd -
+fi
+unset bash_53
