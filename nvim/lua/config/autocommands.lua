@@ -56,3 +56,16 @@ vim.api.nvim_create_autocmd({ 'CursorHold' }, {
     })
   end,
 })
+
+-- activate lsp for embedded shell scripts in yaml files
+local group = vim.api.nvim_create_augroup("OtterYamlInjections", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.yaml", "*.yml" },
+  group = group,
+  callback = function()
+    local ok, otter = pcall(require, "otter")
+    if ok then
+      otter.activate()
+    end
+  end,
+})

@@ -75,8 +75,7 @@ return {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        -- angularls = {},
-        -- bashls = {},
+        bashls = {},
         csharp_ls = {},
         docker_compose_language_service = {},
         dockerls = {},
@@ -104,7 +103,6 @@ return {
         neocmake = {},
         pylsp = {},
         ruff = {},
-        shfmt = {},
         -- snyk_ls = {
         --   cmd = { 'snyk-ls', '-f', '~/.local/share/logs/snyk-ls-vim.log' },
         --   filetypes = {
@@ -241,9 +239,25 @@ return {
           end,
           scope = 'line',
           offset_x = 10,
-          anchor_bias = 'above',
+          anchor_bias = 'auto',
         },
       })
     end,
+  },
+  {
+    'jmbuhr/otter.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = {
+      lsp = {
+        diagnostic_update_events = { "BufReadPost", "BufWritePost" },
+      },
+      debug = false,
+      buffers = { write_to_disk = false, set_filetype = true },
+      verbose = { -- set to false to disable all verbose messages
+        no_code_found = true, -- warn if otter.activate is called, but no injected code was found
+      },
+    },
   },
 }
